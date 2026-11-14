@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Placement Test | English ZERO</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080d1c;color:#eef2ff;font-family:Arial,sans-serif}.wrap{max-width:900px;margin:auto;padding:24px 17px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:25px}.brand{color:#75e6ff;font-weight:900;letter-spacing:2px}.btn{border:1px solid #344365;background:#151f38;color:#fff;padding:11px 17px;border-radius:12px;cursor:pointer;text-decoration:none}.primary{background:linear-gradient(100deg,#2678ee,#8c5cf6);border:0}.hero,.test,.result{padding:25px;border:1px solid #293957;border-radius:20px;background:#10192e}.hero{background:linear-gradient(120deg,#17294b,#251d49);margin-bottom:20px}.hero h1{font-size:clamp(27px,5vw,40px);margin:8px 0}.muted{color:#aab8d4;line-height:1.6}.tag{font-size:12px;color:#65dff7;font-weight:bold;letter-spacing:1px}.levels{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:20px 0}.level{background:#10192e;border:1px solid #344365;padding:12px 5px;text-align:center;border-radius:12px}.level b{display:block;color:#65dff7;font-size:18px;margin-bottom:5px}.test{display:none}.test.show{display:block}.status{display:flex;justify-content:space-between;color:#aab8d4;font-size:13px;margin-bottom:18px}.bar{height:7px;background:#26324c;border-radius:8px;overflow:hidden;margin-bottom:22px}.bar span{height:100%;display:block;background:linear-gradient(90deg,#36d9f4,#8d69ff);width:0}.question{font-size:22px;font-weight:bold;margin:14px 0}.options{display:grid;gap:10px}.option{padding:14px;background:#151f38;color:#fff;border:1px solid #344365;border-radius:12px;text-align:left;cursor:pointer}.option.selected{border-color:#65dff7;background:#15364b}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.result{display:none;text-align:center}.result.show{display:block}.levelResult{font-size:62px;font-weight:900;color:#69e5f5;margin:10px}.result h2{margin-bottom:4px}.hidden{display:none!important}@media(max-width:600px){.levels{grid-template-columns:repeat(3,1fr)}.hero,.test,.result{padding:18px}.question{font-size:19px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top"><div class="brand">ENGLISH ZERO</div><a class="btn" href="../index.html">← Bosh sahifa</a></header>
+<section class="hero">
+<div class="tag">LEVEL ASSESSMENT</div>
+<h1>Find Your English Level</h1>
+<p class="muted">Ushbu test ingliz tili bo‘yicha hozirgi bilim darajangni taxminiy aniqlaydi. Savollarga mustaqil javob ber va yakunda tavsiya etilgan darajangni ko‘r.</p>
+<div class="levels">
+<div class="level"><b>A1</b><small>Beginner</small></div><div class="level"><b>A2</b><small>Elementary</small></div><div class="level"><b>B1</b><small>Intermediate</small></div><div class="level"><b>B2</b><small>Upper-Int.</small></div><div class="level"><b>C1</b><small>Advanced</small></div>
+</div>
+<button class="btn primary" id="start">Darajamni aniqlash →</button>
+</section>
+<section class="test" id="test">
+<div class="status"><span>PLACEMENT ASSESSMENT</span><span id="counter">1 / 15</span></div>
+<div class="bar"><span id="bar"></span></div>
+<div class="tag">SAVOL</div>
+<div class="question" id="question"></div>
+<div class="options" id="options"></div>
+<div class="actions"><button class="btn" id="prev">← Oldingi</button><button class="btn primary" id="next">Keyingi →</button><button class="btn primary hidden" id="finish">Natijani ko‘rish</button></div>
+<p class="muted" id="hint">Har bir savol uchun bitta javobni tanla.</p>
+</section>
+<section class="result" id="result">
+<div class="tag">YOUR ESTIMATED LEVEL</div>
+<h2>Sening taxminiy darajang</h2>
+<div class="levelResult" id="level">A1</div>
+<h2 id="levelName">Beginner</h2>
+<p class="muted" id="description"></p>
+<p id="scoreText"></p>
+<div class="actions" style="justify-content:center"><a class="btn primary" href="grammar.html">Darslarni boshlash →</a><a class="btn" href="progress.html">Progressim</a><button class="btn" id="retry">Qayta topshirish</button></div>
+</section>
+</main>
+<script>
+const questions=[
+{q:"Choose the correct greeting.",o:["Good morning","Good night morning","I am fine morning","Hello yesterday"],a:0},
+{q:"I ___ a student.",o:["are","is","am","be"],a:2},
+{q:"What is the plural of “book”?",o:["Bookes","Books","Bookies","Book"],a:1},
+{q:"She ___ to school every day.",o:["go","goes","going","gone"],a:1},
+{q:"We ___ a film yesterday.",o:["watch","watches","watched","watching"],a:2},
+{q:"There isn't ___ milk in the fridge.",o:["some","any","many","few"],a:1},
+{q:"I have lived here ___ five years.",o:["since","for","at","from"],a:1},
+{q:"If I have time, I ___ you.",o:["helped","helping","will help","helps"],a:2},
+{q:"This is the ___ interesting book I've read.",o:["more","most","much","many"],a:1},
+{q:"She said that she ___ tired.",o:["is","was","are","be"],a:1},
+{q:"The project ___ by our team last week.",o:["completed","was completed","is completing","has complete"],a:1},
+{q:"I wish I ___ speak more languages.",o:["can","could","will","must"],a:1},
+{q:"Despite ___ tired, he continued working.",o:["be","was","being","been"],a:2},
+{q:"Had I known about it, I ___ earlier.",o:["will come","would have come","come","came"],a:1},
+{q:"The proposal was rejected, ___ surprised everyone.",o:["that","what","which","who"],a:2}
+];
+let current=0,answers=Array(questions.length).fill(null);
+const $=id=>document.getElementById(id);
+function render(){
+let q=questions[current];$("counter").textContent=(current+1)+" / "+questions.length;$("bar").style.width=((current+1)/questions.length*100)+"%";$("question").textContent=q.q;$("options").innerHTML="";
+q.o.forEach((v,i)=>{let b=document.createElement("button");b.className="option"+(answers[current]===i?" selected":"");b.textContent=String.fromCharCode(65+i)+". "+v;b.onclick=()=>{answers[current]=i;render()};$("options").appendChild(b)});
+$("prev").disabled=current===0;$("next").classList.toggle("hidden",current===questions.length-1);$("finish").classList.toggle("hidden",current!==questions.length-1);
+}
+function finish(){
+let score=questions.reduce((s,q,i)=>s+(answers[i]===q.a?1:0),0),percent=score/questions.length*100;
+let level=percent<27?"A1":percent<47?"A2":percent<67?"B1":percent<87?"B2":"C1";
+let info={A1:["Beginner","Boshlang‘ich daraja. Avval asosiy so‘zlar, sodda gaplar va Present Simple mavzusini o‘rgan."],A2:["Elementary","Oddiy kundalik suhbatlar va asosiy grammatikani mustahkamla."],B1:["Intermediate","Turli vaziyatlarda fikr bildirish, matn o‘qish va zamonlarni takrorlashni davom ettir."],B2:["Upper-Intermediate","Murakkab matnlar, akademik lug‘at va erkin muloqot ustida ishlashni davom ettir."],C1:["Advanced","Murakkab mavzular, nozik ma’no farqlari va ravon nutqni rivojlantir."]}[level];
+$("test").classList.remove("show");$("result").classList.add("show");$("level").textContent=level;$("levelName").textContent=info[0];$("description").textContent=info[1];$("scoreText").textContent="Natija: "+score+" / "+questions.length+" ("+Math.round(percent)+"%). Bu taxminiy baholash bo‘lib, rasmiy CEFR sertifikati emas.";
+let key="ez_learning_data_v1",d={xp:0,correct:0,total:0,completed:0,history:[]};try{d={...d,...JSON.parse(localStorage.getItem(key)||"{}")}}catch(e){}
+d.placement={level,score,total:questions.length,date:new Date().toISOString()};d.xp=(d.xp||0)+score*5;d.correct=(d.correct||0)+score;d.total=(d.total||0)+questions.length;d.completed=(d.completed||0)+1;d.history=d.history||[];d.history.unshift({name:"Placement Test",date:new Date().toISOString(),score,total:questions.length,xp:score*5});d.history=d.history.slice(0,30);localStorage.setItem(key,JSON.stringify(d));
+if(window.EnglishZero&&typeof EnglishZero.addXP==="function")EnglishZero.addXP(score*5);
+}
+$("start").onclick=()=>{$("test").classList.add("show");$("result").classList.remove("show");current=0;answers=Array(questions.length).fill(null);render();$("test").scrollIntoView({behavior:"smooth"})};
+$("prev").onclick=()=>{if(current>0){current--;render()}};
+$("next").onclick=()=>{if(current<questions.length-1){current++;render()}};
+$("finish").onclick=finish;
+$("retry").onclick=()=>{$("result").classList.remove("show");$("test").classList.add("show");current=0;answers=Array(questions.length).fill(null);render()};
+</script>
+</body>
+</html>

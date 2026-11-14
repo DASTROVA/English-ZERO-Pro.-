@@ -1,0 +1,1024 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1c">
+  <title>Pronunciation — English ZERO</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    :root {
+      --p-bg: #080d1c;
+      --p-card: #111a2d;
+      --p-card2: #17233b;
+      --p-border: rgba(255,255,255,.09);
+      --p-text: #f2f5ff;
+      --p-muted: #9aa8c2;
+      --p-purple: #9b7bff;
+      --p-cyan: #42d9e8;
+      --p-green: #55d69e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--p-bg);
+      color: var(--p-text);
+      font-family: Inter, system-ui, Arial, sans-serif;
+    }
+
+    .pron-wrap {
+      width: min(1120px, 94%);
+      margin: 0 auto;
+      padding: 26px 0 60px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--p-muted);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .back-link:hover { color: var(--p-cyan); }
+
+    .hero {
+      padding: 28px;
+      border: 1px solid var(--p-border);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(66,217,232,.16), transparent 32%),
+        radial-gradient(circle at 10% 100%, rgba(155,123,255,.18), transparent 35%),
+        var(--p-card);
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      color: var(--p-cyan);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 46px);
+      margin: 12px 0;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      color: var(--p-muted);
+      line-height: 1.7;
+      max-width: 650px;
+      margin: 0;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .stat-pill {
+      padding: 9px 13px;
+      border: 1px solid var(--p-border);
+      border-radius: 12px;
+      background: rgba(255,255,255,.04);
+      font-size: 13px;
+    }
+
+    .progress-card {
+      padding: 17px;
+      border: 1px solid var(--p-border);
+      background: var(--p-card);
+      border-radius: 17px;
+      margin-bottom: 22px;
+    }
+
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 11px;
+      font-size: 13px;
+    }
+
+    .progress-track {
+      height: 9px;
+      border-radius: 20px;
+      background: #25314a;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--p-purple), var(--p-cyan));
+      border-radius: inherit;
+      transition: width .3s;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 3px 0 13px;
+      margin-bottom: 15px;
+      scrollbar-width: thin;
+    }
+
+    .tab {
+      flex: 0 0 auto;
+      border: 1px solid var(--p-border);
+      background: var(--p-card);
+      color: var(--p-muted);
+      border-radius: 12px;
+      padding: 11px 15px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .tab.active {
+      color: white;
+      border-color: var(--p-purple);
+      background: rgba(155,123,255,.17);
+    }
+
+    .section-title {
+      font-size: 22px;
+      margin: 8px 0;
+    }
+
+    .section-desc {
+      color: var(--p-muted);
+      line-height: 1.6;
+      font-size: 14px;
+      margin: 0 0 17px;
+    }
+
+    .sound-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 13px;
+    }
+
+    .sound-card {
+      border: 1px solid var(--p-border);
+      background: var(--p-card);
+      border-radius: 17px;
+      padding: 17px;
+      min-width: 0;
+    }
+
+    .sound-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ipa {
+      font-size: 34px;
+      font-weight: 850;
+      color: var(--p-cyan);
+    }
+
+    .sound-type {
+      font-size: 10px;
+      color: var(--p-muted);
+      border: 1px solid var(--p-border);
+      padding: 5px 8px;
+      border-radius: 20px;
+    }
+
+    .sound-card h3 {
+      font-size: 17px;
+      margin: 10px 0 5px;
+    }
+
+    .sound-card p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--p-muted);
+      margin: 0;
+    }
+
+    .examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 13px;
+    }
+
+    .example {
+      background: var(--p-card2);
+      border: 1px solid var(--p-border);
+      padding: 7px 9px;
+      border-radius: 9px;
+      font-size: 12px;
+    }
+
+    .example b { color: var(--p-cyan); }
+
+    .listen-btn, .action-btn {
+      border: 0;
+      background: linear-gradient(110deg, var(--p-purple), #687dff);
+      color: white;
+      padding: 10px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 750;
+      font-size: 12px;
+      margin-top: 14px;
+    }
+
+    .listen-btn:hover, .action-btn:hover {
+      filter: brightness(1.12);
+    }
+
+    .panel {
+      background: var(--p-card);
+      border: 1px solid var(--p-border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .panel p {
+      color: var(--p-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .pair-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .pair-card {
+      padding: 16px;
+      background: var(--p-card);
+      border: 1px solid var(--p-border);
+      border-radius: 15px;
+    }
+
+    .pair-words {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin: 12px 0;
+    }
+
+    .pair-word {
+      padding: 12px 7px;
+      text-align: center;
+      background: var(--p-card2);
+      border-radius: 11px;
+    }
+
+    .pair-word strong {
+      display: block;
+      font-size: 22px;
+      color: var(--p-cyan);
+    }
+
+    .pair-word small { color: var(--p-muted); }
+
+    .pair-card button {
+      width: 100%;
+      padding: 9px;
+      border: 1px solid var(--p-border);
+      border-radius: 9px;
+      color: white;
+      background: #253452;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .lesson-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .lesson-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid var(--p-border);
+      background: var(--p-card);
+      border-radius: 13px;
+    }
+
+    .lesson-item strong { display: block; font-size: 14px; }
+    .lesson-item small { color: var(--p-muted); display: block; margin-top: 5px; }
+
+    .lesson-item button {
+      flex: 0 0 auto;
+      padding: 9px 12px;
+      border: 1px solid var(--p-border);
+      border-radius: 9px;
+      color: white;
+      background: var(--p-card2);
+      cursor: pointer;
+    }
+
+    .practice-box {
+      background: linear-gradient(135deg, rgba(155,123,255,.12), rgba(66,217,232,.08));
+      border: 1px solid rgba(155,123,255,.3);
+      border-radius: 18px;
+      padding: 22px;
+      margin-top: 20px;
+    }
+
+    .practice-word {
+      font-size: clamp(28px, 7vw, 42px);
+      font-weight: 850;
+      text-align: center;
+      margin: 20px 0 5px;
+    }
+
+    .practice-ipa {
+      text-align: center;
+      color: var(--p-cyan);
+      font-size: 19px;
+    }
+
+    .practice-meaning {
+      text-align: center;
+      color: var(--p-muted);
+      margin-top: 8px;
+    }
+
+    .practice-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .practice-controls button {
+      padding: 11px 15px;
+      border-radius: 10px;
+      border: 1px solid var(--p-border);
+      color: white;
+      background: var(--p-card2);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .practice-controls .primary {
+      background: linear-gradient(110deg, var(--p-purple), #687dff);
+      border: 0;
+    }
+
+    .feedback {
+      min-height: 24px;
+      text-align: center;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--p-muted);
+    }
+
+    .quiz-option {
+      width: 100%;
+      display: block;
+      text-align: left;
+      margin: 8px 0;
+      padding: 13px;
+      background: var(--p-card2);
+      color: white;
+      border: 1px solid var(--p-border);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .quiz-option:hover { border-color: var(--p-cyan); }
+    .quiz-option.correct { border-color: var(--p-green); background: rgba(85,214,158,.12); }
+    .quiz-option.wrong { border-color: #ff7777; background: rgba(255,119,119,.1); }
+
+    .note {
+      background: rgba(66,217,232,.07);
+      border-left: 3px solid var(--p-cyan);
+      padding: 13px;
+      border-radius: 8px;
+      color: var(--p-muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 15px;
+    }
+
+    .hidden { display: none !important; }
+
+    @media(max-width:600px) {
+      .pron-wrap { width: 94%; padding-top: 15px; }
+      .hero { padding: 20px; }
+      .panel { padding: 16px; }
+      .lesson-item { align-items: flex-start; }
+      .lesson-item button { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="pron-wrap">
+
+  <a class="back-link" href="../index.html">← Bosh sahifaga qaytish</a>
+
+  <header class="hero">
+    <div class="eyebrow">ENGLISH ZERO • PRONUNCIATION LAB</div>
+    <h1>🎙️ English Pronunciation</h1>
+    <p>
+      Ingliz tilidagi tovushlarni to‘g‘ri talaffuz qilishni,
+      IPA belgilarini tushunishni, so‘z va gap urg‘usini
+      hamda tabiiy intonatsiyani bosqichma-bosqich o‘rganing.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-pill">🔤 IPA tovushlar</div>
+      <div class="stat-pill">👂 Listening practice</div>
+      <div class="stat-pill">🗣️ Speaking practice</div>
+      <div class="stat-pill">⭐ Interactive tests</div>
+    </div>
+  </header>
+
+  <div class="progress-card">
+    <div class="progress-head">
+      <strong>O‘rganish jarayoni</strong>
+      <span id="progressText">0% • 0 XP</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="vowels">Vowels</button>
+    <button class="tab" data-tab="consonants">Consonants</button>
+    <button class="tab" data-tab="pairs">Minimal pairs</button>
+    <button class="tab" data-tab="stress">Word stress</button>
+    <button class="tab" data-tab="intonation">Intonation</button>
+    <button class="tab" data-tab="practice">Practice</button>
+    <button class="tab" data-tab="quiz">Test</button>
+  </nav>
+
+  <main>
+
+    <section id="vowels" class="tab-content">
+      <h2 class="section-title">🔊 Vowel sounds — Unli tovushlar</h2>
+      <p class="section-desc">
+        Unli tovushlarni talaffuz qilganda havo og‘izdan to‘siqsiz chiqadi.
+        Ingliz tilida qisqa, uzun va diftong tovushlar mavjud.
+      </p>
+
+      <div class="sound-grid" id="vowelGrid"></div>
+
+      <div class="note">
+        Eslatma: IPA — International Phonetic Alphabet.
+        U so‘zlarning talaffuzini maxsus belgilar orqali ko‘rsatadi.
+        Masalan, /iː/ uzun tovush, /ɪ/ esa qisqa tovush.
+      </div>
+    </section>
+
+    <section id="consonants" class="tab-content hidden">
+      <h2 class="section-title">🗣️ Consonant sounds — Undosh tovushlar</h2>
+      <p class="section-desc">
+        Undosh tovushlar talaffuzida til, lab yoki tishlar yordamida
+        havo oqimi qisman yoki to‘liq to‘siladi.
+      </p>
+      <div class="sound-grid" id="consonantGrid"></div>
+    </section>
+
+    <section id="pairs" class="tab-content hidden">
+      <h2 class="section-title">👂 Minimal pairs</h2>
+      <p class="section-desc">
+        Minimal pairs — faqat bitta tovushi bilan farq qiladigan so‘zlar.
+        Ularni taqqoslash tovushlarni farqlashga yordam beradi.
+      </p>
+      <div class="pair-grid" id="pairGrid"></div>
+    </section>
+
+    <section id="stress" class="tab-content hidden">
+      <h2 class="section-title">💥 Word stress — So‘z urg‘usi</h2>
+      <p class="section-desc">
+        Ko‘p bo‘g‘inli so‘zlarda bir bo‘g‘in boshqalariga qaraganda
+        kuchliroq talaffuz qilinadi.
+      </p>
+
+      <div class="panel">
+        <h3>1. Urg‘u nima?</h3>
+        <p>
+          Masalan, <b>TA</b>ble so‘zida birinchi bo‘g‘in kuchli aytiladi.
+          Urg‘uli bo‘g‘in odatda balandroq, aniqroq va biroz cho‘ziqroq
+          talaffuz qilinadi.
+        </p>
+        <button class="listen-btn" onclick="speak('TABLE')">🔊 TABLE ni eshitish</button>
+      </div>
+
+      <div class="lesson-list" id="stressList"></div>
+
+      <div class="note">
+        Muhim: Ingliz tilida urg‘u har doim bir xil qoida bilan aniqlanmaydi.
+        Yangi so‘z o‘rganganingizda uning talaffuzini ham tekshiring.
+      </div>
+    </section>
+
+    <section id="intonation" class="tab-content hidden">
+      <h2 class="section-title">🎵 Intonation — Ohang</h2>
+      <p class="section-desc">
+        Intonation — gap davomida ovoz ohangining ko‘tarilishi va pasayishi.
+        U gapning ma’nosi va hissiy mazmuniga ta’sir qiladi.
+      </p>
+
+      <div class="panel">
+        <h3>1. Falling intonation ↘</h3>
+        <p>
+          Odatda darak gaplar va Wh-questions oxirida ovoz pasayadi.
+        </p>
+        <div class="examples">
+          <span class="example">I am a student. ↘</span>
+          <span class="example">Where do you live? ↘</span>
+        </div>
+        <button class="listen-btn" onclick="speak('I am a student. Where do you live?')">🔊 Eshitish</button>
+      </div>
+
+      <div class="panel">
+        <h3>2. Rising intonation ↗</h3>
+        <p>
+          Yes/No savollarida ko‘pincha ovoz ko‘tariladi.
+        </p>
+        <div class="examples">
+          <span class="example">Are you ready? ↗</span>
+          <span class="example">Do you like tea? ↗</span>
+        </div>
+        <button class="listen-btn" onclick="speak('Are you ready? Do you like tea?')">🔊 Eshitish</button>
+      </div>
+
+      <div class="panel">
+        <h3>3. Contrastive stress — Qarama-qarshi urg‘u</h3>
+        <p>
+          Muhim yoki qarama-qarshi ma’lumotni ajratish uchun
+          ma’lum so‘zga kuchli urg‘u beriladi.
+        </p>
+        <div class="examples">
+          <span class="example">I wanted the RED one.</span>
+          <span class="example">I said MONDAY, not Tuesday.</span>
+        </div>
+        <button class="listen-btn" onclick="speak('I wanted the red one. I said Monday, not Tuesday.')">🔊 Eshitish</button>
+      </div>
+
+      <div class="note">
+        Ohang qoidalari vaziyat, gap ma’nosi va gapiruvchining niyatiga qarab
+        o‘zgarishi mumkin. Bu misollar asosiy yo‘nalishlarni ko‘rsatadi.
+      </div>
+    </section>
+
+    <section id="practice" class="tab-content hidden">
+      <h2 class="section-title">🎤 Pronunciation practice</h2>
+      <p class="section-desc">
+        So‘zni tinglang, o‘zingiz takrorlang va keyingi so‘zga o‘ting.
+      </p>
+
+      <div class="practice-box">
+        <div style="text-align:center;color:var(--p-muted);font-size:12px">
+          SO‘Z <span id="practiceNumber">1</span> / <span id="practiceTotal">10</span>
+        </div>
+        <div class="practice-word" id="practiceWord">Think</div>
+        <div class="practice-ipa" id="practiceIPA">/θɪŋk/</div>
+        <div class="practice-meaning" id="practiceMeaning">O‘ylamoq</div>
+
+        <div class="practice-controls">
+          <button class="primary" onclick="listenCurrent()">🔊 Tinglash</button>
+          <button onclick="nextPractice()">Keyingi →</button>
+          <button onclick="markPracticed()">✓ Mashq qildim</button>
+        </div>
+
+        <div class="feedback" id="practiceFeedback">
+          Avval so‘zni tinglang va ovoz chiqarib takrorlang.
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:17px">
+        <h3>📝 Ovoz bilan mashq qilish</h3>
+        <p>
+          Agar brauzeringiz Speech Recognition funksiyasini qo‘llab-quvvatlasa,
+          mikrofon orqali aytgan so‘zingizni matnga aylantirish mumkin.
+          Bu professional talaffuz baholash tizimi emas.
+        </p>
+        <button class="action-btn" onclick="startRecognition()">🎙️ Mikrofonni boshlash</button>
+        <button class="action-btn" onclick="stopRecognition()">To‘xtatish</button>
+        <p id="recognitionResult">Natija shu yerda ko‘rinadi.</p>
+      </div>
+    </section>
+
+    <section id="quiz" class="tab-content hidden">
+      <h2 class="section-title">🧠 Pronunciation test</h2>
+      <p class="section-desc">
+        Bilimingizni tekshiring. Har bir savolda bitta to‘g‘ri javob bor.
+      </p>
+
+      <div class="panel">
+        <div class="progress-head">
+          <strong id="quizCounter">Savol 1 / 10</strong>
+          <span id="quizScore">Ball: 0</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="quizProgress"></div>
+        </div>
+        <h3 id="quizQuestion" style="margin-top:20px">Savol</h3>
+        <div id="quizOptions"></div>
+        <p id="quizFeedback" class="feedback"></p>
+        <button class="action-btn" id="nextQuestion" onclick="nextQuestion()" disabled>
+          Keyingi savol →
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="../script.js"></script>
+<script>
+const vowels = [
+  {ipa:"/iː/",name:"Long E",desc:"Uzun va cho‘ziq i tovushi.",examples:[["see","ko‘rmoq"],["green","yashil"],["teacher","o‘qituvchi"]]},
+  {ipa:"/ɪ/",name:"Short I",desc:"Qisqa, yumshoq i tovushi.",examples:[["sit","o‘tirmoq"],["big","katta"],["fish","baliq"]]},
+  {ipa:"/e/",name:"Short E",desc:"O‘zbekchadagi e tovushiga yaqin.",examples:[["bed","karavot"],["pen","ruchka"],["ten","o‘n"]]},
+  {ipa:"/æ/",name:"Short A",desc:"Og‘iz kengroq ochilib aytiladi.",examples:[["cat","mushuk"],["bag","sumka"],["map","xarita"]]},
+  {ipa:"/ɑː/",name:"Long A",desc:"Uzun ochiq a tovushi.",examples:[["car","mashina"],["father","ota"],["start","boshlamoq"]]},
+  {ipa:"/ɒ/",name:"Short O",desc:"Britan inglizchasidagi qisqa o tovushi.",examples:[["hot","issiq"],["box","quti"],["dog","it"]]},
+  {ipa:"/ɔː/",name:"Long O",desc:"Uzun o tovushi.",examples:[["door","eshik"],["talk","gaplashmoq"],["four","to‘rt"]]},
+  {ipa:"/ʊ/",name:"Short U",desc:"Qisqa va yumaloq u tovushi.",examples:[["book","kitob"],["good","yaxshi"],["put","qo‘ymoq"]]},
+  {ipa:"/uː/",name:"Long U",desc:"Uzun u tovushi.",examples:[["food","ovqat"],["blue","ko‘k"],["school","maktab"]]},
+  {ipa:"/ʌ/",name:"Short UH",desc:"Qisqa markaziy unli tovush.",examples:[["cup","piyola"],["sun","quyosh"],["love","sevgi"]]},
+  {ipa:"/ə/",name:"Schwa",desc:"Urg‘usiz bo‘g‘inlarda uchraydigan kuchsiz tovush.",examples:[["about","haqida"],["teacher","o‘qituvchi"],["sofa","divan"]]},
+  {ipa:"/ɜː/",name:"Long ER",desc:"Britan talaffuzidagi uzun markaziy tovush.",examples:[["bird","qush"],["girl","qiz"],["learn","o‘rganmoq"]]},
+  {ipa:"/eɪ/",name:"Diphthong",desc:"Bir tovushdan ikkinchisiga sirg‘alib o‘tish.",examples:[["day","kun"],["name","ism"],["late","kech"]]},
+  {ipa:"/aɪ/",name:"Diphthong",desc:"a dan i ga o‘tuvchi tovush.",examples:[["time","vaqt"],["my","mening"],["five","besh"]]},
+  {ipa:"/ɔɪ/",name:"Diphthong",desc:"o dan i ga o‘tuvchi tovush.",examples:[["boy","bola"],["coin","tanga"],["voice","ovoz"]]},
+  {ipa:"/aʊ/",name:"Diphthong",desc:"a dan u ga o‘tuvchi tovush.",examples:[["now","hozir"],["house","uy"],["town","shahar"]]},
+  {ipa:"/əʊ/",name:"Diphthong",desc:"Britan talaffuzida o‘ ga yaqin boshlanadi.",examples:[["go","bormoq"],["home","uy"],["phone","telefon"]]},
+  {ipa:"/ɪə/",name:"Diphthong",desc:"i dan markaziy tovushga o‘tish.",examples:[["near","yaqin"],["here","bu yerda"],["idea","g‘oya"]]},
+  {ipa:"/eə/",name:"Diphthong",desc:"e dan markaziy tovushga o‘tish.",examples:[["care","g‘amxo‘rlik"],["hair","soch"],["where","qayerda"]]},
+  {ipa:"/ʊə/",name:"Diphthong",desc:"An’anaviy britan IPA tavsifida uchraydi.",examples:[["pure","sof"],["tour","sayohat"],["cure","davolamoq"]]}
+];
+
+const consonants = [
+  {ipa:"/p/",name:"P sound",desc:"Lablar yopilib, havo bilan ochiladi.",examples:[["pen","ruchka"],["apple","olma"]]},
+  {ipa:"/b/",name:"B sound",desc:"Ovoz ishtirokidagi lab tovushi.",examples:[["book","kitob"],["baby","chaqaloq"]]},
+  {ipa:"/t/",name:"T sound",desc:"Til uchi yuqori tishlar ortiga tegadi.",examples:[["tea","choy"],["time","vaqt"]]},
+  {ipa:"/d/",name:"D sound",desc:"Ovoz ishtirokidagi d tovushi.",examples:[["day","kun"],["door","eshik"]]},
+  {ipa:"/k/",name:"K sound",desc:"Tilning orqa qismi yumshoq tanglayga tegadi.",examples:[["cat","mushuk"],["key","kalit"]]},
+  {ipa:"/g/",name:"G sound",desc:"Ovoz ishtirokidagi g tovushi.",examples:[["go","bormoq"],["game","o‘yin"]]},
+  {ipa:"/f/",name:"F sound",desc:"Pastki lab yuqori tishlarga yaqinlashadi.",examples:[["fish","baliq"],["coffee","qahva"]]},
+  {ipa:"/v/",name:"V sound",desc:"F ga o‘xshaydi, ammo ovoz qatnashadi.",examples:[["very","juda"],["voice","ovoz"]]},
+  {ipa:"/θ/",name:"Voiceless TH",desc:"Til uchi tishlar orasiga yengil qo‘yiladi.",examples:[["think","o‘ylamoq"],["three","uch"]]},
+  {ipa:"/ð/",name:"Voiced TH",desc:"TH tovushining ovozli shakli.",examples:[["this","bu"],["mother","ona"]]},
+  {ipa:"/s/",name:"S sound",desc:"Havo tor oraliqdan sirg‘alib chiqadi.",examples:[["sun","quyosh"],["city","shahar"]]},
+  {ipa:"/z/",name:"Z sound",desc:"S tovushiga o‘xshash, ovozli shakli.",examples:[["zoo","hayvonot bog‘i"],["zero","nol"]]},
+  {ipa:"/ʃ/",name:"SH sound",desc:"O‘zbekchadagi sh tovushiga yaqin.",examples:[["ship","kema"],["shop","do‘kon"]]},
+  {ipa:"/ʒ/",name:"ZH sound",desc:"Jarangli sh ga o‘xshash tovush.",examples:[["vision","ko‘rish"],["usual","odatiy"]]},
+  {ipa:"/tʃ/",name:"CH sound",desc:"Ch tovushi.",examples:[["chair","stul"],["teacher","o‘qituvchi"]]},
+  {ipa:"/dʒ/",name:"J sound",desc:"Jarangli j tovushi.",examples:[["job","ish"],["juice","sharbat"]]},
+  {ipa:"/h/",name:"H sound",desc:"Yengil nafas chiqarish orqali hosil bo‘ladi.",examples:[["house","uy"],["hello","salom"]]},
+  {ipa:"/m/",name:"M sound",desc:"Lablar yopilib, havo burundan chiqadi.",examples:[["man","erkak"],["mother","ona"]]},
+  {ipa:"/n/",name:"N sound",desc:"Til uchi yuqori milkka tegadi.",examples:[["name","ism"],["night","tun"]]},
+  {ipa:"/ŋ/",name:"NG sound",desc:"Tilning orqa qismi bilan burun tovushi.",examples:[["sing","kuylamoq"],["long","uzun"]]},
+  {ipa:"/l/",name:"L sound",desc:"Til uchi yuqori milkka tegadi.",examples:[["love","sevgi"],["light","yorug‘lik"]]},
+  {ipa:"/r/",name:"R sound",desc:"Ingliz r tovushi o‘zbek r tovushidan farq qiladi.",examples:[["red","qizil"],["right","to‘g‘ri"]]},
+  {ipa:"/j/",name:"Y sound",desc:"Ingliz tilidagi y tovushi.",examples:[["yes","ha"],["yellow","sariq"]]},
+  {ipa:"/w/",name:"W sound",desc:"Lablar yumaloqlanib aytiladi.",examples:[["water","suv"],["window","deraza"]]}
+];
+
+const pairs = [
+  ["ship","sheep","/ʃɪp/","/ʃiːp/","kema","qo‘y"],
+  ["bit","beat","/bɪt/","/biːt/","kichik bo‘lak","urmoq"],
+  ["cat","cut","/kæt/","/kʌt/","mushuk","kesmoq"],
+  ["full","fool","/fʊl/","/fuːl/","to‘la","ahmoq"],
+  ["live","leave","/lɪv/","/liːv/","yashamoq","ketmoq"],
+  ["think","sink","/θɪŋk/","/sɪŋk/","o‘ylamoq","cho‘kmoq"],
+  ["very","berry","/ˈveri/","/ˈberi/","juda","rezavor meva"],
+  ["three","tree","/θriː/","/triː/","uch","daraxt"],
+  ["fan","van","/fæn/","/væn/","ventilyator","furgon"],
+  ["west","vest","/west/","/vest/","g‘arb","nimcha"],
+  ["rice","rise","/raɪs/","/raɪz/","guruch","ko‘tarilmoq"],
+  ["thin","tin","/θɪn/","/tɪn/","yupqa","qalay"]
+];
+
+const stressWords = [
+  ["TAble","/ˈteɪ.bəl/","stol"],
+  ["DOCtor","/ˈdɒk.tər/","shifokor"],
+  ["beGIN","/bɪˈɡɪn/","boshlamoq"],
+  ["aBOUT","/əˈbaʊt/","haqida"],
+  ["COMputer","/kəmˈpjuː.tər/","kompyuter"],
+  ["imPORtant","/ɪmˈpɔː.tənt/","muhim"],
+  ["PHOtograph","/ˈfəʊ.tə.ɡrɑːf/","fotosurat"],
+  ["phoTOgrapher","/fəˈtɒɡ.rə.fər/","fotograf"],
+  ["EDucation","/ˌedʒ.ʊˈkeɪ.ʃən/","ta’lim"],
+  ["underSTAND","/ˌʌn.dəˈstænd/","tushunmoq"]
+];
+
+const practiceWords = [
+  ["Think","/θɪŋk/","O‘ylamoq"],
+  ["Three","/θriː/","Uch"],
+  ["Very","/ˈveri/","Juda"],
+  ["World","/wɜːld/","Dunyo"],
+  ["Water","/ˈwɔː.tər/","Suv"],
+  ["School","/skuːl/","Maktab"],
+  ["Beautiful","/ˈbjuː.tɪ.fəl/","Chiroyli"],
+  ["Comfortable","/ˈkʌm.fə.tə.bəl/","Qulay"],
+  ["Through","/θruː/","Orqali"],
+  ["Thought","/θɔːt/","Fikr"]
+];
+
+const quizData = [
+  {q:"/iː/ tovushiga mos so‘zni toping.",o:["Sit","See","Set","Sat"],a:1,e:"See so‘zida uzun /iː/ tovushi bor."},
+  {q:"Think so‘zining boshidagi tovush qaysi?",o:["/s/","/t/","/θ/","/f/"],a:2,e:"Think /θ/ tovushi bilan boshlanadi."},
+  {q:"Qaysi so‘zda /ʃ/ tovushi bor?",o:["Ship","Sip","Tip","Dip"],a:0,e:"Ship so‘zida /ʃ/ tovushi bor."},
+  {q:"/æ/ tovushiga mos so‘zni toping.",o:["Cat","Cut","Cot","Caught"],a:0,e:"Cat so‘zida /æ/ tovushi ishlatiladi."},
+  {q:"Qaysi biri schwa /ə/ tovushiga misol?",o:["See","About so‘zining birinchi tovushi","Book","Fish"],a:1,e:"About so‘zining birinchi bo‘g‘inida schwa bor."},
+  {q:"/uː/ tovushi qaysi so‘zda?",o:["Book","Good","Food","Foot"],a:2,e:"Food so‘zida uzun /uː/ bor."},
+  {q:"/ð/ tovushi qaysi so‘zda?",o:["Think","Three","This","Sink"],a:2,e:"This so‘zi /ð/ tovushi bilan boshlanadi."},
+  {q:"Yes/No savollarida ko‘pincha qaysi intonatsiya ishlatiladi?",o:["Rising","Falling","Hech qaysi","Faqat tekis"],a:0,e:"Yes/No savollarida ko‘pincha rising intonation ishlatiladi."},
+  {q:"/ŋ/ tovushiga misolni toping.",o:["Sing","Sun","Sit","Sea"],a:0,e:"Sing so‘zining oxirida /ŋ/ bor."},
+  {q:"So‘z urg‘usi nimani bildiradi?",o:["So‘zning tarjimasini","Bir bo‘g‘inning kuchliroq aytilishini","Gapning uzunligini","Harflar sonini"],a:1,e:"Word stress — so‘zdagi bir bo‘g‘inning kuchliroq aytilishi."}
+];
+
+function speak(text) {
+  if (!("speechSynthesis" in window)) {
+    alert("Brauzeringiz ovozli o‘qishni qo‘llab-quvvatlamaydi.");
+    return;
+  }
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-US";
+  utterance.rate = 0.82;
+  utterance.pitch = 1;
+  speechSynthesis.speak(utterance);
+}
+
+function makeSoundCard(item) {
+  return `
+    <article class="sound-card">
+      <div class="sound-top">
+        <span class="ipa">${item.ipa}</span>
+        <span class="sound-type">${item.name}</span>
+      </div>
+      <h3>${item.name}</h3>
+      <p>${item.desc}</p>
+      <div class="examples">
+        ${item.examples.map(x => `<span class="example"><b>${x[0]}</b> — ${x[1]}</span>`).join("")}
+      </div>
+      <button class="listen-btn" onclick="speak('${item.examples[0][0]}')">🔊 Talaffuzni eshitish</button>
+    </article>
+  `;
+}
+
+document.getElementById("vowelGrid").innerHTML = vowels.map(makeSoundCard).join("");
+document.getElementById("consonantGrid").innerHTML = consonants.map(makeSoundCard).join("");
+
+document.getElementById("pairGrid").innerHTML = pairs.map((p,i) => `
+  <article class="pair-card">
+    <div style="font-size:12px;color:var(--p-muted)">PAIR ${i+1}</div>
+    <div class="pair-words">
+      <div class="pair-word">
+        <strong>${p[0]}</strong><small>${p[2]}</small><small>${p[4]}</small>
+      </div>
+      <div class="pair-word">
+        <strong>${p[1]}</strong><small>${p[3]}</small><small>${p[5]}</small>
+      </div>
+    </div>
+    <button onclick="speak('${p[0]}')">🔊 ${p[0]}</button>
+    <button onclick="speak('${p[1]}')">🔊 ${p[1]}</button>
+  </article>
+`).join("");
+
+document.getElementById("stressList").innerHTML = stressWords.map((w,i) => `
+  <div class="lesson-item">
+    <div>
+      <strong>${i+1}. ${w[0]}</strong>
+      <small>${w[1]} • ${w[2]}</small>
+    </div>
+    <button onclick="speak('${w[0].replace(/[A-Z]/g, c => c.toLowerCase())}')">🔊 Eshitish</button>
+  </div>
+`).join("");
+
+/* TAB SYSTEM */
+document.querySelectorAll(".tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(x => x.classList.add("hidden"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.remove("hidden");
+  });
+});
+
+/* PROGRESS */
+const STORAGE_KEY = "ez_pronunciation_progress";
+let progressData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"practiced":[],"xp":0}');
+
+function saveProgress() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(progressData));
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = progressData.practiced.length;
+  const percent = Math.round(count / practiceWords.length * 100);
+  document.getElementById("progressFill").style.width = percent + "%";
+  document.getElementById("progressText").textContent = percent + "% • " + progressData.xp + " XP";
+}
+updateProgress();
+
+/* PRACTICE */
+let practiceIndex = 0;
+document.getElementById("practiceTotal").textContent = practiceWords.length;
+
+function renderPractice() {
+  const w = practiceWords[practiceIndex];
+  document.getElementById("practiceNumber").textContent = practiceIndex + 1;
+  document.getElementById("practiceWord").textContent = w[0];
+  document.getElementById("practiceIPA").textContent = w[1];
+  document.getElementById("practiceMeaning").textContent = w[2];
+  document.getElementById("practiceFeedback").textContent =
+    progressData.practiced.includes(practiceIndex)
+      ? "✓ Bu so‘zni mashq qilgansiz."
+      : "So‘zni tinglang va ovoz chiqarib takrorlang.";
+}
+
+function listenCurrent() {
+  speak(practiceWords[practiceIndex][0]);
+}
+
+function nextPractice() {
+  practiceIndex = (practiceIndex + 1) % practiceWords.length;
+  renderPractice();
+}
+
+function markPracticed() {
+  if (!progressData.practiced.includes(practiceIndex)) {
+    progressData.practiced.push(practiceIndex);
+    progressData.xp += 10;
+    saveProgress();
+
+    if (window.EnglishZero && typeof EnglishZero.addXP === "function") {
+      EnglishZero.addXP(10);
+    }
+  }
+  document.getElementById("practiceFeedback").textContent =
+    "✓ Ajoyib! 10 XP qo‘shildi. Keyingi so‘zga o‘tishingiz mumkin.";
+}
+renderPractice();
+
+/* SPEECH RECOGNITION */
+let recognition = null;
+
+function startRecognition() {
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!Recognition) {
+    document.getElementById("recognitionResult").textContent =
+      "Bu brauzerda ovozni matnga aylantirish mavjud emas. Oddiy tinglash va takrorlash mashqidan foydalaning.";
+    return;
+  }
+
+  if (recognition) recognition.stop();
+
+  recognition = new Recognition();
+  recognition.lang = "en-US";
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onresult = event => {
+    const result = event.results[0][0].transcript;
+    document.getElementById("recognitionResult").textContent =
+      "Brauzer eshitgan matn: " + result;
+  };
+
+  recognition.onerror = () => {
+    document.getElementById("recognitionResult").textContent =
+      "Mikrofon ishlamadi. Ruxsatlarni tekshiring yoki qayta urinib ko‘ring.";
+  };
+
+  recognition.start();
+  document.getElementById("recognitionResult").textContent = "Tinglanmoqda...";
+}
+
+function stopRecognition() {
+  if (recognition) {
+    recognition.stop();
+    recognition = null;
+  }
+  document.getElementById("recognitionResult").textContent = "Mikrofon to‘xtatildi.";
+}
+
+/* QUIZ */
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function renderQuestion() {
+  const q = quizData[quizIndex];
+  quizAnswered = false;
+
+  document.getElementById("quizCounter").textContent =
+    `Savol ${quizIndex + 1} / ${quizData.length}`;
+  document.getElementById("quizScore").textContent = "Ball: " + quizScore;
+  document.getElementById("quizProgress").style.width =
+    (quizIndex / quizData.length * 100) + "%";
+  document.getElementById("quizQuestion").textContent = q.q;
+  document.getElementById("quizFeedback").textContent = "";
+  document.getElementById("nextQuestion").disabled = true;
+  document.getElementById("nextQuestion").textContent =
+    quizIndex === quizData.length - 1 ? "Natijani ko‘rish" : "Keyingi savol →";
+
+  document.getElementById("quizOptions").innerHTML = q.o.map((option,i) => `
+    <button class="quiz-option" onclick="answerQuestion(${i})">${String.fromCharCode(65+i)}. ${option}</button>
+  `).join("");
+}
+
+function answerQuestion(index) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+
+  const q = quizData[quizIndex];
+  const buttons = document.querySelectorAll(".quiz-option");
+
+  buttons.forEach((btn,i) => {
+    btn.disabled = true;
+    if (i === q.a) btn.classList.add("correct");
+    if (i === index && index !== q.a) btn.classList.add("wrong");
+  });
+
+  if (index === q.a) {
+    quizScore++;
+    document.getElementById("quizFeedback").textContent = "✓ To‘g‘ri! " + q.e;
+  } else {
+    document.getElementById("quizFeedback").textContent = "✗ " + q.e;
+  }
+
+  document.getElementById("quizScore").textContent = "Ball: " + quizScore;
+  document.getElementById("nextQuestion").disabled = false;
+}
+
+function nextQuestion() {
+  if (!quizAnswered) return;
+
+  if (quizIndex < quizData.length - 1) {
+    quizIndex++;
+    renderQuestion();
+    return;
+  }
+
+  const percent = Math.round(quizScore / quizData.length * 100);
+  document.getElementById("quizQuestion").textContent =
+    `Test yakunlandi! Natijangiz: ${quizScore}/${quizData.length} (${percent}%)`;
+  document.getElementById("quizOptions").innerHTML = "";
+  document.getElementById("quizFeedback").textContent =
+    percent >= 80 ? "Ajoyib natija! Talaffuz bilimlaringiz yaxshi." :
+    percent >= 50 ? "Yaxshi! Yana mashq qiling." :
+    "Mavzularni qayta ko‘rib chiqing va yana urinib ko‘ring.";
+
+  document.getElementById("quizProgress").style.width = "100%";
+  document.getElementById("nextQuestion").textContent = "Testni qayta boshlash";
+  document.getElementById("nextQuestion").onclick = restartQuiz;
+
+  if (!progressData.quizAwarded) {
+    progressData.quizAwarded = true;
+    progressData.xp += quizScore * 5;
+    saveProgress();
+
+    if (window.EnglishZero && typeof EnglishZero.addXP === "function") {
+      EnglishZero.addXP(quizScore * 5);
+    }
+  }
+}
+
+function restartQuiz() {
+  quizIndex = 0;
+  quizScore = 0;
+  document.getElementById("nextQuestion").onclick = nextQuestion;
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+
+</body>
+</html>

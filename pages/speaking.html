@@ -1,0 +1,705 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1b">
+<title>Speaking — English Zero</title>
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.speaking-page{max-width:1200px;margin:auto;padding:35px 20px 70px}
+.hero{padding:30px;border:1px solid var(--border);border-radius:24px;background:linear-gradient(130deg,#211943,#103449);margin-bottom:25px}
+.hero h1{font-size:clamp(27px,5vw,42px);margin:12px 0}
+.hero p{color:var(--muted);line-height:1.7;max-width:700px}
+.eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:2px}
+.levels,.tabs,.actions{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}
+.level-btn,.tab-btn,.action-btn,.lesson-btn{
+border:1px solid var(--border);background:var(--surface);color:var(--text);
+padding:11px 15px;border-radius:11px;cursor:pointer;font-weight:700
+}
+.level-btn.active,.tab-btn.active,.action-btn.primary{
+background:linear-gradient(120deg,#7555ed,#287edc);border-color:transparent;color:white
+}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:20px;align-items:start}
+.panel,.card{background:var(--surface);border:1px solid var(--border);border-radius:19px;padding:20px;min-width:0}
+.panel h3,.card h3{margin:0 0 15px}
+.lesson-list{display:grid;gap:10px}
+.lesson-btn{width:100%;text-align:left;line-height:1.5;padding:13px}
+.lesson-btn small{display:block;color:var(--muted);font-weight:400;margin-top:5px}
+.lesson-btn.active{border-color:var(--purple);background:#242044}
+.main{min-width:0}
+.toolbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.chip{background:var(--surface-light);border:1px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--muted);font-size:13px}
+.card{margin-bottom:18px}
+.description{color:var(--muted);line-height:1.7}
+.topic-title{font-size:25px;margin:0 0 8px}
+.prompt-box{padding:17px;border:1px solid #34405d;background:#19243a;border-radius:13px;line-height:1.8;margin:14px 0}
+.phrase-list{display:grid;gap:10px}
+.phrase{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px;background:var(--surface-light);border:1px solid var(--border);border-radius:12px}
+.phrase div{min-width:0;line-height:1.6}
+.phrase small{display:block;color:var(--muted);margin-top:3px}
+.icon-btn{border:1px solid var(--border);background:#242044;color:white;border-radius:10px;padding:10px 13px;cursor:pointer;flex-shrink:0}
+.practice-word{font-size:clamp(24px,5vw,36px);font-weight:800;text-align:center;padding:25px 10px;color:#b5a6ff;overflow-wrap:anywhere}
+.mic-area{text-align:center;padding:20px}
+.mic-btn{width:82px;height:82px;border-radius:50%;border:0;background:linear-gradient(135deg,#7955ed,#238bdc);color:white;font-size:30px;cursor:pointer}
+.mic-btn.recording{background:linear-gradient(135deg,#e34f72,#a82050);animation:pulse 1.3s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 13px #e34f7222}}
+.status{color:var(--muted);margin-top:13px;line-height:1.6}
+.transcript{padding:15px;background:var(--surface-light);border:1px solid var(--border);border-radius:12px;margin-top:15px;line-height:1.8;min-height:55px;overflow-wrap:anywhere}
+textarea{width:100%;min-height:120px;resize:vertical;padding:14px;border-radius:12px;border:1px solid var(--border);background:#10182a;color:var(--text);font:inherit;line-height:1.7}
+.feedback{display:none;margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-light);border:1px solid var(--border);line-height:1.8}
+.question{padding:15px;border:1px solid var(--border);border-radius:13px;margin:12px 0}
+.question h4{margin:0 0 12px;line-height:1.6}
+.options{display:grid;gap:8px}
+.option{padding:12px;text-align:left;background:var(--surface-light);color:var(--text);border:1px solid var(--border);border-radius:10px;cursor:pointer}
+.option.selected{border-color:var(--purple);background:#28234a}
+.option.correct{border-color:#20bd88;background:#123b32}
+.option.wrong{border-color:#e16c75;background:#46232b}
+.option:disabled{opacity:1}
+.progress{height:7px;background:var(--surface-light);border-radius:20px;overflow:hidden;margin:15px 0}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#7457ee,#21c5d9)}
+.hidden{display:none!important}
+@media(max-width:760px){
+.speaking-page{padding:20px 13px 50px}
+.hero{padding:22px}
+.layout{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<header class="site-header">
+<a href="../index.html" class="logo">ENGLISH <span>ZERO</span></a>
+<nav>
+<a href="../index.html">Bosh sahifa</a>
+<a href="courses.html">Kurslar</a>
+<a href="progress.html">Natijalar</a>
+</nav>
+</header>
+
+<main class="speaking-page">
+
+<section class="hero">
+<div class="eyebrow">SPEAKING & PRONUNCIATION CENTER</div>
+<h1>Speaking — Ingliz tilida gapirish</h1>
+<p>
+Ingliz tilida erkin gapirishni mashq qiling. So‘zlarni tinglang,
+talaffuz qiling, mikrofon orqali javob bering va o‘z ovozingizni qayta eshiting.
+</p>
+<div class="toolbar">
+<div class="chip">🎤 Mashqlar: <strong id="totalCount">12</strong></div>
+<div class="chip">✅ Tugatilgan: <strong id="completedCount">0</strong></div>
+<div class="chip">⭐ XP: <strong id="xpCount">0</strong></div>
+</div>
+</section>
+
+<div class="eyebrow">DARAJANI TANLANG</div>
+<div class="levels" id="levels">
+<button class="level-btn active" data-level="A1">A1 Beginner</button>
+<button class="level-btn" data-level="A2">A2 Elementary</button>
+<button class="level-btn" data-level="B1">B1 Intermediate</button>
+<button class="level-btn" data-level="B2">B2 Upper-Intermediate</button>
+<button class="level-btn" data-level="C1">C1 Advanced</button>
+<button class="level-btn" data-level="C2">C2 Proficiency</button>
+</div>
+
+<div class="layout">
+<aside class="panel">
+<h3>🎙 Speaking darslari</h3>
+<div class="lesson-list" id="lessonList"></div>
+</aside>
+
+<section class="main">
+
+<div class="toolbar">
+<div class="eyebrow" id="levelLabel">A1 LEVEL</div>
+<div class="chip" id="lessonType">Introduction</div>
+</div>
+
+<section class="card">
+<h2 class="topic-title" id="lessonTitle">Introducing Yourself</h2>
+<p class="description" id="lessonDescription"></p>
+<div class="prompt-box">
+<strong>🎯 Bugungi topshiriq</strong>
+<div id="lessonInstruction"></div>
+</div>
+<div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+</section>
+
+<div class="tabs">
+<button class="tab-btn active" data-tab="phrases">💬 Foydali iboralar</button>
+<button class="tab-btn" data-tab="pronunciation">🔊 Talaffuz</button>
+<button class="tab-btn" data-tab="speaking">🎤 Speaking</button>
+<button class="tab-btn" data-tab="recording">⏺ Ovoz yozish</button>
+</div>
+
+<section class="card tab-content" id="phrases">
+<h3>💬 Foydali iboralar</h3>
+<p class="description">Iborani tinglang va uning ma'nosini o‘rganing.</p>
+<div class="phrase-list" id="phraseList"></div>
+</section>
+
+<section class="card tab-content hidden" id="pronunciation">
+<h3>🔊 Pronunciation Practice</h3>
+<p class="description">So‘z va gaplarni tinglang, so‘ng o‘zingiz talaffuz qilishga harakat qiling.</p>
+<div class="practice-word" id="practiceWord">Hello!</div>
+<p class="description" style="text-align:center" id="practiceMeaning">Salom!</p>
+<div class="actions" style="justify-content:center">
+<button class="action-btn primary" id="speakWordBtn">🔊 Eshitish</button>
+<button class="action-btn" id="nextWordBtn">Keyingi so‘z →</button>
+</div>
+<div class="prompt-box">
+<strong>Maslahat:</strong>
+Avval so‘zni tinglang, keyin ovoz chiqarib takrorlang.
+So‘zning har bir tovushiga e'tibor bering.
+</div>
+</section>
+
+<section class="card tab-content hidden" id="speaking">
+<h3>🎤 Speak Now</h3>
+<p class="description">Savolni o‘qing va ingliz tilida javob bering. Mikrofon orqali javobingizni matnga aylantirish imkoniyati ham mavjud.</p>
+<div class="prompt-box" id="speakingPrompt"></div>
+<div class="mic-area">
+<button class="mic-btn" id="recognitionBtn" aria-label="Mikrofonni yoqish">🎙</button>
+<div class="status" id="recognitionStatus">Boshlash uchun mikrofon tugmasini bosing.</div>
+</div>
+<div class="transcript" id="transcript">Sizning nutqingiz shu yerda ko‘rinadi.</div>
+<div class="actions">
+<button class="action-btn" id="clearTranscriptBtn">Tozalash</button>
+<button class="action-btn" id="speakPromptBtn">🔊 Savolni eshitish</button>
+</div>
+<p class="description">Mikrofon orqali tanilgan matnni o‘zingiz ham tekshiring. Brauzer nutqni noto‘g‘ri tanishi mumkin.</p>
+</section>
+
+<section class="card tab-content hidden" id="recording">
+<h3>⏺ Ovoz yozish studiyasi</h3>
+<p class="description">
+O‘z ovozingizni yozib oling va qayta eshiting.
+Yozuv ushbu qurilmada ishlaydi va hech qayerga avtomatik yuborilmaydi.
+</p>
+<div class="mic-area">
+<button class="mic-btn" id="recordBtn" aria-label="Ovoz yozishni boshlash">●</button>
+<div class="status" id="recordStatus">Yozishni boshlash uchun tugmani bosing.</div>
+</div>
+<div class="actions" style="justify-content:center">
+<button class="action-btn" id="stopRecordBtn" disabled>■ To‘xtatish</button>
+<button class="action-btn" id="playRecordBtn" disabled>▶ Qayta eshitish</button>
+</div>
+<audio id="audioPlayback" controls class="hidden" style="width:100%;margin-top:15px"></audio>
+</section>
+
+<section class="card">
+<h3>✍️ Mustaqil javob</h3>
+<p class="description">Gapirishdan oldin javobingizni yozib tayyorlashingiz mumkin.</p>
+<textarea id="answerInput" placeholder="Write your speaking answer here..."></textarea>
+<div class="toolbar" style="margin-top:10px">
+<span class="description">So‘zlar: <strong id="answerWords">0</strong></span>
+<button class="action-btn" id="saveAnswerBtn">💾 Saqlash</button>
+</div>
+<div class="feedback" id="answerFeedback"></div>
+</section>
+
+<section class="card">
+<h3>🧠 Speaking Mini Test</h3>
+<div id="quiz"></div>
+<button class="action-btn primary" id="checkQuizBtn">Testni tekshirish</button>
+<div class="feedback" id="quizFeedback"></div>
+</section>
+
+<section class="card">
+<h3>🏆 Darsni yakunlash</h3>
+<p class="description">Iboralarni o‘rganing, speaking mashqini bajaring va mini-testni tekshiring.</p>
+<button class="action-btn primary" id="completeBtn" disabled>✓ Darsni yakunlash · +20 XP</button>
+<div class="feedback" id="completeFeedback"></div>
+</section>
+
+</section>
+</div>
+</main>
+
+<script src="../script.js"></script>
+<script>
+const lessons=[
+{
+id:"a1-intro",level:"A1",title:"Introducing Yourself",type:"Introduction",
+description:"O‘zingizni tanishtirishni, ismingiz, yoshingiz va yashash joyingiz haqida gapirishni o‘rganing.",
+instruction:"O‘zingizni ingliz tilida tanishtiring. Ismingiz, qayerdan ekaningiz, yoshingiz va qiziqishlaringiz haqida gapiring.",
+phrases:[
+["Hello! My name is Anna.","Salom! Mening ismim Anna."],
+["I am from Uzbekistan.","Men O‘zbekistondanman."],
+["I am a student.","Men o‘quvchiman."],
+["Nice to meet you!","Tanishganimdan xursandman!"]
+],
+words:[["Hello","Salom"],["Student","O‘quvchi"],["Country","Mamlakat"],["Friend","Do‘st"]],
+prompt:"What is your name? Where are you from? What do you like doing?",
+quiz:[["How do you introduce your name?",["I name Anna.","My name is Anna.","I am name Anna.","Name my Anna."],1],["Choose the correct sentence.",["I from Uzbekistan.","I is from Uzbekistan.","I am from Uzbekistan.","I are Uzbekistan."],2],["What does 'Nice to meet you' mean?",["Xayrli tun","Tanishganimdan xursandman","Ko‘rishguncha","Rahmat"],1]]
+},
+{
+id:"a1-hobbies",level:"A1",title:"My Hobbies",type:"Daily Conversation",
+description:"Sevimli mashg‘ulotlaringiz haqida sodda gaplar bilan suhbatlashishni o‘rganing.",
+instruction:"Bo‘sh vaqtingizda nimalar qilishni yoqtirishingiz haqida 5 ta gap ayting.",
+phrases:[
+["I like reading books.","Men kitob o‘qishni yoqtiraman."],
+["I enjoy listening to music.","Men musiqa tinglashdan zavqlanaman."],
+["My favourite hobby is drawing.","Mening sevimli mashg‘ulotim rasm chizish."],
+["I play football with my friends.","Men do‘stlarim bilan futbol o‘ynayman."]
+],
+words:[["Hobby","Mashg‘ulot"],["Reading","O‘qish"],["Drawing","Rasm chizish"],["Enjoy","Zavqlanmoq"]],
+prompt:"What are your hobbies? What do you do in your free time?",
+quiz:[["I enjoy ___ music.",["listen","listening to","listened","listens"],1],["Choose the correct sentence.",["I likes reading.","I like reading.","I liking read.","I am like reading."],1],["What does 'free time' mean?",["Ish vaqti","Dars vaqti","Bo‘sh vaqt","Uyqu vaqti"],2]]
+},
+{
+id:"a2-weekend",level:"A2",title:"My Last Weekend",type:"Past Experiences",
+description:"O‘tgan dam olish kunlari haqida Past Simple yordamida gapirishni mashq qiling.",
+instruction:"O‘tgan dam olish kunlari qilgan ishlaringizni ketma-ket aytib bering.",
+phrases:[
+["Last weekend, I visited my grandparents.","O‘tgan dam olish kuni bobom va buvimni ko‘rgani bordim."],
+["We watched a film together.","Biz birga film tomosha qildik."],
+["I had a wonderful time.","Men ajoyib vaqt o‘tkazdim."],
+["It was really interesting.","Bu juda qiziqarli edi."]
+],
+words:[["Weekend","Dam olish kunlari"],["Visited","Tashrif buyurdi"],["Together","Birgalikda"],["Wonderful","Ajoyib"]],
+prompt:"What did you do last weekend? Who did you meet? What was the best part?",
+quiz:[["Yesterday, we ___ a film.",["watch","watched","watches","watching"],1],["Past form of 'go' is...",["goed","gone","went","going"],2],["Choose the correct phrase.",["Last week I visit.","Last week I visited.","Last week I visiting.","Last week I visits."],1]]
+},
+{
+id:"a2-travel",level:"A2",title:"Talking About Travel",type:"Travel English",
+description:"Sayohat, transport, joylar va taassurotlar haqida gapirish.",
+instruction:"O‘zingiz bormoqchi bo‘lgan joy haqida gapiring. U yerga nima uchun bormoqchisiz?",
+phrases:[
+["I would like to visit London.","Men Londonga borishni xohlardim."],
+["How can I get there?","U yerga qanday borsam bo‘ladi?"],
+["I prefer travelling by train.","Men poyezdda sayohat qilishni afzal ko‘raman."],
+["The scenery was beautiful.","Manzara chiroyli edi."]
+],
+words:[["Travel","Sayohat"],["Journey","Safar"],["Scenery","Manzara"],["Destination","Manzil"]],
+prompt:"Which country would you like to visit? What would you do there?",
+quiz:[["I prefer ___ by train.",["travel","travelling","travelled","travels"],1],["A 'destination' is...",["A type of food","A place you are going to","A person","A ticket"],1],["Choose the correct question.",["Where you want go?","Where do you want to go?","Where do want you go?","Where going you?"],1]]
+},
+{
+id:"b1-opinions",level:"B1",title:"Expressing Opinions",type:"Opinion Speaking",
+description:"O‘z fikringizni sabablar va misollar bilan tushuntirishni o‘rganing.",
+instruction:"Internet ta'lim uchun foydalimi? Mavzu bo‘yicha fikringizni va kamida ikkita sababni ayting.",
+phrases:[
+["In my opinion, education is essential.","Mening fikrimcha, ta'lim juda muhim."],
+["I strongly believe that...","Men qat'iy ishonamanki..."],
+["One reason for this is...","Buning sabablaridan biri..."],
+["For example, ...","Masalan, ..."]
+],
+words:[["Opinion","Fikr"],["Essential","Juda muhim"],["Reason","Sabab"],["Evidence","Dalil"]],
+prompt:"Do you think the internet makes learning easier? Why or why not?",
+quiz:[["Which phrase introduces an opinion?",["In my opinion","Yesterday","At the moment","By the way"],0],["Which phrase introduces an example?",["However","For example","Although","Finally"],1],["Choose the correct sentence.",["I strongly believes it.","I strongly believe it.","I strongly believing it.","I strong believe it."],1]]
+},
+{
+id:"b1-technology",level:"B1",title:"Technology in Daily Life",type:"Discussion",
+description:"Texnologiyaning kundalik hayotdagi o‘rni haqida suhbatlashish.",
+instruction:"Texnologiyaning foydali tomonlari va ehtimoliy kamchiliklari haqida gapiring.",
+phrases:[
+["Technology has changed our lives.","Texnologiya hayotimizni o‘zgartirdi."],
+["It makes communication easier.","U muloqotni osonlashtiradi."],
+["On the other hand, ...","Boshqa tomondan, ..."],
+["We should use it responsibly.","Biz undan mas'uliyat bilan foydalanishimiz kerak."]
+],
+words:[["Technology","Texnologiya"],["Communication","Muloqot"],["Responsibly","Mas'uliyat bilan"],["Convenient","Qulay"]],
+prompt:"How does technology help students? Can it sometimes be distracting?",
+quiz:[["'On the other hand' expresses...",["Addition","Contrast","Time","Place"],1],["Technology ___ our lives.",["have changed","has changed","changing","change"],1],["Choose the correct adverb.",["Responsibility","Responsible","Responsibly","Respond"],2]]
+},
+{
+id:"b2-debate",level:"B2",title:"Debating an Issue",type:"Debate",
+description:"Murakkab mavzuda qarshi fikrlarni muhokama qilishni mashq qiling.",
+instruction:"Online education an'anaviy ta'limning o‘rnini bosa oladimi? Ikki tomonni muhokama qiling.",
+phrases:[
+["There is a strong argument that...","... degan kuchli dalil mavjud."],
+["I see your point, however...","Fikringizni tushunaman, biroq..."],
+["It is worth considering...","...ni ko‘rib chiqish arziydi."],
+["To some extent, I agree.","Ma'lum darajada qo‘shilaman."]
+],
+words:[["Argument","Dalil"],["Consider","Ko‘rib chiqmoq"],["Extent","Daraja"],["Perspective","Nuqtai nazar"]],
+prompt:"Can online education completely replace traditional classrooms? Explain both perspectives.",
+quiz:[["Which phrase politely disagrees?",["You're completely wrong.","I see your point, however...","No, never.","That's silly."],1],["'To some extent' means...",["Completely","To a certain degree","Never","Immediately"],1],["A balanced debate should...",["Ignore opposing views","Consider both sides","Repeat one idea","Avoid reasons"],1]]
+},
+{
+id:"b2-public",level:"B2",title:"Public Speaking",type:"Presentation",
+description:"Auditoriya oldida fikr bildirish, nutqni boshlash va yakunlashni mashq qiling.",
+instruction:"Yoshlar uchun ta'limning ahamiyati haqida 1 daqiqalik nutq tayyorlang.",
+phrases:[
+["Good morning, everyone.","Barchaga xayrli tong."],
+["Today, I would like to talk about...","Bugun ... haqida gapirmoqchiman."],
+["Let me give you an example.","Sizga bir misol keltiray."],
+["Thank you for your attention.","E'tiboringiz uchun rahmat."]
+],
+words:[["Audience","Tinglovchilar"],["Attention","E'tibor"],["Presentation","Taqdimot"],["Confident","O‘ziga ishongan"]],
+prompt:"Prepare a short presentation about why education matters.",
+quiz:[["Which phrase is suitable for an opening?",["Thank you for listening.","Good morning, everyone.","That's all.","See you later."],1],["Which phrase introduces a topic?",["Today, I would like to talk about...","Never mind.","Goodbye.","I disagree."],0],["Which phrase ends a presentation?",["Once upon a time","Thank you for your attention.","For example","On the contrary"],1]]
+},
+{
+id:"c1-fluency",level:"C1",title:"Developing Fluency",type:"Advanced Discussion",
+description:"Murakkab mavzularda ravon, izchil va tabiiy nutq qurishni mashq qiling.",
+instruction:"Madaniyatlararo muloqot nima uchun muhimligini tushuntiring. Fikrlaringizni misollar bilan rivojlantiring.",
+phrases:[
+["What I find particularly significant is...","Men ayniqsa muhim deb hisoblaydigan jihat..."],
+["This raises an important question.","Bu muhim savolni yuzaga keltiradi."],
+["A further consideration is...","Yana bir e'tiborga molik jihat..."],
+["It would be reasonable to suggest...","... deb taxmin qilish o‘rinli bo‘ladi."]
+],
+words:[["Significant","Muhim"],["Consideration","E'tiborga molik jihat"],["Fluency","Ravonlik"],["Perspective","Nuqtai nazar"]],
+prompt:"Why is intercultural communication important in an increasingly connected world?",
+quiz:[["Which phrase introduces an additional point?",["A further consideration is...","In conclusion only","Yesterday","Hello"],0],["Fluency refers to...",["Speaking smoothly","Writing slowly","Memorising lists","Reading silently"],0],["Which expression is more cautious?",["It is absolutely certain","It would be reasonable to suggest","Everyone must agree","No doubt whatsoever"],1]]
+},
+{
+id:"c1-analysis",level:"C1",title:"Analysing Complex Topics",type:"Critical Discussion",
+description:"Murakkab g‘oyalarni tahlil qilish va ularni aniq ifodalash.",
+instruction:"Sun'iy intellektning ta'limdagi imkoniyatlari va cheklovlarini tahlil qiling.",
+phrases:[
+["A key distinction needs to be made.","Muhim farqni ajratib ko‘rsatish kerak."],
+["The evidence appears to suggest...","Dalillar ...ni ko‘rsatayotganga o‘xshaydi."],
+["This should not be interpreted as...","Buni ... deb talqin qilmaslik kerak."],
+["A more nuanced perspective would be...","Yanada nozik yondashuv ... bo‘ladi."]
+],
+words:[["Distinction","Farq"],["Evidence","Dalil"],["Interpreted","Talqin qilingan"],["Nuanced","Nozik farqlarni hisobga oluvchi"]],
+prompt:"Can artificial intelligence improve education without replacing human teachers?",
+quiz:[["'Nuanced' means...",["Oversimplified","Showing subtle distinctions","Unrelated","Unclear"],1],["Which phrase refers to evidence?",["The evidence appears to suggest...","I feel sleepy","See you tomorrow","Once upon a time"],0],["A critical discussion should...",["Examine complexity","Avoid questions","Ignore evidence","Only repeat claims"],0]]
+},
+{
+id:"c2-nuance",level:"C2",title:"Nuanced Communication",type:"Expert Communication",
+description:"Nozik ma'nolarni, ehtiyotkor fikrlarni va murakkab dalillarni tabiiy ifodalash.",
+instruction:"Globalizatsiya mahalliy madaniyatlarga qanday ta'sir qilishini turli nuqtai nazardan muhokama qiling.",
+phrases:[
+["There is a degree to which...","...ning ma'lum darajasi mavjud."],
+["That interpretation overlooks...","Bu talqin ...ni e'tibordan chetda qoldiradi."],
+["It would be misleading to assume...","... deb taxmin qilish noto‘g‘ri bo‘lardi."],
+["The issue is considerably more complex.","Bu masala ancha murakkabroq."]
+],
+words:[["Interpretation","Talqin"],["Overlooks","E'tibordan chetda qoldiradi"],["Misleading","Chalg‘ituvchi"],["Considerably","Ancha"]],
+prompt:"Does globalisation strengthen or weaken local cultural identity? Explore both possibilities.",
+quiz:[["'Overlooks' means...",["Pays attention to","Fails to consider","Explains clearly","Agrees with"],1],["Which phrase expresses caution?",["It would be misleading to assume...","Everyone knows...","Absolutely impossible","No questions asked"],0],["A nuanced response...",["Recognises complexity","Avoids all detail","Uses only simple claims","Rejects discussion"],0]]
+}
+];
+
+let level="A1";
+let current=null;
+let wordIndex=0;
+let quizAnswers={};
+let quizDone=false;
+let phrasesSeen=false;
+let recognition=null;
+let mediaRecorder=null;
+let mediaStream=null;
+let audioChunks=[];
+let audioURL=null;
+let recording=false;
+
+const $=id=>document.getElementById(id);
+
+function doneList(){
+ try{return JSON.parse(localStorage.getItem("ez_speaking_completed")||"[]")}
+ catch(e){return []}
+}
+function updateStats(){
+ $("completedCount").textContent=doneList().length;
+ $("xpCount").textContent=localStorage.getItem("ez_speaking_xp")||0;
+}
+function renderLessons(){
+ $("lessonList").innerHTML="";
+ lessons.filter(x=>x.level===level).forEach(lesson=>{
+  const b=document.createElement("button");
+  b.className="lesson-btn"+(current?.id===lesson.id?" active":"");
+  b.innerHTML=`${doneList().includes(lesson.id)?"✅ ":"🎤 "}${lesson.title}<small>${lesson.level} · ${lesson.type}</small>`;
+  b.addEventListener("click",()=>loadLesson(lesson.id));
+  $("lessonList").appendChild(b);
+ });
+}
+function loadLesson(id){
+ stopRecognition();
+ stopRecording();
+ current=lessons.find(x=>x.id===id);
+ if(!current)return;
+ level=current.level;
+ wordIndex=0;
+ quizAnswers={};
+ quizDone=false;
+ phrasesSeen=false;
+
+ $("levelLabel").textContent=level+" LEVEL";
+ $("lessonTitle").textContent=current.title;
+ $("lessonType").textContent=current.type;
+ $("lessonDescription").textContent=current.description;
+ $("lessonInstruction").textContent=current.instruction;
+ $("speakingPrompt").textContent=current.prompt;
+ $("transcript").textContent="Sizning nutqingiz shu yerda ko‘rinadi.";
+ $("answerInput").value=localStorage.getItem("ez_speaking_answer_"+id)||"";
+ $("answerFeedback").style.display="none";
+ $("quizFeedback").style.display="none";
+ $("completeFeedback").style.display="none";
+ $("progressFill").style.width="0%";
+ $("completeBtn").disabled=true;
+ $("completeBtn").textContent=doneList().includes(id)?"✓ Dars avval yakunlangan":"Darsni yakunlash · +20 XP";
+ $("phraseList").innerHTML=current.phrases.map((p,i)=>`
+ <div class="phrase">
+  <div><strong>${p[0]}</strong><small>${p[1]}</small></div>
+  <button class="icon-btn" data-say="${i}" aria-label="Iborani eshitish">🔊</button>
+ </div>`).join("");
+
+ $("phraseList").querySelectorAll("[data-say]").forEach(b=>{
+  b.addEventListener("click",()=>speakText(current.phrases[Number(b.dataset.say)][0]));
+ });
+ renderWord();
+ renderQuiz();
+ renderLessons();
+}
+function speakText(text){
+ if(!("speechSynthesis" in window)){
+  alert("Bu brauzer ovozli o‘qishni qo‘llab-quvvatlamaydi.");
+  return;
+ }
+ speechSynthesis.cancel();
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang="en-US";
+ utterance.rate=0.85;
+ speechSynthesis.speak(utterance);
+}
+function renderWord(){
+ const item=current.words[wordIndex];
+ $("practiceWord").textContent=item[0];
+ $("practiceMeaning").textContent=item[1];
+}
+$("speakWordBtn").addEventListener("click",()=>{
+ if(current)speakText(current.words[wordIndex][0]);
+});
+$("nextWordBtn").addEventListener("click",()=>{
+ if(!current)return;
+ wordIndex=(wordIndex+1)%current.words.length;
+ renderWord();
+});
+function showTab(name){
+ document.querySelectorAll(".tab-content").forEach(el=>el.classList.add("hidden"));
+ document.querySelectorAll(".tab-btn").forEach(el=>el.classList.toggle("active",el.dataset.tab===name));
+ $(name).classList.remove("hidden");
+ if(name==="phrases"){
+  phrasesSeen=true;
+  updateProgress();
+ }
+}
+document.querySelectorAll(".tab-btn").forEach(b=>{
+ b.addEventListener("click",()=>showTab(b.dataset.tab));
+});
+function updateProgress(){
+ let value=0;
+ if(phrasesSeen)value+=25;
+ if($("transcript").textContent.trim()!=="Sizning nutqingiz shu yerda ko‘rinadi.")value+=25;
+ if($("answerInput").value.trim().length>=10)value+=25;
+ if(quizDone)value+=25;
+ $("progressFill").style.width=value+"%";
+ if(value===100)$("completeBtn").disabled=false;
+}
+function renderQuiz(){
+ $("quiz").innerHTML=current.quiz.map((q,i)=>`
+ <div class="question">
+ <h4>${i+1}. ${q[0]}</h4>
+ <div class="options">
+ ${q[1].map((a,j)=>`<button class="option" data-q="${i}" data-a="${j}">${String.fromCharCode(65+j)}. ${a}</button>`).join("")}
+ </div>
+ </div>`).join("");
+ $("quiz").querySelectorAll(".option").forEach(b=>{
+  b.addEventListener("click",()=>{
+   if(quizDone)return;
+   const q=Number(b.dataset.q);
+   quizAnswers[q]=Number(b.dataset.a);
+   $("quiz").querySelectorAll(`[data-q="${q}"]`).forEach(x=>x.classList.toggle("selected",x===b));
+  });
+ });
+}
+$("checkQuizBtn").addEventListener("click",()=>{
+ if(!current||quizDone)return;
+ if(Object.keys(quizAnswers).length!==current.quiz.length){
+  $("quizFeedback").style.display="block";
+  $("quizFeedback").textContent="Iltimos, barcha savollarga javob bering.";
+  return;
+ }
+ let score=0;
+ current.quiz.forEach((q,i)=>{
+  if(quizAnswers[i]===q[2])score++;
+  $("quiz").querySelectorAll(`[data-q="${i}"]`).forEach((b,j)=>{
+   b.disabled=true;
+   if(j===q[2])b.classList.add("correct");
+   else if(j===quizAnswers[i])b.classList.add("wrong");
+  });
+ });
+ quizDone=true;
+ const percent=Math.round(score/current.quiz.length*100);
+ $("quizFeedback").style.display="block";
+ $("quizFeedback").textContent=`Natija: ${score}/${current.quiz.length} (${percent}%).`;
+ updateProgress();
+});
+function startRecognition(){
+ const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SpeechRecognition){
+  $("recognitionStatus").textContent="Nutqni matnga aylantirish bu brauzerda mavjud emas. Ovoz yozish bo‘limidan foydalanishingiz mumkin.";
+  return;
+ }
+ recognition=new SpeechRecognition();
+ recognition.lang="en-US";
+ recognition.continuous=true;
+ recognition.interimResults=true;
+ recognition.onstart=()=>{
+  $("recognitionStatus").textContent="🎙 Tinglayapman... Ingliz tilida gapiring.";
+  $("recognitionBtn").classList.add("recording");
+ };
+ recognition.onresult=e=>{
+  let finalText="";
+  let interim="";
+  for(let i=e.resultIndex;i<e.results.length;i++){
+   if(e.results[i].isFinal)finalText+=e.results[i][0].transcript+" ";
+   else interim+=e.results[i][0].transcript;
+  }
+  if(finalText){
+   const old=$("transcript").dataset.final||"";
+   $("transcript").dataset.final=(old+" "+finalText).trim();
+  }
+  const complete=$("transcript").dataset.final||"";
+  $("transcript").textContent=(complete+" "+interim).trim();
+  updateProgress();
+ };
+ recognition.onerror=e=>{
+  $("recognitionStatus").textContent="Mikrofon xatosi: "+e.error+". Ruxsatlarni tekshiring.";
+  $("recognitionBtn").classList.remove("recording");
+ };
+ recognition.onend=()=>{
+  $("recognitionBtn").classList.remove("recording");
+  if($("recognitionStatus").textContent.includes("Tinglayapman")){
+   $("recognitionStatus").textContent="Tinglash yakunlandi.";
+  }
+ };
+ try{recognition.start()}
+ catch(e){$("recognitionStatus").textContent="Mikrofonni qayta ishga tushirib ko‘ring."}
+}
+function stopRecognition(){
+ if(recognition){
+  try{recognition.stop()}catch(e){}
+  recognition=null;
+ }
+ $("recognitionBtn")?.classList.remove("recording");
+}
+$("recognitionBtn").addEventListener("click",()=>{
+ if(recognition){
+  stopRecognition();
+  $("recognitionStatus").textContent="Tinglash to‘xtatildi.";
+ }else startRecognition();
+});
+$("clearTranscriptBtn").addEventListener("click",()=>{
+ $("transcript").textContent="Sizning nutqingiz shu yerda ko‘rinadi.";
+ delete $("transcript").dataset.final;
+ $("recognitionStatus").textContent="Matn tozalandi.";
+ updateProgress();
+});
+$("speakPromptBtn").addEventListener("click",()=>{
+ if(current)speakText(current.prompt);
+});
+async function startRecording(){
+ if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){
+  $("recordStatus").textContent="Bu brauzer ovoz yozishni qo‘llab-quvvatlamaydi yoki xavfsiz ulanish talab qilinadi.";
+  return;
+ }
+ try{
+  mediaStream=await navigator.mediaDevices.getUserMedia({audio:true});
+  audioChunks=[];
+  mediaRecorder=new MediaRecorder(mediaStream);
+  mediaRecorder.ondataavailable=e=>{
+   if(e.data.size>0)audioChunks.push(e.data);
+  };
+  mediaRecorder.onstop=()=>{
+   const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType||"audio/webm"});
+   if(audioURL)URL.revokeObjectURL(audioURL);
+   audioURL=URL.createObjectURL(blob);
+   $("audioPlayback").src=audioURL;
+   $("audioPlayback").classList.remove("hidden");
+   $("playRecordBtn").disabled=false;
+   $("recordStatus").textContent="✓ Yozuv tayyor. Uni qayta eshitishingiz mumkin.";
+   mediaStream?.getTracks().forEach(t=>t.stop());
+   mediaStream=null;
+  };
+  mediaRecorder.start();
+  recording=true;
+  $("recordBtn").classList.add("recording");
+  $("recordStatus").textContent="🔴 Ovoz yozilmoqda...";
+  $("stopRecordBtn").disabled=false;
+  $("recordBtn").disabled=true;
+ }catch(e){
+  $("recordStatus").textContent="Mikrofon ruxsati berilmadi yoki qurilmada mikrofon mavjud emas.";
+ }
+}
+function stopRecording(){
+ if(mediaRecorder&&recording){
+  mediaRecorder.stop();
+  recording=false;
+ }
+ $("recordBtn")?.classList.remove("recording");
+ if($("recordBtn"))$("recordBtn").disabled=false;
+ if($("stopRecordBtn"))$("stopRecordBtn").disabled=true;
+}
+$("recordBtn").addEventListener("click",startRecording);
+$("stopRecordBtn").addEventListener("click",stopRecording);
+$("playRecordBtn").addEventListener("click",()=>{
+ $("audioPlayback").play();
+});
+$("answerInput").addEventListener("input",()=>{
+ const text=$("answerInput").value.trim();
+ $("answerWords").textContent=text?text.split(/\s+/).length:0;
+ if(current)localStorage.setItem("ez_speaking_answer_"+current.id,$("answerInput").value);
+ updateProgress();
+});
+$("saveAnswerBtn").addEventListener("click",()=>{
+ if(!current)return;
+ localStorage.setItem("ez_speaking_answer_"+current.id,$("answerInput").value);
+ $("answerFeedback").style.display="block";
+ $("answerFeedback").textContent="✓ Javobingiz ushbu qurilmada saqlandi.";
+});
+$("completeBtn").addEventListener("click",()=>{
+ if(!current||$("completeBtn").disabled)return;
+ const list=doneList();
+ if(!list.includes(current.id)){
+  list.push(current.id);
+  localStorage.setItem("ez_speaking_completed",JSON.stringify(list));
+  const xp=Number(localStorage.getItem("ez_speaking_xp")||0)+20;
+  localStorage.setItem("ez_speaking_xp",xp);
+  if(window.EnglishZero){
+   EnglishZero.addXP(20);
+   EnglishZero.completeLesson();
+  }
+  $("completeFeedback").textContent="🎉 Dars yakunlandi! Siz 20 XP oldingiz.";
+ }else{
+  $("completeFeedback").textContent="Bu dars avval yakunlangan.";
+ }
+ $("completeFeedback").style.display="block";
+ $("completeBtn").disabled=true;
+ $("completeBtn").textContent="✓ Dars yakunlandi";
+ updateStats();
+ renderLessons();
+});
+$("levels").addEventListener("click",e=>{
+ const b=e.target.closest(".level-btn");
+ if(!b)return;
+ stopRecognition();
+ stopRecording();
+ level=b.dataset.level;
+ $("levels").querySelectorAll(".level-btn").forEach(x=>x.classList.toggle("active",x===b));
+ current=null;
+ $("lessonTitle").textContent="Darsni tanlang";
+ $("lessonDescription").textContent="Chap tomondagi ro‘yxatdan darsni tanlang.";
+ $("lessonInstruction").textContent="";
+ $("phraseList").innerHTML="";
+ $("quiz").innerHTML="";
+ $("completeBtn").disabled=true;
+ $("progressFill").style.width="0%";
+ $("answerInput").value="";
+ renderLessons();
+});
+$("totalCount").textContent=lessons.length;
+updateStats();
+renderLessons();
+loadLesson("a1-intro");
+</script>
+</body>
+</html>

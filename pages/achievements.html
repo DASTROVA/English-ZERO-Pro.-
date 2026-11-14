@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Achievements | English ZERO</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080d1c;color:#eef2ff;font-family:Arial,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 18px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:25px}
+.brand{color:#75e6ff;font-weight:900;letter-spacing:2px}
+.btn{display:inline-block;padding:11px 16px;background:#151f38;border:1px solid #344365;color:white;text-decoration:none;border-radius:12px;cursor:pointer}
+.hero{padding:28px;border:1px solid #293957;border-radius:22px;background:linear-gradient(120deg,#17294b,#251d49);margin-bottom:20px}
+.tag{font-size:12px;color:#65dff7;font-weight:bold;letter-spacing:1px}
+.hero h1{font-size:clamp(28px,5vw,40px);margin:9px 0}
+.muted{color:#aab8d4;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px}
+.stat,.panel{padding:20px;background:#10192e;border:1px solid #293957;border-radius:18px}
+.stat small{color:#aab8d4}
+.stat strong{display:block;font-size:29px;color:#75e6ff;margin:9px 0}
+.panel h2{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.achievement{padding:18px;background:#121e37;border:1px solid #293957;border-radius:16px;display:flex;gap:13px;align-items:center;min-width:0}
+.achievement.locked{opacity:.52;filter:saturate(.3)}
+.medal{width:54px;height:54px;flex-shrink:0;display:grid;place-items:center;font-size:28px;background:#1c3451;border-radius:15px}
+.achievement h3{font-size:15px;margin:0 0 6px}
+.achievement p{font-size:12px;color:#aab8d4;margin:0;line-height:1.5}
+.status{font-size:11px;color:#70e8bb;margin-top:7px;display:block}
+.locked .status{color:#aab8d4}
+.bar{height:9px;background:#26324c;border-radius:10px;overflow:hidden;margin:12px 0}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#36d9f4,#8d69ff)}
+.progress-row{display:flex;justify-content:space-between;gap:10px;color:#aab8d4;font-size:13px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:550px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.hero{padding:20px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<header class="top">
+<div class="brand">ENGLISH ZERO</div>
+<a class="btn" href="../index.html">← Bosh sahifa</a>
+</header>
+
+<section class="hero">
+<div class="tag">REWARDS & MILESTONES</div>
+<h1>Your Achievements 🏆</h1>
+<p class="muted">Har bir dars, mashq va test seni yangi yutuqlarga yaqinlashtiradi. O‘z natijalaringni kuzat va barcha nishonlarni ochishga harakat qil.</p>
+</section>
+
+<section class="stats">
+<div class="stat"><small>⭐ Jami XP</small><strong id="xp">0</strong><span class="muted">To‘plangan ball</span></div>
+<div class="stat"><small>🏅 Ochilgan yutuqlar</small><strong id="unlocked">0 / 9</strong><span class="muted">Nishonlar soni</span></div>
+<div class="stat"><small>📚 Bajarilgan ishlar</small><strong id="completed">0</strong><span class="muted">Mashq va testlar</span></div>
+</section>
+
+<section class="panel" style="margin-bottom:20px">
+<div class="tag">NEXT REWARD</div>
+<h2>Keyingi yutuq</h2>
+<div class="progress-row">
+<span id="nextName">First Steps</span>
+<b id="nextProgress">0 / 50 XP</b>
+</div>
+<div class="bar"><span id="nextBar"></span></div>
+<p class="muted" id="nextDescription">Birinchi 50 XP ballni to‘pla.</p>
+</section>
+
+<section class="panel">
+<div class="tag">YOUR TROPHIES</div>
+<h2>Yutuqlar kolleksiyasi</h2>
+<p class="muted">Yutuqlar avtomatik ochiladi. Ularni olish uchun ko‘rsatilgan shartlarni bajar.</p>
+
+<div class="grid" id="achievements"></div>
+
+<div class="actions">
+<a class="btn" href="practice.html">Mashq qilish →</a>
+<a class="btn" href="tests.html">Test ishlash →</a>
+<a class="btn" href="progress.html">Progressim →</a>
+</div>
+</section>
+
+</main>
+
+<script>
+const KEY="ez_learning_data_v1";
+
+const achievements=[
+{id:"first",icon:"🌱",name:"First Steps",desc:"Birinchi 50 XP to‘pla.",goal:50,type:"xp"},
+{id:"learner",icon:"📘",name:"Active Learner",desc:"100 XP to‘pla.",goal:100,type:"xp"},
+{id:"explorer",icon:"🧭",name:"Explorer",desc:"250 XP to‘pla.",goal:250,type:"xp"},
+{id:"champion",icon:"🏆",name:"XP Champion",desc:"500 XP to‘pla.",goal:500,type:"xp"},
+{id:"master",icon:"👑",name:"English Master",desc:"1000 XP to‘pla.",goal:1000,type:"xp"},
+{id:"practice",icon:"✍️",name:"Practice Pro",desc:"5 ta mashq yoki test bajar.",goal:5,type:"completed"},
+{id:"dedicated",icon:"🔥",name:"Dedicated Student",desc:"10 ta mashq yoki test bajar.",goal:10,type:"completed"},
+{id:"perfect",icon:"💯",name:"Perfect Score",desc:"Biror mashq yoki testda 100% natija ol.",goal:100,type:"perfect"},
+{id:"placement",icon:"🎯",name:"Level Finder",desc:"Darajani aniqlash testini topshir.",goal:1,type:"placement"}
+];
+
+function readData(){
+let base={xp:0,correct:0,total:0,completed:0,history:[],placement:null};
+try{return {...base,...JSON.parse(localStorage.getItem(KEY)||"{}")}}catch(e){return base}
+}
+
+function getValue(a,d){
+if(a.type==="xp")return Number(d.xp)||0;
+if(a.type==="completed")return Number(d.completed)||0;
+if(a.type==="perfect")return (d.history||[]).some(x=>x.total>0&&x.score===x.total)?100:0;
+if(a.type==="placement")return d.placement?1:0;
+return 0;
+}
+
+function render(){
+const d=readData();
+const xp=Number(d.xp)||0;
+const history=d.history||[];
+const completed=Number(d.completed)||0;
+
+$("xp").textContent=xp.toLocaleString("uz-UZ");
+$("completed").textContent=completed;
+
+let unlocked=0;
+const container=document.getElementById("achievements");
+container.innerHTML="";
+
+achievements.forEach(a=>{
+const value=getValue(a,d);
+const open=value>=a.goal;
+if(open)unlocked++;
+
+const card=document.createElement("article");
+card.className="achievement"+(open?"":" locked");
+
+const medal=document.createElement("div");
+medal.className="medal";
+medal.textContent=open?a.icon:"🔒";
+
+const info=document.createElement("div");
+const title=document.createElement("h3");
+title.textContent=a.name;
+const desc=document.createElement("p");
+desc.textContent=a.desc;
+const status=document.createElement("span");
+status.className="status";
+status.textContent=open?"✓ UNLOCKED":"LOCKED";
+
+info.append(title,desc,status);
+card.append(medal,info);
+container.appendChild(card);
+});
+
+$("unlocked").textContent=unlocked+" / "+achievements.length;
+
+const next=achievements.find(a=>getValue(a,d)<a.goal);
+if(next){
+const value=getValue(next,d);
+const percent=Math.min(100,value/next.goal*100);
+$("nextName").textContent=next.name;
+$("nextProgress").textContent=value+" / "+next.goal+(next.type==="xp"?" XP":"");
+$("nextBar").style.width=percent+"%";
+$("nextDescription").textContent=next.desc;
+}else{
+$("nextName").textContent="All Achievements Unlocked!";
+$("nextProgress").textContent="100%";
+$("nextBar").style.width="100%";
+$("nextDescription").textContent="Ajoyib! Barcha yutuqlarni ochding.";
+}
+}
+
+function $(id){return document.getElementById(id)}
+render();
+</script>
+</body>
+</html>

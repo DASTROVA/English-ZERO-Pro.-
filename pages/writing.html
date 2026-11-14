@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1b">
+<title>Writing — English Zero</title>
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.writing-page{max-width:1200px;margin:auto;padding:35px 20px 70px}
+.writing-hero{padding:30px;border:1px solid var(--border);border-radius:24px;background:linear-gradient(130deg,#211943,#103449);margin-bottom:25px}
+.writing-hero h1{font-size:clamp(27px,5vw,42px);margin:12px 0}
+.writing-hero p{color:var(--muted);line-height:1.7;max-width:680px}
+.eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:2px}
+.levels{display:flex;flex-wrap:wrap;gap:9px;margin:20px 0}
+.level-btn,.action-btn,.task-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:11px 15px;border-radius:11px;cursor:pointer;font-weight:700}
+.level-btn.active,.action-btn.primary{background:linear-gradient(120deg,#7555ed,#287edc);border-color:transparent;color:white}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:20px;align-items:start}
+.panel,.card{background:var(--surface);border:1px solid var(--border);border-radius:19px;padding:20px;min-width:0}
+.panel h3,.card h3{margin:0 0 15px}
+.task-list{display:grid;gap:10px}
+.task-btn{width:100%;text-align:left;line-height:1.5;padding:13px}
+.task-btn small{display:block;color:var(--muted);font-weight:400;margin-top:4px}
+.task-btn.active{border-color:var(--purple);background:#242044}
+.main{min-width:0}
+.toolbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.chip{background:var(--surface-light);border:1px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--muted);font-size:13px}
+.card{margin-bottom:18px}
+.task-title{font-size:25px;margin:0 0 8px}
+.description{color:var(--muted);line-height:1.7}
+.instruction{background:#19243a;border:1px solid #34405d;border-radius:13px;padding:15px;line-height:1.8;margin:15px 0}
+.example{background:#172c37;border:1px solid #28516a;border-radius:13px;padding:15px;line-height:1.8;margin:15px 0}
+.example strong{color:#76e3db}
+textarea{width:100%;min-height:180px;resize:vertical;padding:15px;border-radius:13px;border:1px solid var(--border);background:#10182a;color:var(--text);font:inherit;line-height:1.8;outline:none}
+textarea:focus{border-color:var(--purple)}
+.editor-stats{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:12px 0;color:var(--muted);font-size:13px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.feedback{display:none;margin-top:15px;padding:15px;border-radius:13px;background:var(--surface-light);border:1px solid var(--border);line-height:1.8}
+.check-list{display:grid;gap:10px}
+.check-item{padding:12px;border-radius:11px;background:var(--surface-light);border:1px solid var(--border);line-height:1.6}
+.prompt-list{display:grid;gap:9px}
+.prompt{padding:13px;border:1px solid var(--border);border-radius:11px;background:var(--surface-light);line-height:1.6}
+.quiz-question{padding:15px;border:1px solid var(--border);border-radius:13px;margin:12px 0}
+.quiz-question h4{margin:0 0 12px;line-height:1.6}
+.option-list{display:grid;gap:8px}
+.option{background:var(--surface-light);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:12px;text-align:left;cursor:pointer}
+.option.selected{border-color:var(--purple);background:#28234a}
+.option.correct{border-color:#20bd88;background:#123b32}
+.option.wrong{border-color:#e16c75;background:#46232b}
+.option:disabled{opacity:1}
+@media(max-width:760px){.writing-page{padding:20px 13px 50px}.writing-hero{padding:22px}.layout{grid-template-columns:1fr}.article-text{font-size:16px}}
+</style>
+</head>
+
+<body>
+<header class="site-header">
+  <a href="../index.html" class="logo">ENGLISH <span>ZERO</span></a>
+  <nav>
+    <a href="../index.html">Bosh sahifa</a>
+    <a href="courses.html">Kurslar</a>
+    <a href="progress.html">Natijalar</a>
+  </nav>
+</header>
+
+<main class="writing-page">
+
+<section class="writing-hero">
+  <div class="eyebrow">WRITING CENTER</div>
+  <h1>Writing — Ingliz tilida yozish</h1>
+  <p>
+    Ingliz tilida grammatik jihatdan to‘g‘ri gaplar tuzing,
+    paragraf yozing, xat va email tayyorlang hamda insholar yozishni o‘rganing.
+  </p>
+  <div class="toolbar">
+    <div class="chip">✍️ Mashqlar: <strong id="totalTasks">12</strong></div>
+    <div class="chip">✅ Tugatilgan: <strong id="completedTasks">0</strong></div>
+    <div class="chip">⭐ XP: <strong id="writingXP">0</strong></div>
+  </div>
+</section>
+
+<div class="eyebrow">DARAJANI TANLANG</div>
+<div class="levels" id="levels">
+  <button class="level-btn active" data-level="A1">A1 Beginner</button>
+  <button class="level-btn" data-level="A2">A2 Elementary</button>
+  <button class="level-btn" data-level="B1">B1 Intermediate</button>
+  <button class="level-btn" data-level="B2">B2 Upper-Intermediate</button>
+  <button class="level-btn" data-level="C1">C1 Advanced</button>
+  <button class="level-btn" data-level="C2">C2 Proficiency</button>
+</div>
+
+<div class="layout">
+<aside class="panel">
+  <h3>📝 Writing darslari</h3>
+  <div class="task-list" id="taskList"></div>
+</aside>
+
+<section class="main">
+  <div class="toolbar">
+    <div class="eyebrow" id="levelLabel">A1 LEVEL</div>
+    <div class="chip" id="taskType">Sentence Writing</div>
+  </div>
+
+  <section class="card">
+    <h2 class="task-title" id="taskTitle">My First Sentences</h2>
+    <p class="description" id="taskDescription"></p>
+
+    <div class="instruction">
+      <strong>📌 Topshiriq</strong>
+      <div id="taskInstruction"></div>
+    </div>
+
+    <div class="example">
+      <strong>Namuna:</strong>
+      <div id="taskExample"></div>
+    </div>
+
+    <h3>🎯 Yozish uchun mavzu</h3>
+    <div class="prompt-list" id="prompts"></div>
+  </section>
+
+  <section class="card">
+    <h3>✍️ Writing editor</h3>
+    <textarea id="writingInput" placeholder="Write your answer in English here..."></textarea>
+
+    <div class="editor-stats">
+      <span>So‘zlar: <strong id="wordCount">0</strong></span>
+      <span>Belgilar: <strong id="charCount">0</strong></span>
+      <span>Gaplar: <strong id="sentenceCount">0</strong></span>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn" id="clearBtn">Tozalash</button>
+      <button class="action-btn" id="saveBtn">💾 Saqlash</button>
+      <button class="action-btn primary" id="checkWritingBtn">Yozuvni tekshirish</button>
+    </div>
+
+    <div class="feedback" id="writingFeedback"></div>
+  </section>
+
+  <section class="card">
+    <h3>📋 O‘z-o‘zini tekshirish</h3>
+    <p class="description">Matningizni quyidagi mezonlar asosida ko‘rib chiqing.</p>
+    <div class="check-list">
+      <div class="check-item">✓ Har bir gap bosh harf bilan boshlanganmi?</div>
+      <div class="check-item">✓ Gap oxirida nuqta yoki savol belgisi bormi?</div>
+      <div class="check-item">✓ Fe'llar zamonga mos ishlatilganmi?</div>
+      <div class="check-item">✓ So‘zlar to‘g‘ri tartibda joylashganmi?</div>
+      <div class="check-item">✓ Mavzudan chetga chiqmaganmisiz?</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3>🧠 Grammar in Writing</h3>
+    <p class="description">Gap tuzilishini mustahkamlash uchun mini-test.</p>
+    <div id="grammarQuiz"></div>
+    <button class="action-btn primary" id="checkQuizBtn">Testni tekshirish</button>
+    <div class="feedback" id="quizFeedback"></div>
+  </section>
+
+  <section class="card">
+    <h3>🏆 Dars natijasi</h3>
+    <p class="description">Yozuvni tekshirish va mini-testdan so‘ng darsni yakunlashingiz mumkin.</p>
+    <button class="action-btn primary" id="completeBtn" disabled>✓ Darsni yakunlash · +20 XP</button>
+    <div class="feedback" id="completeFeedback"></div>
+  </section>
+</section>
+</div>
+</main>
+
+<script src="../script.js"></script>
+<script>
+const tasks=[
+{id:"a1-sentences",level:"A1",title:"My First Sentences",type:"Sentence Writing",
+description:"Oddiy inglizcha gaplar yozishni o‘rganing. Ega, fe'l va to‘ldiruvchi tartibiga e'tibor bering.",
+instruction:"O‘zingiz haqingizda kamida 5 ta sodda gap yozing. Ismingiz, yoshingiz, yashash joyingiz, qiziqishingiz va sevimli mashg‘ulotingiz haqida yozing.",
+example:"My name is Ali. I am a student. I live in Uzbekistan. I like reading books.",
+prompts:["What is your name?","Where do you live?","What do you like?"],
+quiz:[["Choose the correct sentence.",["I student am.","I am a student.","Am I student.","I a student."],1],["Choose the correct verb: She ___ happy.",["are","am","is","be"],2],["Choose the correct article: I have ___ apple.",["a","an","the","no article"],1]]},
+{id:"a1-family",level:"A1",title:"Describing My Family",type:"Description",
+description:"Oila a'zolarini tasvirlash va have/has dan foydalanishni o‘rganing.",
+instruction:"Oilangiz haqida 5–7 ta gap yozing. Kamida uchta oila a'zosini tasvirlang.",
+example:"I have a small family. My mother is kind. My father works in an office. I have one brother.",
+prompts:["How many people are in your family?","What are they like?","What do you do together?"],
+quiz:[["My sister ___ long hair.",["have","has","having","is have"],1],["My parents ___ kind.",["is","am","are","be"],2],["Choose the correct word: ___ mother is a teacher.",["I","Me","My","Mine"],2]]},
+{id:"a2-diary",level:"A2",title:"Writing a Daily Diary",type:"Diary",
+description:"Kundalik yozishda Present Simple va vaqt ifodalaridan foydalaning.",
+instruction:"Bir kuningiz haqida 80–100 so‘zli kundalik yozing. Ertalab, tushdan keyin va kechqurun nima qilishingizni yozing.",
+example:"Today was a busy day. I woke up early and had breakfast. Then I went to school...",
+prompts:["What time did you wake up?","What happened during the day?","How did you feel?"],
+quiz:[["Yesterday, I ___ to school.",["go","goes","went","going"],2],["She usually ___ breakfast at 7.",["have","has","having","had"],1],["Choose the past form of 'study'.",["studys","studied","studyed","studying"],1]]},
+{id:"a2-email",level:"A2",title:"Writing an Informal Email",type:"Email",
+description:"Do‘stga oddiy email yozish: salomlashish, asosiy xabar va xayrlashish.",
+instruction:"Do‘stingizga 80–100 so‘zli email yozing. Uni dam olish kunida uchrashishga taklif qiling.",
+example:"Hi Tom, How are you? I am writing to invite you to my house this Saturday...",
+prompts:["Why are you writing?","When and where will you meet?","What will you do together?"],
+quiz:[["Which is a suitable informal greeting?",["Dear Sir","Hi Tom","To whom it may concern","Yours faithfully"],1],["Choose the correct future form.",["I will call you.","I calling you yesterday.","I calls you.","I called you tomorrow."],0],["Which is a friendly ending?",["Best wishes","Yours faithfully","Dear manager","To whom"],0]]},
+{id:"b1-opinion",level:"B1",title:"Giving Your Opinion",type:"Opinion Paragraph",
+description:"Fikr bildirish, sabab keltirish va misollar bilan fikrni rivojlantirish.",
+instruction:"'Is learning English important?' mavzusida 120–150 so‘zli paragraf yozing. Fikringizni kamida ikki sabab bilan asoslang.",
+example:"I believe learning English is important for several reasons. First, it helps people communicate with others...",
+prompts:["State your opinion clearly.","Give two supporting reasons.","Add an example and a conclusion."],
+quiz:[["Which phrase introduces an opinion?",["In my opinion","For example","As a result","On the other hand"],0],["Which connector shows contrast?",["Because","Moreover","However","Therefore"],2],["Choose the correct sentence.",["People learns English.","People learn English.","People learning English.","People is learn English."],1]]},
+{id:"b1-story",level:"B1",title:"Writing a Short Story",type:"Narrative",
+description:"Hikoya yozish, voqealarni ketma-ket tasvirlash va o'tgan zamonlardan foydalanish.",
+instruction:"Unutilmas kuningiz haqida 120–150 so‘zli hikoya yozing. Kirish, voqealar rivoji va yakun bo‘lsin.",
+example:"Last summer, I had an unforgettable experience. One morning, my friends and I decided to...",
+prompts:["When and where did it happen?","Who was involved?","What happened in the end?"],
+quiz:[["Choose the correct past form of 'take'.",["taked","took","taken","taking"],1],["Which phrase shows sequence?",["First of all","Although","Despite","Unless"],0],["Choose the correct sentence.",["We was happy.","We were happy.","We is happy.","We be happy."],1]]},
+{id:"b2-essay",level:"B2",title:"Advantages and Disadvantages Essay",type:"Essay",
+description:"Ikki tomonlama mavzuni tahlil qilish va muvozanatli insho yozish.",
+instruction:"'Online education: advantages and disadvantages' mavzusida 180–220 so‘zli insho yozing. Kirish, afzalliklar, kamchiliklar va xulosa bo‘lsin.",
+example:"Online education has become increasingly popular. Although it offers flexibility, it also presents certain challenges...",
+prompts:["Introduce the topic.","Discuss at least two advantages.","Discuss disadvantages and conclude."],
+quiz:[["Which phrase introduces a disadvantage?",["Furthermore","One drawback is","For instance","In conclusion"],1],["Which is the most formal connector?",["Plus","Also","Nevertheless","And then"],2],["A conclusion should...",["Introduce a new topic","Summarise the main points","Repeat every sentence","Be unrelated"],1]]},
+{id:"b2-formal",level:"B2",title:"Formal Letter",type:"Formal Letter",
+description:"Rasmiy xat yozish, hurmatli murojaat va rasmiy uslubdan foydalanish.",
+instruction:"Maktab rahbariyatiga kutubxona imkoniyatlarini yaxshilash haqida 180–200 so‘zli rasmiy xat yozing.",
+example:"Dear Sir or Madam, I am writing to express my concern regarding the current facilities in our school library...",
+prompts:["Explain the reason for writing.","Describe the issue.","Suggest practical improvements."],
+quiz:[["Which opening is formal?",["Hey there","Dear Sir or Madam","What's up?","Hi mate"],1],["Which phrase is more formal?",["I wanna ask","I would like to request","Gimme","I gotta"],1],["Which ending suits a formal letter?",["See ya","Cheers mate","Yours faithfully","Bye bye"],2]]},
+{id:"c1-report",level:"C1",title:"Writing a Report",type:"Report",
+description:"Hisobot tuzilishi, dalillar, kuzatuvlar va tavsiyalarni aniq ifodalash.",
+instruction:"Maktab o‘quvchilari uchun yangi to‘garaklar tashkil etish bo‘yicha 220–260 so‘zli hisobot yozing.",
+example:"Introduction: The purpose of this report is to evaluate students' interest in additional after-school activities...",
+prompts:["State the purpose.","Present findings and evidence.","Make clear recommendations."],
+quiz:[["A report should usually be...",["Highly emotional","Structured and objective","Entirely informal","A fictional story"],1],["Which heading is suitable?",["Findings","Hey!","My random thoughts","Once upon a time"],0],["Recommendations should be...",["Unclear","Evidence-based","Unrelated","Personal attacks"],1]]},
+{id:"c1-argument",level:"C1",title:"Argumentative Essay",type:"Argumentative Essay",
+description:"Murakkab mavzu bo‘yicha asoslangan dalillar, qarshi fikr va xulosa yozish.",
+instruction:"'Should technology replace traditional classrooms?' mavzusida 250–300 so‘zli argumentativ insho yozing.",
+example:"The increasing integration of technology into education has raised questions about the future role of traditional classrooms...",
+prompts:["Present a clear thesis.","Develop evidence-based arguments.","Address a counterargument.","Reach a reasoned conclusion."],
+quiz:[["A counterargument is...",["An opposing viewpoint","A spelling mistake","A conclusion only","A title"],0],["A strong argument requires...",["Evidence and reasoning","Only personal feelings","Repeated claims","Unrelated examples"],0],["A thesis statement should...",["Present the central position","List random facts","Replace the conclusion","Be hidden"],0]]},
+{id:"c2-analysis",level:"C2",title:"Critical Analytical Writing",type:"Critical Analysis",
+description:"Murakkab matnlarni tahlil qilish, nozik ma'nolar va qarama-qarshi nuqtai nazarlarni baholash.",
+instruction:"'The relationship between language and cultural identity' mavzusida 300–350 so‘zli tahliliy matn yozing. Misollar, qarama-qarshi qarashlar va asoslangan xulosadan foydalaning.",
+example:"Language functions not merely as a communicative instrument but also as a repository of collective memory and cultural identity...",
+prompts:["Define the central concept.","Compare different perspectives.","Evaluate limitations and implications.","Develop a nuanced conclusion."],
+quiz:[["What characterises analytical writing?",["Uncritical description","Evaluation of evidence and assumptions","Only personal anecdotes","Informal messages"],1],["A nuanced argument...",["Ignores complexity","Acknowledges important distinctions","Avoids evidence","Repeats one opinion"],1],["Which phrase signals qualification?",["Without any doubt","To some extent","Everyone knows","It is obvious"],1]]},
+{id:"c2-proposal",level:"C2",title:"Academic Proposal",type:"Proposal",
+description:"Akademik taklif yozish: muammo, maqsad, metod, kutilayotgan natija.",
+instruction:"Maktabda ingliz tilini o‘rganish klubini tashkil etish bo‘yicha 300–350 so‘zli taklif yozing.",
+example:"Title: Proposal for an English Language Club. Aim: This proposal outlines a structured programme designed to...",
+prompts:["Identify the need.","Define aims and objectives.","Describe the proposed activities.","Explain expected outcomes."],
+quiz:[["A proposal primarily aims to...",["Suggest a plan","Tell a fictional story","Describe a holiday","Write a casual chat"],0],["Which section explains the plan?",["Methodology","Greeting","Plot twist","Signature only"],0],["Expected outcomes describe...",["Likely results","Past mistakes only","The author's biography","Unrelated details"],0]]}
+];
+
+let level="A1",current=null;
+let writingChecked=false,quizChecked=false;
+let selectedAnswers={};
+const $=id=>document.getElementById(id);
+
+function getDone(){
+ try{return JSON.parse(localStorage.getItem("ez_writing_completed")||"[]")}
+ catch(e){return []}
+}
+function getXP(){return Number(localStorage.getItem("ez_writing_xp")||0)}
+function updateStats(){
+ $("completedTasks").textContent=getDone().length;
+ $("writingXP").textContent=getXP();
+}
+function renderList(){
+ const list=tasks.filter(t=>t.level===level);
+ $("taskList").innerHTML="";
+ list.forEach(t=>{
+  const b=document.createElement("button");
+  b.className="task-btn"+(current?.id===t.id?" active":"");
+  b.innerHTML=`${getDone().includes(t.id)?"✅ ":"✍️ "}${t.title}<small>${t.level} · ${t.type}</small>`;
+  b.addEventListener("click",()=>loadTask(t.id));
+  $("taskList").appendChild(b);
+ });
+}
+function loadTask(id){
+ current=tasks.find(t=>t.id===id);
+ if(!current)return;
+ level=current.level;
+ writingChecked=false;
+ quizChecked=false;
+ selectedAnswers={};
+ $("levelLabel").textContent=level+" LEVEL";
+ $("taskTitle").textContent=current.title;
+ $("taskType").textContent=current.type;
+ $("taskDescription").textContent=current.description;
+ $("taskInstruction").textContent=current.instruction;
+ $("taskExample").textContent=current.example;
+ $("prompts").innerHTML=current.prompts.map((p,i)=>`<div class="prompt">${i+1}. ${p}</div>`).join("");
+ $("writingInput").value=localStorage.getItem("ez_writing_draft_"+id)||"";
+ updateEditorStats();
+ $("writingFeedback").style.display="none";
+ $("quizFeedback").style.display="none";
+ $("completeFeedback").style.display="none";
+ $("completeBtn").disabled=true;
+ $("completeBtn").textContent=getDone().includes(id)?"✓ Dars avval yakunlangan":"+20 XP · Darsni yakunlash";
+ renderQuiz();
+ renderList();
+}
+function updateEditorStats(){
+ const text=$("writingInput").value.trim();
+ const words=text?text.split(/\s+/).filter(Boolean):[];
+ const sentences=text?text.split(/[.!?]+/).filter(s=>s.trim()).length:0;
+ $("wordCount").textContent=words.length;
+ $("charCount").textContent=$("writingInput").value.length;
+ $("sentenceCount").textContent=sentences;
+}
+function renderQuiz(){
+ $("grammarQuiz").innerHTML=current.quiz.map((q,i)=>`
+ <div class="quiz-question">
+ <h4>${i+1}. ${q[0]}</h4>
+ <div class="option-list">
+ ${q[1].map((a,j)=>`<button class="option" data-q="${i}" data-a="${j}">${String.fromCharCode(65+j)}. ${a}</button>`).join("")}
+ </div></div>`).join("");
+ $("grammarQuiz").querySelectorAll(".option").forEach(b=>{
+  b.addEventListener("click",()=>{
+   if(quizChecked)return;
+   const q=Number(b.dataset.q);
+   selectedAnswers[q]=Number(b.dataset.a);
+   $("grammarQuiz").querySelectorAll(`[data-q="${q}"]`).forEach(x=>x.classList.toggle("selected",x===b));
+  });
+ });
+}
+$("writingInput").addEventListener("input",()=>{
+ updateEditorStats();
+ if(current){
+  localStorage.setItem("ez_writing_draft_"+current.id,$("writingInput").value);
+ }
+});
+$("clearBtn").addEventListener("click",()=>{
+ $("writingInput").value="";
+ if(current)localStorage.removeItem("ez_writing_draft_"+current.id);
+ updateEditorStats();
+ $("writingFeedback").style.display="none";
+});
+$("saveBtn").addEventListener("click",()=>{
+ if(!current)return;
+ localStorage.setItem("ez_writing_draft_"+current.id,$("writingInput").value);
+ $("writingFeedback").style.display="block";
+ $("writingFeedback").textContent="✓ Matningiz ushbu qurilmada saqlandi.";
+});
+$("checkWritingBtn").addEventListener("click",()=>{
+ if(!current)return;
+ const text=$("writingInput").value.trim();
+ const words=text?text.split(/\s+/).filter(Boolean):[];
+ const sentences=text.split(/[.!?]+/).filter(s=>s.trim());
+ const feedback=[];
+ if(words.length===0){
+  feedback.push("Matn hali yozilmagan. Avval topshiriqni bajaring.");
+ }else{
+  feedback.push("So‘zlar soni: "+words.length);
+  feedback.push("Gaplar soni: "+sentences.length);
+  const capitals=sentences.filter(s=>/^[A-Z]/.test(s.trim())).length;
+  feedback.push("Bosh harf bilan boshlangan gaplar: "+capitals+"/"+sentences.length);
+  if(sentences.length<3)feedback.push("Tavsiya: kamida 3 ta to‘liq gap yozing.");
+  if(words.length<30)feedback.push("Tavsiya: fikringizni batafsilroq rivojlantiring.");
+  if(!/[.!?]$/.test(text))feedback.push("Tavsiya: oxirgi gapga tinish belgisi qo‘ying.");
+  feedback.push("Eslatma: bu avtomatik tekshiruv faqat matn tuzilishining ayrim jihatlarini ko‘radi. Grammatik va mazmuniy to‘g‘rilikni to‘liq baholamaydi.");
+  writingChecked=words.length>=10;
+ }
+ $("writingFeedback").style.display="block";
+ $("writingFeedback").innerHTML=feedback.map(x=>`<div>• ${x}</div>`).join("");
+ updateCompleteButton();
+});
+$("checkQuizBtn").addEventListener("click",()=>{
+ if(!current||quizChecked)return;
+ if(Object.keys(selectedAnswers).length!==current.quiz.length){
+  $("quizFeedback").style.display="block";
+  $("quizFeedback").textContent="Barcha savollarga javob bering.";
+  return;
+ }
+ quizChecked=true;
+ let score=0;
+ current.quiz.forEach((q,i)=>{
+  const correct=q[2];
+  if(selectedAnswers[i]===correct)score++;
+  $("grammarQuiz").querySelectorAll(`[data-q="${i}"]`).forEach((b,j)=>{
+   b.disabled=true;
+   if(j===correct)b.classList.add("correct");
+   else if(j===selectedAnswers[i])b.classList.add("wrong");
+  });
+ });
+ const percent=Math.round(score/current.quiz.length*100);
+ $("quizFeedback").style.display="block";
+ $("quizFeedback").textContent=`Natija: ${score}/${current.quiz.length}. ${percent>=67?"Yaxshi natija!":"Qayta takrorlash foydali bo‘ladi."}`;
+ quizChecked=true;
+ updateCompleteButton();
+});
+function updateCompleteButton(){
+ if(writingChecked&&quizChecked){
+  $("completeBtn").disabled=false;
+ }
+}
+$("completeBtn").addEventListener("click",()=>{
+ if(!current||!writingChecked||!quizChecked)return;
+ const done=getDone();
+ if(!done.includes(current.id)){
+  done.push(current.id);
+  localStorage.setItem("ez_writing_completed",JSON.stringify(done));
+  localStorage.setItem("ez_writing_xp",String(getXP()+20));
+  if(window.EnglishZero){
+   EnglishZero.addXP(20);
+   EnglishZero.completeLesson();
+  }
+  $("completeFeedback").textContent="🎉 Dars yakunlandi! Hisobingizga 20 XP qo‘shildi.";
+ }else{
+  $("completeFeedback").textContent="Bu dars avval yakunlangan.";
+ }
+ $("completeFeedback").style.display="block";
+ $("completeBtn").disabled=true;
+ $("completeBtn").textContent="✓ Dars yakunlandi";
+ updateStats();
+ renderList();
+});
+$("levels").addEventListener("click",e=>{
+ const b=e.target.closest(".level-btn");
+ if(!b)return;
+ level=b.dataset.level;
+ $("levels").querySelectorAll(".level-btn").forEach(x=>x.classList.toggle("active",x===b));
+ current=null;
+ $("taskTitle").textContent="Darsni tanlang";
+ $("taskDescription").textContent="Chap tomondagi ro‘yxatdan Writing darsini tanlang.";
+ $("taskInstruction").textContent="Darsni tanlaganingizdan so‘ng topshiriq ko‘rsatiladi.";
+ $("taskExample").textContent="";
+ $("prompts").innerHTML="";
+ $("writingInput").value="";
+ $("grammarQuiz").innerHTML="";
+ $("writingFeedback").style.display="none";
+ $("quizFeedback").style.display="none";
+ $("completeBtn").disabled=true;
+ $("completeBtn").textContent="Darsni yakunlash";
+ updateEditorStats();
+ renderList();
+});
+$("totalTasks").textContent=tasks.length;
+updateStats();
+renderList();
+loadTask("a1-sentences");
+</script>
+</body>
+</html>

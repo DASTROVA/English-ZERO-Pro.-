@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1c">
+  <title>Lessons | ENGLISH ZERO</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #080d1c;
+      color: #f3f5ff;
+      font-family: Arial, sans-serif;
+    }
+    .container { width: min(1100px, 94%); margin: 30px auto; }
+    .header {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 14px; margin-bottom: 28px;
+    }
+    .brand { color: #91a5ff; font-size: 21px; font-weight: 800; }
+    .back {
+      color: #bdcaff; text-decoration: none; background: #151f37;
+      border: 1px solid #2c3a5a; padding: 10px 15px; border-radius: 10px;
+    }
+    .hero {
+      padding: 27px; border-radius: 22px;
+      background: linear-gradient(120deg, #19264a, #252052, #123448);
+      border: 1px solid #33416a; margin-bottom: 22px;
+    }
+    .hero small { color: #a9b8ed; letter-spacing: 1px; }
+    .hero h1 { font-size: clamp(26px, 5vw, 36px); margin: 12px 0; }
+    .hero p { color: #c0cbea; line-height: 1.6; margin-bottom: 0; }
+    .toolbar {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .toolbar input, .toolbar select {
+      background: #111a2d; color: white; border: 1px solid #34415f;
+      padding: 13px; border-radius: 11px; outline: none; min-width: 0;
+    }
+    .toolbar input { flex: 1; }
+    .toolbar select { width: 150px; }
+    .lesson-layout {
+      display: grid; grid-template-columns: 260px 1fr; gap: 18px;
+    }
+    .sidebar, .content {
+      background: #111a2d; border: 1px solid #283651;
+      border-radius: 17px; padding: 18px; min-width: 0;
+    }
+    .sidebar h2, .content h2 { font-size: 18px; margin: 0 0 15px; }
+    .level-btn {
+      display: block; width: 100%; text-align: left; padding: 13px;
+      margin-bottom: 9px; border-radius: 10px; border: 1px solid #293754;
+      background: #18243b; color: #dce5ff; cursor: pointer;
+    }
+    .level-btn.active {
+      background: #29356a; border-color: #778aff; color: white;
+    }
+    .lesson-list { display: grid; gap: 11px; }
+    .lesson-card {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; padding: 15px; background: #18243b;
+      border: 1px solid #2a3958; border-radius: 13px;
+    }
+    .lesson-card h3 { font-size: 15px; margin: 0 0 6px; }
+    .lesson-card p { font-size: 12px; color: #94a4c7; margin: 0; }
+    .lesson-card button, .primary {
+      border: 0; border-radius: 9px; padding: 10px 13px;
+      background: linear-gradient(100deg, #657bff, #28c9c4);
+      color: #07111e; font-weight: bold; cursor: pointer;
+      white-space: nowrap;
+    }
+    .tag {
+      display: inline-block; color: #9fe5dd; font-size: 11px;
+      margin-top: 8px;
+    }
+    .empty { color: #8d9bb8; font-size: 14px; line-height: 1.6; }
+    .lesson-view {
+      display: none; background: #111a2d; border: 1px solid #35466c;
+      border-radius: 18px; padding: 22px; margin-top: 20px;
+    }
+    .lesson-view h2 { margin-top: 0; }
+    .lesson-view p, .lesson-view li {
+      color: #c0cbea; line-height: 1.75; font-size: 14px;
+    }
+    .lesson-view h3 { color: #9fb1ff; margin-top: 22px; }
+    .example {
+      padding: 14px; background: #1a2943; border-radius: 11px;
+      margin: 12px 0; color: #b9f0e7; line-height: 1.7;
+    }
+    .close-btn {
+      background: #29344d; color: #dce5ff; border: 1px solid #3b4b6c;
+      border-radius: 9px; padding: 10px 13px; cursor: pointer;
+    }
+    .complete-note { color: #7de4d4; font-size: 13px; }
+    @media(max-width: 720px) {
+      .lesson-layout { grid-template-columns: 1fr; }
+      .sidebar { display: flex; flex-wrap: wrap; gap: 8px; }
+      .sidebar h2 { width: 100%; }
+      .level-btn { width: auto; flex: 1; margin: 0; text-align: center; }
+    }
+    @media(max-width: 430px) {
+      .container { width: 92%; }
+      .hero { padding: 20px; }
+      .lesson-card { align-items: flex-start; flex-direction: column; }
+      .lesson-card button { width: 100%; }
+      .toolbar select { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <div class="brand">ENGLISH ZERO</div>
+      <a class="back" href="dashboard.html">← Dashboard</a>
+    </header>
+
+    <section class="hero">
+      <small>ENGLISH LEARNING CENTER</small>
+      <h1>Ingliz tili darslari 🎓</h1>
+      <p>Grammatika, lug‘at, gapirish va boshqa ko‘nikmalarni
+        bosqichma-bosqich o‘rganing. Har bir darsni ochib, mavzuni
+        o‘qing va misollar bilan mustahkamlang.</p>
+    </section>
+
+    <div class="toolbar">
+      <input id="searchInput" type="search" placeholder="Dars yoki mavzu qidirish...">
+      <select id="categoryFilter">
+        <option value="all">Barcha yo‘nalishlar</option>
+        <option value="grammar">Grammatika</option>
+        <option value="vocabulary">Lug‘at</option>
+        <option value="speaking">Speaking</option>
+        <option value="other">Boshqa</option>
+      </select>
+    </div>
+
+    <div class="lesson-layout">
+      <aside class="sidebar">
+        <h2>📚 Darajani tanlang</h2>
+        <button class="level-btn active" data-level="A1">A1 Beginner</button>
+        <button class="level-btn" data-level="A2">A2 Elementary</button>
+        <button class="level-btn" data-level="B1">B1 Intermediate</button>
+        <button class="level-btn" data-level="B2">B2 Upper Intermediate</button>
+        <button class="level-btn" data-level="C1">C1 Advanced</button>
+      </aside>
+
+      <section class="content">
+        <h2 id="levelTitle">A1 — Beginner darslari</h2>
+        <div class="lesson-list" id="lessonList"></div>
+      </section>
+    </div>
+
+    <section class="lesson-view" id="lessonView">
+      <button class="close-btn" id="closeLesson">← Darslarga qaytish</button>
+      <div id="lessonContent"></div>
+      <button class="primary" id="completeLesson">✓ Darsni tugatdim</button>
+      <p class="complete-note" id="completeNote"></p>
+    </section>
+  </main>
+
+  <script>
+    const DATA_KEY = "ez_learning_data_v1";
+    const levelNames = {
+      A1: "Beginner",
+      A2: "Elementary",
+      B1: "Intermediate",
+      B2: "Upper Intermediate",
+      C1: "Advanced"
+    };
+
+    const lessons = [
+      {id:"a1-1",level:"A1",title:"Alphabet — Ingliz alifbosi",category:"other",time:"15 daqiqa",desc:"26 ta harf va ularning talaffuzi.",body:"Ingliz alifbosida 26 ta harf bor. Harflar ikki xil ko‘rinishda yoziladi: katta va kichik. Harf nomi bilan uning so‘z ichidagi tovushi har doim ham bir xil bo‘lmaydi.",example:"A — apple (olma)<br>B — book (kitob)<br>C — cat (mushuk)"},
+      {id:"a1-2",level:"A1",title:"To be — am, is, are",category:"grammar",time:"20 daqiqa",desc:"To be fe’lining hozirgi zamondagi shakllari.",body:"To be fe’li shaxs yoki narsaning kimligi, holati va qayerdaligini bildirishda ishlatiladi. I bilan am, he/she/it bilan is, you/we/they bilan are ishlatiladi.",example:"I am a student. — Men o‘quvchiman.<br>She is happy. — U xursand.<br>They are friends. — Ular do‘stlar."},
+      {id:"a1-3",level:"A1",title:"Personal Pronouns — Olmoshlar",category:"grammar",time:"15 daqiqa",desc:"I, you, he, she, it, we, they.",body:"Kishilik olmoshlari gapda ot o‘rnida ishlatiladi. Ular gapning egasini bildiradi.",example:"I — men<br>You — sen/siz<br>He — u (erkak)<br>She — u (ayol)<br>It — u (narsa yoki hayvon)<br>We — biz<br>They — ular"},
+      {id:"a1-4",level:"A1",title:"Articles — A, An, The",category:"grammar",time:"20 daqiqa",desc:"Artikllarning asosiy qo‘llanishi.",body:"A va an birlikdagi sanaladigan otlar oldidan keladi. A undosh tovush bilan, an unli tovush bilan boshlanadigan talaffuz oldidan ishlatiladi. The esa aniq narsa haqida gapirganda qo‘llanadi.",example:"a book — bir kitob<br>an apple — bir olma<br>the sun — quyosh"},
+      {id:"a1-5",level:"A1",title:"Numbers — Sonlar",category:"vocabulary",time:"15 daqiqa",desc:"1 dan 100 gacha sonlar.",body:"Ingliz tilida sonlarni o‘rganish kundalik suhbatda juda muhim. Avval 1–20 sonlarini, keyin o‘nliklarni yodlang.",example:"One — 1<br>Two — 2<br>Ten — 10<br>Twenty — 20<br>One hundred — 100"},
+      {id:"a1-6",level:"A1",title:"Present Simple",category:"grammar",time:"25 daqiqa",desc:"Kundalik odatlar va takrorlanadigan ishlar.",body:"Present Simple odatlar, kundalik ishlar va umumiy haqiqatlar uchun ishlatiladi. He, she, it bilan fe’lga ko‘pincha -s yoki -es qo‘shiladi.",example:"I play football. — Men futbol o‘ynayman.<br>She reads books. — U kitob o‘qiydi."},
+      {id:"a1-7",level:"A1",title:"Family — Oila",category:"vocabulary",time:"15 daqiqa",desc:"Oila a’zolarining inglizcha nomlari.",body:"Oila haqida gapirish uchun quyidagi so‘zlarni o‘rganing.",example:"Mother — ona<br>Father — ota<br>Sister — opa/singil<br>Brother — aka/uka<br>Parents — ota-ona"},
+      {id:"a1-8",level:"A1",title:"Basic Questions",category:"speaking",time:"20 daqiqa",desc:"Oddiy savollar tuzish.",body:"Savol so‘zlari ma’lumot so‘rash uchun ishlatiladi. What — nima, Where — qayerda, Who — kim, When — qachon, Why — nima uchun, How — qanday.",example:"What is your name? — Ismingiz nima?<br>Where are you from? — Qayerdansiz?<br>How are you? — Qalaysiz?"},
+      {id:"a2-1",level:"A2",title:"Past Simple",category:"grammar",time:"25 daqiqa",desc:"O‘tgan zamondagi voqealar.",body:"Past Simple tugagan o‘tgan ish-harakatlarni ifodalaydi. To‘g‘ri fe’llarga odatda -ed qo‘shiladi, noto‘g‘ri fe’llarning shakli esa o‘zgaradi.",example:"I visited my friend yesterday.<br>She went to school."},
+      {id:"a2-2",level:"A2",title:"Future with Going to",category:"grammar",time:"20 daqiqa",desc:"Kelajakdagi rejalar.",body:"Be going to oldindan rejalashtirilgan ishlar va dalilga asoslangan taxminlar uchun ishlatiladi.",example:"I am going to study tonight.<br>They are going to travel."},
+      {id:"a2-3",level:"A2",title:"Comparatives",category:"grammar",time:"20 daqiqa",desc:"Narsalarni taqqoslash.",body:"Comparative ikki narsa yoki odamni taqqoslash uchun ishlatiladi. Ko‘p qisqa sifatlarda -er, uzun sifatlarda more ishlatiladi.",example:"tall → taller<br>beautiful → more beautiful<br>This book is cheaper."},
+      {id:"a2-4",level:"A2",title:"Food and Drinks",category:"vocabulary",time:"15 daqiqa",desc:"Taomlar va ichimliklar.",body:"Restoranda yoki do‘konda kerak bo‘ladigan asosiy so‘zlar.",example:"Bread — non<br>Water — suv<br>Milk — sut<br>Vegetables — sabzavotlar<br>Fruit — meva"},
+      {id:"b1-1",level:"B1",title:"Present Perfect",category:"grammar",time:"30 daqiqa",desc:"Tajriba va hozirga aloqador natijalar.",body:"Present Perfect have yoki has va fe’lning uchinchi shakli bilan tuziladi. Hayotiy tajriba va hozirgi natijasi muhim bo‘lgan ishlar uchun qo‘llanadi.",example:"I have finished my homework.<br>She has visited London."},
+      {id:"b1-2",level:"B1",title:"First Conditional",category:"grammar",time:"25 daqiqa",desc:"Haqiqiy bo‘lishi mumkin bo‘lgan shartlar.",body:"First Conditional kelajakda ro‘y berishi mumkin bo‘lgan shart va uning natijasini ifodalaydi.",example:"If it rains, I will stay home.<br>If you study, you will improve."},
+      {id:"b1-3",level:"B1",title:"Phrasal Verbs",category:"vocabulary",time:"20 daqiqa",desc:"Ko‘p ishlatiladigan birikma fe’llar.",body:"Phrasal verb fe’l va predlog yoki ravishdan tuziladi. Uning ma’nosi ba’zan asosiy fe’l ma’nosidan farq qiladi.",example:"Wake up — uyg‘onmoq<br>Give up — voz kechmoq<br>Look after — g‘amxo‘rlik qilmoq"},
+      {id:"b2-1",level:"B2",title:"Passive Voice",category:"grammar",time:"30 daqiqa",desc:"Majhul nisbat.",body:"Passive Voice ishni kim bajarganidan ko‘ra, ish yoki natijaga urg‘u berilganda ishlatiladi. Be fe’li va past participle bilan tuziladi.",example:"The book was written in 1990.<br>English is spoken worldwide."},
+      {id:"b2-2",level:"B2",title:"Reported Speech",category:"grammar",time:"30 daqiqa",desc:"O‘zlashtirma gap.",body:"Reported Speech boshqa odamning gapini mazmunini saqlagan holda yetkazadi. Ba’zi zamonlar va olmoshlar o‘zgarishi mumkin.",example:"Direct: He said, “I am tired.”<br>Reported: He said that he was tired."},
+      {id:"c1-1",level:"C1",title:"Advanced Conditionals",category:"grammar",time:"35 daqiqa",desc:"Murakkab shart gaplar.",body:"Advanced conditionals turli vaqt va vaziyatlarni ifodalash uchun ishlatiladi. Mixed Conditional o'tmishdagi shartning hozirgi natijasini ham ifodalashi mumkin.",example:"If I had studied medicine, I would be a doctor now.<br>Had I known, I would have helped."},
+      {id:"c1-2",level:"C1",title:"Academic Vocabulary",category:"vocabulary",time:"25 daqiqa",desc:"Akademik matnlarda ishlatiladigan so‘zlar.",body:"Akademik lug‘at ilmiy va rasmiy matnlarni tushunish hamda yozishda yordam beradi.",example:"Significant — muhim<br>Analyze — tahlil qilmoq<br>Evidence — dalil<br>Consequently — natijada"}
+    ];
+
+    let currentLevel = "A1";
+    let activeLesson = null;
+
+    function readData() {
+      try {
+        return JSON.parse(localStorage.getItem(DATA_KEY)) || {};
+      } catch {
+        return {};
+      }
+    }
+
+    function getCompleted() {
+      const data = readData();
+      return Array.isArray(data.lessonIds) ? data.lessonIds : [];
+    }
+
+    function renderLessons() {
+      const query = document.getElementById("searchInput").value
+        .trim().toLowerCase();
+      const category = document.getElementById("categoryFilter").value;
+      const completed = getCompleted();
+
+      const filtered = lessons.filter(lesson => {
+        const matchesLevel = lesson.level === currentLevel;
+        const matchesQuery =
+          lesson.title.toLowerCase().includes(query) ||
+          lesson.desc.toLowerCase().includes(query);
+        const matchesCategory =
+          category === "all" || category === lesson.category;
+        return matchesLevel && matchesQuery && matchesCategory;
+      });
+
+      const list = document.getElementById("lessonList");
+      list.replaceChildren();
+
+      if (!filtered.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent = "Bu qidiruv bo‘yicha dars topilmadi.";
+        list.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(lesson => {
+        const card = document.createElement("article");
+        card.className = "lesson-card";
+
+        const info = document.createElement("div");
+        const title = document.createElement("h3");
+        title.textContent = lesson.title;
+        const desc = document.createElement("p");
+        desc.textContent = lesson.desc + " · " + lesson.time;
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = completed.includes(lesson.id)
+          ? "✓ Tugatilgan"
+          : "● Yangi dars";
+
+        info.append(title, desc, tag);
+
+        const button = document.createElement("button");
+        button.textContent = "Darsni ochish";
+        button.addEventListener("click", () => openLesson(lesson.id));
+
+        card.append(info, button);
+        list.appendChild(card);
+      });
+    }
+
+    function openLesson(id) {
+      activeLesson = lessons.find(item => item.id === id);
+      if (!activeLesson) return;
+
+      const completed = getCompleted().includes(id);
+      const content = document.getElementById("lessonContent");
+      content.replaceChildren();
+
+      const title = document.createElement("h2");
+      title.textContent = activeLesson.title;
+
+      const description = document.createElement("p");
+      description.textContent = activeLesson.desc + " · " + activeLesson.time;
+
+      const explanation = document.createElement("p");
+      explanation.textContent = activeLesson.body;
+
+      const heading = document.createElement("h3");
+      heading.textContent = "Misollar va tushuntirish";
+
+      const example = document.createElement("div");
+      example.className = "example";
+      // Dars matnidagi <br> larni xavfsiz satr ajratish bilan chiqaramiz.
+      activeLesson.example.split("<br>").forEach((line, index) => {
+        if (index) example.appendChild(document.createElement("br"));
+        example.appendChild(document.createTextNode(line));
+      });
+
+      content.append(title, description, explanation, heading, example);
+
+      document.getElementById("completeLesson").hidden = completed;
+      document.getElementById("completeNote").textContent =
+        completed ? "✓ Bu dars avval tugatilgan." : "";
+
+      document.getElementById("lessonView").style.display = "block";
+      document.getElementById("lessonView").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
+    document.querySelectorAll(".level-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        currentLevel = button.dataset.level;
+        document.querySelectorAll(".level-btn").forEach(item =>
+          item.classList.toggle("active", item === button)
+        );
+        document.getElementById("levelTitle").textContent =
+          currentLevel + " — " + levelNames[currentLevel] + " darslari";
+        renderLessons();
+      });
+    });
+
+    document.getElementById("searchInput").addEventListener("input", renderLessons);
+    document.getElementById("categoryFilter").addEventListener("change", renderLessons);
+
+    document.getElementById("closeLesson").addEventListener("click", () => {
+      document.getElementById("lessonView").style.display = "none";
+      activeLesson = null;
+    });
+
+    document.getElementById("completeLesson").addEventListener("click", () => {
+      if (!activeLesson) return;
+
+      const data = readData();
+      data.lessonIds = Array.isArray(data.lessonIds) ? data.lessonIds : [];
+
+      if (!data.lessonIds.includes(activeLesson.id)) {
+        data.lessonIds.push(activeLesson.id);
+        data.completed = (Number(data.completed) || 0) + 1;
+        data.xp = (Number(data.xp) || 0) + 15;
+        data.history = Array.isArray(data.history) ? data.history : [];
+        data.history.push({
+          type: "Dars: " + activeLesson.title,
+          xp: 15,
+          date: new Date().toISOString()
+        });
+
+        localStorage.setItem(DATA_KEY, JSON.stringify(data));
+      }
+
+      document.getElementById("completeLesson").hidden = true;
+      document.getElementById("completeNote").textContent =
+        "🎉 Dars tugatildi! Sizga 15 XP qo‘shildi.";
+      renderLessons();
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedLevel = params.get("level");
+    if (levelNames[requestedLevel]) {
+      currentLevel = requestedLevel;
+      document.querySelectorAll(".level-btn").forEach(button => {
+        button.classList.toggle("active", button.dataset.level === currentLevel);
+      });
+      document.getElementById("levelTitle").textContent =
+        currentLevel + " — " + levelNames[currentLevel] + " darslari";
+    }
+
+    renderLessons();
+  </script>
+</body>
+</html>

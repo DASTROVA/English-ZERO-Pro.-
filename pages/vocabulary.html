@@ -1,0 +1,985 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d1a">
+  <title>Vocabulary Center | English Zero</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .vocab-page {
+      width: min(1180px, 94%);
+      margin: 35px auto 70px;
+    }
+
+    .vocab-hero {
+      padding: 32px;
+      border: 1px solid rgba(145, 120, 255, .25);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 90% 10%, rgba(104, 76, 255, .2), transparent 35%),
+        linear-gradient(135deg, #171a36, #101a30);
+      margin-bottom: 25px;
+    }
+
+    .vocab-hero h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      margin: 10px 0;
+    }
+
+    .vocab-hero p {
+      color: #aab3ca;
+      line-height: 1.7;
+      max-width: 650px;
+    }
+
+    .vocab-label {
+      color: #a995ff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .vocab-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .vocab-stat {
+      padding: 15px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 15px;
+    }
+
+    .vocab-stat strong {
+      display: block;
+      font-size: 24px;
+      color: #fff;
+    }
+
+    .vocab-stat span {
+      color: #aab3ca;
+      font-size: 12px;
+    }
+
+    .vocab-section {
+      margin-top: 30px;
+      padding: 23px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.09);
+      background: rgba(20,25,45,.85);
+      min-width: 0;
+    }
+
+    .vocab-section h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .vocab-muted {
+      color: #9ca8c1;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .vocab-tools {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .vocab-tools input,
+    .vocab-tools select {
+      flex: 1;
+      min-width: 180px;
+      padding: 13px 15px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 12px;
+      background: #11182b;
+      color: white;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .topic-list {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin: 17px 0;
+    }
+
+    .topic-btn {
+      padding: 10px 15px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: #171e34;
+      color: #c5cde0;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .topic-btn.active {
+      background: linear-gradient(110deg, #7659ed, #3987e8);
+      color: white;
+      border-color: transparent;
+    }
+
+    .word-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .word-card {
+      padding: 17px;
+      border: 1px solid rgba(255,255,255,.09);
+      background: #141c31;
+      border-radius: 16px;
+      min-width: 0;
+      transition: .2s;
+    }
+
+    .word-card:hover {
+      border-color: rgba(145,120,255,.55);
+      transform: translateY(-2px);
+    }
+
+    .word-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .word-top h3 {
+      font-size: 21px;
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .word-type {
+      color: #a995ff;
+      font-size: 11px;
+      background: rgba(143,112,255,.12);
+      padding: 5px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .word-phonetic {
+      color: #8fa4c7;
+      font-size: 13px;
+      margin: 8px 0;
+    }
+
+    .word-meaning {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 8px 0;
+    }
+
+    .word-example {
+      color: #aab3ca;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .word-example b {
+      color: #d9ddf4;
+    }
+
+    .small-action {
+      margin-top: 13px;
+      padding: 9px 12px;
+      background: #252c49;
+      border: 1px solid rgba(255,255,255,.1);
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .small-action:hover {
+      background: #393b70;
+    }
+
+    .empty-message {
+      padding: 25px;
+      text-align: center;
+      color: #aab3ca;
+      grid-column: 1 / -1;
+    }
+
+    /* Flashcards */
+
+    .flash-area {
+      max-width: 560px;
+      margin: 20px auto 0;
+    }
+
+    .flash-card {
+      min-height: 230px;
+      border-radius: 20px;
+      padding: 28px;
+      background:
+        radial-gradient(circle at top right, rgba(91,120,255,.3), transparent 45%),
+        linear-gradient(140deg, #25204d, #14233d);
+      border: 1px solid rgba(151,130,255,.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .flash-card small {
+      color: #aab4d0;
+      letter-spacing: 1px;
+    }
+
+    .flash-card h2 {
+      font-size: clamp(30px, 7vw, 43px);
+      margin: 18px 0 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .flash-card p {
+      color: #c3cbe0;
+      margin: 5px 0;
+    }
+
+    .flash-controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .vocab-btn {
+      padding: 12px 17px;
+      background: linear-gradient(110deg, #7957ee, #3988e9);
+      color: white;
+      border: none;
+      border-radius: 11px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .vocab-btn.secondary {
+      background: #252d49;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    /* Word builder */
+
+    .builder-box {
+      max-width: 650px;
+      margin: 20px auto 0;
+    }
+
+    .builder-question {
+      text-align: center;
+      padding: 20px;
+      background: #151d34;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .builder-question strong {
+      display: block;
+      font-size: 25px;
+      margin: 8px 0;
+    }
+
+    .answer-slots {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 58px;
+      padding: 12px;
+      border: 1px dashed rgba(160,145,255,.5);
+      background: rgba(120,100,255,.06);
+      border-radius: 14px;
+      margin: 15px 0;
+    }
+
+    .letter-slot {
+      width: 39px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      background: #242c49;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 9px;
+      font-size: 19px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .letter-keyboard {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 9px;
+      padding: 15px;
+      background: #10182a;
+      border-radius: 15px;
+    }
+
+    .letter-key {
+      width: 43px;
+      height: 45px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px;
+      background: linear-gradient(145deg, #303958, #1c2540);
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #0a1020;
+    }
+
+    .letter-key:disabled {
+      opacity: .25;
+      cursor: default;
+    }
+
+    .builder-message {
+      text-align: center;
+      min-height: 25px;
+      margin: 14px 0;
+      font-weight: 700;
+    }
+
+    .builder-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .vocab-progress {
+      height: 7px;
+      background: #252d45;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 15px;
+    }
+
+    .vocab-progress div {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #8a5cf6, #32b7ed);
+      transition: width .3s;
+    }
+
+    @media(max-width:850px) {
+      .word-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:560px) {
+      .vocab-page {
+        width: 94%;
+        margin-top: 20px;
+      }
+
+      .vocab-hero,
+      .vocab-section {
+        padding: 18px;
+      }
+
+      .word-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vocab-stats {
+        gap: 7px;
+      }
+
+      .vocab-stat {
+        padding: 11px;
+      }
+
+      .vocab-stat strong {
+        font-size: 20px;
+      }
+
+      .letter-key {
+        width: 39px;
+        height: 42px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container nav-container">
+    <a href="../index.html" class="logo">ENGLISH <span>ZERO</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menyuni ochish">☰</button>
+
+    <nav class="nav-links" id="mobileMenu">
+      <a href="../index.html">Bosh sahifa</a>
+      <a href="grammar.html">Grammar</a>
+      <a href="vocabulary.html" class="active">Vocabulary</a>
+      <a href="speaking.html">Speaking</a>
+      <a href="tests.html">Tests</a>
+    </nav>
+  </div>
+</header>
+
+<main class="vocab-page">
+
+  <section class="vocab-hero">
+    <span class="vocab-label">ENGLISH ZERO / VOCABULARY CENTER</span>
+    <h1>So‘z boyligingizni oshiring</h1>
+    <p>
+      Inglizcha so‘zlarni mavzular bo‘yicha o‘rganing.
+      Tarjimasini ko‘ring, talaffuzini tinglang va interaktiv
+      mashqlar orqali xotirangizda mustahkamlang.
+    </p>
+
+    <div class="vocab-stats">
+      <div class="vocab-stat">
+        <strong id="totalWords">0</strong>
+        <span>Jami so‘zlar</span>
+      </div>
+      <div class="vocab-stat">
+        <strong id="learnedWords">0</strong>
+        <span>O‘rganilgan</span>
+      </div>
+      <div class="vocab-stat">
+        <strong id="wordAccuracy">0%</strong>
+        <span>Mashq natijasi</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="vocab-section">
+    <h2>📚 So‘zlar kutubxonasi</h2>
+    <p class="vocab-muted">
+      Mavzuni tanlang yoki kerakli so‘zni qidiruv orqali toping.
+    </p>
+
+    <div class="vocab-tools">
+      <input id="wordSearch" type="search"
+        placeholder="So‘z yoki tarjimasini qidiring...">
+
+      <select id="levelFilter">
+        <option value="all">Barcha darajalar</option>
+        <option value="A1">A1 — Beginner</option>
+        <option value="A2">A2 — Elementary</option>
+        <option value="B1">B1 — Intermediate</option>
+        <option value="B2">B2 — Upper Intermediate</option>
+      </select>
+    </div>
+
+    <div class="topic-list" id="topicList"></div>
+    <div class="word-grid" id="wordGrid"></div>
+  </section>
+
+  <section class="vocab-section">
+    <h2>🃏 Flashcards — Kartochkalar</h2>
+    <p class="vocab-muted">
+      Kartochkani bosing va so‘zning tarjimasini oching.
+      Keyingi tugmasi bilan yangi so‘zga o‘ting.
+    </p>
+
+    <div class="flash-area">
+      <div class="flash-card" id="flashCard">
+        <small id="flashLabel">ENGLISH WORD</small>
+        <h2 id="flashWord">Hello</h2>
+        <p id="flashMeaning">Tarjimani ko‘rish uchun bosing</p>
+        <p id="flashPhonetic"></p>
+      </div>
+
+      <div class="flash-controls">
+        <button class="vocab-btn secondary" id="flashSpeak">🔊 Tinglash</button>
+        <button class="vocab-btn" id="flashReveal">Tarjimani ko‘rish</button>
+        <button class="vocab-btn secondary" id="flashNext">Keyingi →</button>
+      </div>
+
+      <div class="vocab-progress">
+        <div id="flashProgress"></div>
+      </div>
+      <p class="vocab-muted" id="flashCounter" style="text-align:center">
+        1 / 1
+      </p>
+    </div>
+  </section>
+
+  <section class="vocab-section">
+    <h2>⌨️ Harflardan so‘z tuzing</h2>
+    <p class="vocab-muted">
+      O‘zbekcha ma’noni o‘qing. Pastdagi harflarni kerakli
+      tartibda bosib, inglizcha so‘zni hosil qiling.
+    </p>
+
+    <div class="builder-box">
+      <div class="builder-question">
+        <span class="vocab-muted">Inglizcha tarjimasini tuzing:</span>
+        <strong id="builderMeaning">Olma</strong>
+        <span class="vocab-muted" id="builderHint">A1 daraja</span>
+      </div>
+
+      <div class="answer-slots" id="answerSlots"></div>
+
+      <div class="letter-keyboard" id="letterKeyboard"></div>
+
+      <p class="builder-message" id="builderMessage"></p>
+
+      <div class="builder-actions">
+        <button class="vocab-btn secondary" id="builderReset">↶ Tozalash</button>
+        <button class="vocab-btn" id="builderCheck">Tekshirish</button>
+        <button class="vocab-btn secondary" id="builderNext">Keyingi →</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 English Zero — Learn English step by step.</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+
+<script>
+const vocabulary = [
+  // DAILY LIFE
+  {word:"Hello",meaning:"Salom",phonetic:"/həˈləʊ/",type:"Greeting",topic:"Daily Life",level:"A1",example:"Hello, how are you?",translation:"Salom, qalaysiz?"},
+  {word:"Goodbye",meaning:"Xayr",phonetic:"/ˌɡʊdˈbaɪ/",type:"Greeting",topic:"Daily Life",level:"A1",example:"Goodbye, see you tomorrow.",translation:"Xayr, ertaga ko‘rishamiz."},
+  {word:"Morning",meaning:"Ertalab",phonetic:"/ˈmɔːnɪŋ/",type:"Noun",topic:"Daily Life",level:"A1",example:"I wake up in the morning.",translation:"Men ertalab uyg‘onaman."},
+  {word:"Evening",meaning:"Kechqurun",phonetic:"/ˈiːvnɪŋ/",type:"Noun",topic:"Daily Life",level:"A1",example:"We study in the evening.",translation:"Biz kechqurun o‘qiymiz."},
+  {word:"Usually",meaning:"Odatda",phonetic:"/ˈjuːʒuəli/",type:"Adverb",topic:"Daily Life",level:"A2",example:"I usually walk to school.",translation:"Men odatda maktabga piyoda boraman."},
+
+  // FAMILY
+  {word:"Mother",meaning:"Ona",phonetic:"/ˈmʌðə/",type:"Noun",topic:"Family",level:"A1",example:"My mother is kind.",translation:"Mening onam mehribon."},
+  {word:"Father",meaning:"Ota",phonetic:"/ˈfɑːðə/",type:"Noun",topic:"Family",level:"A1",example:"My father works.",translation:"Mening otam ishlaydi."},
+  {word:"Brother",meaning:"Aka yoki uka",phonetic:"/ˈbrʌðə/",type:"Noun",topic:"Family",level:"A1",example:"I have one brother.",translation:"Mening bitta akam bor."},
+  {word:"Sister",meaning:"Opa yoki singil",phonetic:"/ˈsɪstə/",type:"Noun",topic:"Family",level:"A1",example:"My sister is a student.",translation:"Singlim o‘quvchi."},
+  {word:"Relative",meaning:"Qarindosh",phonetic:"/ˈrelətɪv/",type:"Noun",topic:"Family",level:"B1",example:"My relatives live nearby.",translation:"Qarindoshlarim yaqin joyda yashaydi."},
+
+  // FOOD
+  {word:"Apple",meaning:"Olma",phonetic:"/ˈæpəl/",type:"Noun",topic:"Food",level:"A1",example:"I eat an apple.",translation:"Men olma yeyman."},
+  {word:"Bread",meaning:"Non",phonetic:"/bred/",type:"Noun",topic:"Food",level:"A1",example:"I need some bread.",translation:"Menga biroz non kerak."},
+  {word:"Water",meaning:"Suv",phonetic:"/ˈwɔːtə/",type:"Noun",topic:"Food",level:"A1",example:"Please give me water.",translation:"Iltimos, menga suv bering."},
+  {word:"Breakfast",meaning:"Nonushta",phonetic:"/ˈbrekfəst/",type:"Noun",topic:"Food",level:"A1",example:"Breakfast is ready.",translation:"Nonushta tayyor."},
+  {word:"Delicious",meaning:"Mazali",phonetic:"/dɪˈlɪʃəs/",type:"Adjective",topic:"Food",level:"A2",example:"This food is delicious.",translation:"Bu taom mazali."},
+
+  // SCHOOL
+  {word:"School",meaning:"Maktab",phonetic:"/skuːl/",type:"Noun",topic:"School",level:"A1",example:"I go to school.",translation:"Men maktabga boraman."},
+  {word:"Teacher",meaning:"O‘qituvchi",phonetic:"/ˈtiːtʃə/",type:"Noun",topic:"School",level:"A1",example:"My teacher is helpful.",translation:"O‘qituvchim yordam beradi."},
+  {word:"Student",meaning:"O‘quvchi yoki talaba",phonetic:"/ˈstjuːdənt/",type:"Noun",topic:"School",level:"A1",example:"She is a good student.",translation:"U yaxshi o‘quvchi."},
+  {word:"Knowledge",meaning:"Bilim",phonetic:"/ˈnɒlɪdʒ/",type:"Noun",topic:"School",level:"B1",example:"Knowledge is important.",translation:"Bilim muhim."},
+  {word:"Improve",meaning:"Yaxshilamoq",phonetic:"/ɪmˈpruːv/",type:"Verb",topic:"School",level:"B1",example:"I want to improve my English.",translation:"Men ingliz tilimni yaxshilamoqchiman."},
+
+  // TRAVEL
+  {word:"Airport",meaning:"Aeroport",phonetic:"/ˈeəpɔːt/",type:"Noun",topic:"Travel",level:"A2",example:"We are at the airport.",translation:"Biz aeroportdamiz."},
+  {word:"Ticket",meaning:"Chipta",phonetic:"/ˈtɪkɪt/",type:"Noun",topic:"Travel",level:"A1",example:"I bought a ticket.",translation:"Men chipta sotib oldim."},
+  {word:"Journey",meaning:"Sayohat yoki safar",phonetic:"/ˈdʒɜːni/",type:"Noun",topic:"Travel",level:"A2",example:"Have a safe journey.",translation:"Safaringiz bexatar bo‘lsin."},
+  {word:"Destination",meaning:"Manzil",phonetic:"/ˌdestɪˈneɪʃən/",type:"Noun",topic:"Travel",level:"B1",example:"What is your destination?",translation:"Manzilingiz qayer?"},
+
+  // WORK
+  {word:"Job",meaning:"Ish yoki kasb",phonetic:"/dʒɒb/",type:"Noun",topic:"Work",level:"A1",example:"I need a job.",translation:"Menga ish kerak."},
+  {word:"Meeting",meaning:"Yig‘ilish yoki uchrashuv",phonetic:"/ˈmiːtɪŋ/",type:"Noun",topic:"Work",level:"A2",example:"The meeting starts at nine.",translation:"Yig‘ilish soat to‘qqizda boshlanadi."},
+  {word:"Experience",meaning:"Tajriba",phonetic:"/ɪkˈspɪəriəns/",type:"Noun",topic:"Work",level:"B1",example:"Experience is valuable.",translation:"Tajriba qadrli."},
+
+  // FEELINGS
+  {word:"Happy",meaning:"Xursand",phonetic:"/ˈhæpi/",type:"Adjective",topic:"Feelings",level:"A1",example:"I am happy today.",translation:"Bugun men xursandman."},
+  {word:"Nervous",meaning:"Hayajonlangan",phonetic:"/ˈnɜːvəs/",type:"Adjective",topic:"Feelings",level:"A2",example:"I feel nervous before exams.",translation:"Imtihonlardan oldin hayajonlanaman."},
+  {word:"Confident",meaning:"O‘ziga ishongan",phonetic:"/ˈkɒnfɪdənt/",type:"Adjective",topic:"Feelings",level:"B1",example:"Be confident when you speak.",translation:"Gapirganingizda o‘zingizga ishoning."},
+
+  // TECHNOLOGY
+  {word:"Computer",meaning:"Kompyuter",phonetic:"/kəmˈpjuːtə/",type:"Noun",topic:"Technology",level:"A1",example:"My computer is new.",translation:"Mening kompyuterim yangi."},
+  {word:"Website",meaning:"Veb-sayt",phonetic:"/ˈwebsaɪt/",type:"Noun",topic:"Technology",level:"A2",example:"I created a website.",translation:"Men veb-sayt yaratdim."},
+  {word:"Technology",meaning:"Texnologiya",phonetic:"/tekˈnɒlədʒi/",type:"Noun",topic:"Technology",level:"B1",example:"Technology changes our lives.",translation:"Texnologiya hayotimizni o‘zgartiradi."}
+];
+
+const topics = [
+  "All","Daily Life","Family","Food","School",
+  "Travel","Work","Feelings","Technology"
+];
+
+let activeTopic = "All";
+let filteredWords = [...vocabulary];
+let flashIndex = 0;
+let flashRevealed = false;
+
+const learnedKey = "ez_learned_vocabulary";
+const statsKey = "ez_vocabulary_stats";
+
+let learned = JSON.parse(localStorage.getItem(learnedKey) || "[]");
+let wordStats = JSON.parse(localStorage.getItem(statsKey) || '{"correct":0,"total":0}');
+
+function saveVocabularyData() {
+  localStorage.setItem(learnedKey, JSON.stringify(learned));
+  localStorage.setItem(statsKey, JSON.stringify(wordStats));
+}
+
+function updateVocabStats() {
+  document.getElementById("totalWords").textContent = vocabulary.length;
+  document.getElementById("learnedWords").textContent = learned.length;
+
+  const accuracy = wordStats.total
+    ? Math.round(wordStats.correct / wordStats.total * 100)
+    : 0;
+
+  document.getElementById("wordAccuracy").textContent = accuracy + "%";
+}
+
+function createTopics() {
+  const container = document.getElementById("topicList");
+  container.innerHTML = "";
+
+  topics.forEach(topic => {
+    const button = document.createElement("button");
+    button.className = "topic-btn" + (activeTopic === topic ? " active" : "");
+    button.textContent = topic === "All" ? "🌐 Barchasi" : topic;
+
+    button.addEventListener("click", () => {
+      activeTopic = topic;
+      createTopics();
+      renderWords();
+    });
+
+    container.appendChild(button);
+  });
+}
+
+function renderWords() {
+  const grid = document.getElementById("wordGrid");
+  const search = document.getElementById("wordSearch").value
+    .trim().toLowerCase();
+  const level = document.getElementById("levelFilter").value;
+
+  filteredWords = vocabulary.filter(item => {
+    const matchesTopic = activeTopic === "All" || item.topic === activeTopic;
+    const matchesLevel = level === "all" || item.level === level;
+    const matchesSearch =
+      item.word.toLowerCase().includes(search) ||
+      item.meaning.toLowerCase().includes(search);
+
+    return matchesTopic && matchesLevel && matchesSearch;
+  });
+
+  grid.innerHTML = "";
+
+  if (!filteredWords.length) {
+    grid.innerHTML = '<div class="empty-message">Bu so‘z topilmadi. Boshqa so‘z qidirib ko‘ring.</div>';
+    return;
+  }
+
+  filteredWords.forEach(item => {
+    const card = document.createElement("article");
+    card.className = "word-card";
+
+    const top = document.createElement("div");
+    top.className = "word-top";
+
+    const heading = document.createElement("h3");
+    heading.textContent = item.word;
+
+    const type = document.createElement("span");
+    type.className = "word-type";
+    type.textContent = item.type;
+
+    top.append(heading, type);
+
+    const phonetic = document.createElement("div");
+    phonetic.className = "word-phonetic";
+    phonetic.textContent = item.phonetic + " · " + item.level;
+
+    const meaning = document.createElement("div");
+    meaning.className = "word-meaning";
+    meaning.textContent = item.meaning;
+
+    const example = document.createElement("p");
+    example.className = "word-example";
+    example.textContent = item.example + " — " + item.translation;
+
+    const actions = document.createElement("div");
+
+    const speakButton = document.createElement("button");
+    speakButton.className = "small-action";
+    speakButton.textContent = "🔊 Talaffuz";
+    speakButton.addEventListener("click", () => speakWord(item.word));
+
+    const learnedButton = document.createElement("button");
+    learnedButton.className = "small-action";
+    learnedButton.textContent = learned.includes(item.word)
+      ? "✓ O‘rganildi"
+      : "+ O‘rgandim";
+
+    learnedButton.addEventListener("click", () => {
+      markLearned(item.word);
+      learnedButton.textContent = "✓ O‘rganildi";
+    });
+
+    actions.append(speakButton, learnedButton);
+    card.append(top, phonetic, meaning, example, actions);
+    grid.appendChild(card);
+  });
+}
+
+function markLearned(word) {
+  if (!learned.includes(word)) {
+    learned.push(word);
+    saveVocabularyData();
+    updateVocabStats();
+
+    if (window.EnglishZero) {
+      EnglishZero.toast("Yangi so‘z o‘rganildi!");
+    }
+  }
+}
+
+function speakWord(word) {
+  if (window.EnglishZero && typeof EnglishZero.speak === "function") {
+    EnglishZero.speak(word);
+    return;
+  }
+
+  if ("speechSynthesis" in window) {
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = "en-US";
+    speechSynthesis.speak(utterance);
+  }
+}
+
+/* FLASHCARDS */
+
+function showFlashcard() {
+  const item = filteredWords.length
+    ? filteredWords[flashIndex % filteredWords.length]
+    : vocabulary[flashIndex % vocabulary.length];
+
+  document.getElementById("flashWord").textContent = item.word;
+  document.getElementById("flashPhonetic").textContent = item.phonetic;
+  document.getElementById("flashLabel").textContent =
+    item.level + " · " + item.topic;
+
+  document.getElementById("flashMeaning").textContent =
+    flashRevealed ? item.meaning : "Tarjimani ko‘rish uchun bosing";
+
+  document.getElementById("flashReveal").textContent =
+    flashRevealed ? "Tarjima ochildi" : "Tarjimani ko‘rish";
+
+  document.getElementById("flashCounter").textContent =
+    (flashIndex + 1) + " / " + (filteredWords.length || vocabulary.length);
+
+  document.getElementById("flashProgress").style.width =
+    ((flashIndex + 1) / (filteredWords.length || vocabulary.length) * 100) + "%";
+}
+
+function revealFlashcard() {
+  flashRevealed = !flashRevealed;
+
+  if (flashRevealed) {
+    const item = filteredWords.length
+      ? filteredWords[flashIndex % filteredWords.length]
+      : vocabulary[flashIndex % vocabulary.length];
+
+    markLearned(item.word);
+  }
+
+  showFlashcard();
+}
+
+document.getElementById("flashCard").addEventListener("click", revealFlashcard);
+document.getElementById("flashReveal").addEventListener("click", revealFlashcard);
+
+document.getElementById("flashNext").addEventListener("click", () => {
+  flashIndex = (flashIndex + 1) % (filteredWords.length || vocabulary.length);
+  flashRevealed = false;
+  showFlashcard();
+});
+
+document.getElementById("flashSpeak").addEventListener("click", () => {
+  const item = filteredWords.length
+    ? filteredWords[flashIndex % filteredWords.length]
+    : vocabulary[flashIndex % vocabulary.length];
+
+  speakWord(item.word);
+});
+
+/* WORD BUILDER */
+
+const builderWords = [
+  {word:"apple",meaning:"Olma",level:"A1"},
+  {word:"water",meaning:"Suv",level:"A1"},
+  {word:"school",meaning:"Maktab",level:"A1"},
+  {word:"friend",meaning:"Do‘st",level:"A1"},
+  {word:"family",meaning:"Oila",level:"A1"},
+  {word:"teacher",meaning:"O‘qituvchi",level:"A1"},
+  {word:"morning",meaning:"Ertalab",level:"A1"},
+  {word:"beautiful",meaning:"Chiroyli",level:"A2"},
+  {word:"computer",meaning:"Kompyuter",level:"A1"},
+  {word:"knowledge",meaning:"Bilim",level:"B1"},
+  {word:"important",meaning:"Muhim",level:"A2"},
+  {word:"experience",meaning:"Tajriba",level:"B1"}
+];
+
+let builderIndex = 0;
+let selectedLetters = [];
+let currentLetters = [];
+
+function shuffleLetters(word) {
+  const letters = word.toUpperCase().split("");
+
+  for (let i = letters.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [letters[i], letters[j]] = [letters[j], letters[i]];
+  }
+
+  return letters;
+}
+
+function renderBuilder() {
+  const item = builderWords[builderIndex];
+
+  selectedLetters = [];
+  currentLetters = shuffleLetters(item.word);
+
+  document.getElementById("builderMeaning").textContent = item.meaning;
+  document.getElementById("builderHint").textContent = item.level + " daraja";
+  document.getElementById("builderMessage").textContent = "";
+
+  renderSlots();
+  renderKeyboard();
+}
+
+function renderSlots() {
+  const slots = document.getElementById("answerSlots");
+  slots.innerHTML = "";
+
+  const item = builderWords[builderIndex];
+
+  for (let i = 0; i < item.word.length; i++) {
+    const slot = document.createElement("button");
+    slot.className = "letter-slot";
+    slot.type = "button";
+    slot.textContent = selectedLetters[i]?.letter || "_";
+    slot.setAttribute("aria-label", "Javob harfi " + (i + 1));
+
+    slot.addEventListener("click", () => {
+      if (selectedLetters[i]) {
+        selectedLetters.splice(i, 1);
+        renderSlots();
+        renderKeyboard();
+      }
+    });
+
+    slots.appendChild(slot);
+  }
+}
+
+function renderKeyboard() {
+  const keyboard = document.getElementById("letterKeyboard");
+  keyboard.innerHTML = "";
+
+  currentLetters.forEach((letter, index) => {
+    const button = document.createElement("button");
+    button.className = "letter-key";
+    button.type = "button";
+    button.textContent = letter;
+    button.disabled = selectedLetters.some(item => item.index === index);
+
+    button.addEventListener("click", () => {
+      if (selectedLetters.length >= builderWords[builderIndex].word.length) {
+        return;
+      }
+
+      selectedLetters.push({letter, index});
+      renderSlots();
+      renderKeyboard();
+    });
+
+    keyboard.appendChild(button);
+  });
+}
+
+document.getElementById("builderReset").addEventListener("click", () => {
+  selectedLetters = [];
+  document.getElementById("builderMessage").textContent = "";
+  renderSlots();
+  renderKeyboard();
+});
+
+document.getElementById("builderCheck").addEventListener("click", () => {
+  const answer = selectedLetters.map(item => item.letter).join("").toLowerCase();
+  const correct = builderWords[builderIndex].word.toLowerCase();
+  const message = document.getElementById("builderMessage");
+
+  if (answer.length !== correct.length) {
+    message.textContent = "Avval barcha harflarni tanlang.";
+    message.style.color = "#ffca70";
+    return;
+  }
+
+  wordStats.total++;
+
+  if (answer === correct) {
+    wordStats.correct++;
+    message.textContent = "✓ To‘g‘ri! Ajoyib natija!";
+    message.style.color = "#5ee6a8";
+    markLearned(builderWords[builderIndex].word);
+    saveVocabularyData();
+    updateVocabStats();
+  } else {
+    message.textContent = "Yana urinib ko‘ring. Harflar tartibini tekshiring.";
+    message.style.color = "#ff8b9b";
+  }
+
+  saveVocabularyData();
+  updateVocabStats();
+});
+
+document.getElementById("builderNext").addEventListener("click", () => {
+  builderIndex = (builderIndex + 1) % builderWords.length;
+  renderBuilder();
+});
+
+/* SEARCH AND FILTER */
+
+document.getElementById("wordSearch").addEventListener("input", () => {
+  flashIndex = 0;
+  flashRevealed = false;
+  renderWords();
+  showFlashcard();
+});
+
+document.getElementById("levelFilter").addEventListener("change", () => {
+  flashIndex = 0;
+  flashRevealed = false;
+  renderWords();
+  showFlashcard();
+});
+
+/* INIT */
+
+createTopics();
+renderWords();
+showFlashcard();
+renderBuilder();
+updateVocabStats();
+</script>
+
+</body>
+</html>

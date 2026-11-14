@@ -1,0 +1,595 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1c">
+  <title>Settings | ENGLISH ZERO</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #080d1c;
+      color: #f4f6ff;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: min(1050px, 94%);
+      margin: 30px auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      color: #91a5ff;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .back {
+      color: #c4d0f2;
+      background: #151f37;
+      border: 1px solid #2c3a5a;
+      padding: 11px 15px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .hero {
+      padding: 27px;
+      border-radius: 20px;
+      background: linear-gradient(120deg, #19264a, #252052, #123448);
+      border: 1px solid #33416a;
+      margin-bottom: 22px;
+    }
+
+    .hero small {
+      color: #a9b8ed;
+      letter-spacing: 1px;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 35px);
+      margin: 12px 0;
+    }
+
+    .hero p {
+      color: #c0cbea;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    .settings-layout {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 18px;
+    }
+
+    .navigation, .section {
+      background: #111a2d;
+      border: 1px solid #283651;
+      border-radius: 17px;
+      padding: 20px;
+      min-width: 0;
+    }
+
+    .navigation h2, .section h2 {
+      font-size: 18px;
+      margin: 0 0 18px;
+    }
+
+    .nav-item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 13px;
+      margin-bottom: 9px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: #18243b;
+      color: #cbd6f3;
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      background: #29356a;
+      border-color: #778aff;
+      color: white;
+    }
+
+    .settings-panel {
+      display: none;
+    }
+
+    .settings-panel.active {
+      display: block;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      color: #c5d0ec;
+      font-size: 13px;
+      margin-bottom: 9px;
+    }
+
+    .field input, .field select {
+      width: 100%;
+      padding: 13px;
+      background: #0c1426;
+      border: 1px solid #34415f;
+      border-radius: 10px;
+      color: white;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .field input:focus, .field select:focus {
+      border-color: #7b8dff;
+    }
+
+    .description {
+      color: #8998b8;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 7px;
+    }
+
+    .save-btn {
+      border: 0;
+      padding: 13px 20px;
+      border-radius: 10px;
+      background: linear-gradient(100deg, #687dff, #31cfc7);
+      color: #07111e;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .danger-btn {
+      border: 1px solid #784254;
+      background: #351d2b;
+      color: #ffb9c9;
+      padding: 12px 17px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .message.success {
+      display: block;
+      color: #a5f3d7;
+      background: #12332f;
+      border: 1px solid #28675a;
+    }
+
+    .message.error {
+      display: block;
+      color: #ffb9c5;
+      background: #351c2a;
+      border: 1px solid #714052;
+    }
+
+    .switch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding: 14px 0;
+      border-bottom: 1px solid #293651;
+    }
+
+    .switch-row:last-child {
+      border-bottom: 0;
+    }
+
+    .switch-row strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .switch-row small {
+      color: #8998b8;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .switch-row input {
+      width: 20px;
+      height: 20px;
+      accent-color: #7b8dff;
+      flex-shrink: 0;
+    }
+
+    .account-info {
+      padding: 15px;
+      background: #18243b;
+      border-radius: 12px;
+      color: #b9c7e7;
+      font-size: 13px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+      margin-bottom: 18px;
+    }
+
+    .account-info strong {
+      color: #91a5ff;
+    }
+
+    @media(max-width: 700px) {
+      .settings-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .navigation {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .navigation h2 {
+        width: 100%;
+      }
+
+      .nav-item {
+        width: auto;
+        flex: 1;
+        margin: 0;
+        text-align: center;
+      }
+    }
+
+    @media(max-width: 430px) {
+      .container { width: 92%; }
+      .hero { padding: 20px; }
+      .section, .navigation { padding: 16px; }
+      .nav-item { font-size: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <header class="header">
+      <div class="brand">ENGLISH ZERO</div>
+      <a class="back" href="dashboard.html">← Dashboard</a>
+    </header>
+
+    <section class="hero">
+      <small>PERSONAL CONTROL CENTER</small>
+      <h1>Sozlamalar ⚙️</h1>
+      <p>
+        Profilingiz, o‘rganish maqsadlaringiz va sayt ko‘rinishini
+        o‘zingizga moslashtiring.
+      </p>
+    </section>
+
+    <div class="settings-layout">
+
+      <aside class="navigation">
+        <h2>Sozlamalar menyusi</h2>
+        <button class="nav-item active" data-panel="profile">👤 Profil</button>
+        <button class="nav-item" data-panel="learning">📚 O‘rganish</button>
+        <button class="nav-item" data-panel="appearance">🎨 Ko‘rinish</button>
+        <button class="nav-item" data-panel="account">🔐 Hisob</button>
+      </aside>
+
+      <section class="section">
+
+        <div id="message" class="message" role="status"></div>
+
+        <!-- PROFILE -->
+        <div class="settings-panel active" id="profile">
+          <h2>👤 Profil sozlamalari</h2>
+
+          <div class="field">
+            <label for="profileName">Ismingiz</label>
+            <input id="profileName" type="text" maxlength="50">
+          </div>
+
+          <div class="field">
+            <label for="profileEmail">Email manzilingiz</label>
+            <input id="profileEmail" type="email" disabled>
+            <p class="description">
+              Email manzili ushbu demo versiyada o‘zgartirilmaydi.
+            </p>
+          </div>
+
+          <button class="save-btn" id="saveProfile">
+            O‘zgarishlarni saqlash
+          </button>
+        </div>
+
+        <!-- LEARNING -->
+        <div class="settings-panel" id="learning">
+          <h2>📚 O‘rganish maqsadlari</h2>
+
+          <div class="field">
+            <label for="dailyGoal">Kunlik o‘rganish maqsadi</label>
+            <select id="dailyGoal">
+              <option value="10">10 daqiqa</option>
+              <option value="15">15 daqiqa</option>
+              <option value="20">20 daqiqa</option>
+              <option value="30">30 daqiqa</option>
+              <option value="45">45 daqiqa</option>
+              <option value="60">60 daqiqa</option>
+            </select>
+            <p class="description">
+              Har kuni ingliz tiliga ajratmoqchi bo‘lgan vaqtingizni tanlang.
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="targetLevel">Maqsad darajangiz</label>
+            <select id="targetLevel">
+              <option value="A1">A1 — Beginner</option>
+              <option value="A2">A2 — Elementary</option>
+              <option value="B1">B1 — Intermediate</option>
+              <option value="B2">B2 — Upper Intermediate</option>
+              <option value="C1">C1 — Advanced</option>
+            </select>
+          </div>
+
+          <button class="save-btn" id="saveLearning">
+            Maqsadlarni saqlash
+          </button>
+        </div>
+
+        <!-- APPEARANCE -->
+        <div class="settings-panel" id="appearance">
+          <h2>🎨 Ko‘rinish sozlamalari</h2>
+
+          <div class="switch-row">
+            <div>
+              <strong>Animatsiyalar</strong>
+              <small>Interfeysdagi harakat effektlari</small>
+            </div>
+            <input type="checkbox" id="animations" checked>
+          </div>
+
+          <div class="switch-row">
+            <div>
+              <strong>Ixcham ko‘rinish</strong>
+              <small>Elementlar orasidagi masofani kamaytirish</small>
+            </div>
+            <input type="checkbox" id="compact">
+          </div>
+
+          <p class="description">
+            Tanlangan ko‘rinish sozlamalari ushbu brauzerda saqlanadi.
+          </p>
+
+          <button class="save-btn" id="saveAppearance">
+            Ko‘rinishni saqlash
+          </button>
+        </div>
+
+        <!-- ACCOUNT -->
+        <div class="settings-panel" id="account">
+          <h2>🔐 Hisob ma’lumotlari</h2>
+
+          <div class="account-info">
+            <div>Ism: <strong id="accountName">—</strong></div>
+            <div>Email: <strong id="accountEmail">—</strong></div>
+            <div>Holat: <strong id="accountStatus">Mehmon</strong></div>
+          </div>
+
+          <p class="description">
+            Hisobdan chiqish ushbu brauzerdagi joriy sessiyani yakunlaydi.
+          </p>
+
+          <button class="danger-btn" id="logoutBtn">
+            Hisobdan chiqish
+          </button>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const SESSION_KEY = "ez_session";
+    const USERS_KEY = "ez_users";
+    const SETTINGS_KEY = "ez_settings";
+
+    function readJSON(key, fallback) {
+      try {
+        const value = JSON.parse(localStorage.getItem(key));
+        return value && typeof value === "object" ? value : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    let session = readJSON(SESSION_KEY, null);
+    let settings = readJSON(SETTINGS_KEY, {});
+
+    const message = document.getElementById("message");
+
+    function showMessage(text, type = "success") {
+      message.textContent = text;
+      message.className = "message " + type;
+
+      window.clearTimeout(showMessage.timer);
+      showMessage.timer = window.setTimeout(() => {
+        message.className = "message";
+      }, 3500);
+    }
+
+    // Navigation
+    document.querySelectorAll(".nav-item").forEach(button => {
+      button.addEventListener("click", () => {
+        const panelId = button.dataset.panel;
+
+        document.querySelectorAll(".nav-item").forEach(item =>
+          item.classList.toggle("active", item === button)
+        );
+
+        document.querySelectorAll(".settings-panel").forEach(panel =>
+          panel.classList.toggle("active", panel.id === panelId)
+        );
+      });
+    });
+
+    // Load profile
+    if (session) {
+      document.getElementById("profileName").value = session.name || "";
+      document.getElementById("profileEmail").value = session.email || "";
+      document.getElementById("accountName").textContent = session.name || "—";
+      document.getElementById("accountEmail").textContent = session.email || "—";
+      document.getElementById("accountStatus").textContent = "Tizimga kirilgan";
+    } else {
+      document.getElementById("accountStatus").textContent = "Mehmon";
+      showMessage("Profilni o‘zgartirish uchun avval tizimga kiring.", "error");
+    }
+
+    // Load learning settings
+    document.getElementById("dailyGoal").value =
+      String(settings.dailyGoal || 20);
+
+    document.getElementById("targetLevel").value =
+      settings.targetLevel || "B1";
+
+    // Load appearance settings
+    document.getElementById("animations").checked =
+      settings.animations !== false;
+
+    document.getElementById("compact").checked =
+      settings.compact === true;
+
+    function saveSettings() {
+      try {
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+        return true;
+      } catch {
+        showMessage("Sozlamalarni saqlab bo‘lmadi.", "error");
+        return false;
+      }
+    }
+
+    // Save profile
+    document.getElementById("saveProfile").addEventListener("click", () => {
+      if (!session) {
+        showMessage("Avval tizimga kiring.", "error");
+        return;
+      }
+
+      const name = document.getElementById("profileName").value.trim();
+
+      if (name.length < 2) {
+        showMessage("Ism kamida 2 ta belgidan iborat bo‘lsin.", "error");
+        return;
+      }
+
+      try {
+        session.name = name;
+        localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+
+        const users = readJSON(USERS_KEY, []);
+        const userIndex = users.findIndex(user =>
+          user.email.toLowerCase() === session.email.toLowerCase()
+        );
+
+        if (userIndex !== -1) {
+          users[userIndex].name = name;
+          localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+
+        document.getElementById("accountName").textContent = name;
+        showMessage("Profil muvaffaqiyatli yangilandi!");
+      } catch {
+        showMessage("Profilni saqlashda xatolik yuz berdi.", "error");
+      }
+    });
+
+    // Save learning goals
+    document.getElementById("saveLearning").addEventListener("click", () => {
+      settings.dailyGoal = Number(document.getElementById("dailyGoal").value);
+      settings.targetLevel = document.getElementById("targetLevel").value;
+
+      if (saveSettings()) {
+        showMessage("O‘rganish maqsadlari saqlandi!");
+      }
+    });
+
+    // Save appearance
+    document.getElementById("saveAppearance").addEventListener("click", () => {
+      settings.animations = document.getElementById("animations").checked;
+      settings.compact = document.getElementById("compact").checked;
+
+      if (saveSettings()) {
+        document.body.classList.toggle("compact-mode", settings.compact);
+        document.body.classList.toggle("no-animations", !settings.animations);
+        showMessage("Ko‘rinish sozlamalari saqlandi!");
+      }
+    });
+
+    // Apply appearance
+    function applyAppearance() {
+      document.body.classList.toggle(
+        "compact-mode",
+        settings.compact === true
+      );
+
+      document.body.classList.toggle(
+        "no-animations",
+        settings.animations === false
+      );
+    }
+
+    const appearanceStyle = document.createElement("style");
+    appearanceStyle.textContent = `
+      body.no-animations *,
+      body.no-animations *::before,
+      body.no-animations *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      body.compact-mode .section,
+      body.compact-mode .navigation {
+        padding: 13px;
+      }
+
+      body.compact-mode .field {
+        margin-bottom: 11px;
+      }
+    `;
+    document.head.appendChild(appearanceStyle);
+    applyAppearance();
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      if (!confirm("Hisobdan chiqishni xohlaysizmi?")) return;
+
+      localStorage.removeItem(SESSION_KEY);
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

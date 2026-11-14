@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tests | English ZERO</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080d1c;color:#eef2ff;font-family:Arial,sans-serif}.wrap{max-width:1000px;margin:auto;padding:24px 17px 60px}.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:25px}.brand{color:#75e6ff;font-weight:900;letter-spacing:2px}.btn{border:1px solid #344365;background:#151f38;color:#fff;padding:11px 17px;border-radius:12px;cursor:pointer;text-decoration:none}.primary{background:linear-gradient(100deg,#2678ee,#8c5cf6);border:0}.hero,.card,.quiz,.result{border:1px solid #293957;border-radius:20px;background:#10192e;padding:23px}.hero{background:linear-gradient(120deg,#17294b,#251d49);margin-bottom:20px}.hero h1{font-size:clamp(27px,5vw,39px);margin:8px 0}.muted{color:#aab8d4;line-height:1.6}.tag{font-size:12px;color:#65dff7;font-weight:bold;letter-spacing:1px}.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:20px}.choice{background:#121e37;border:1px solid #30415f;color:#fff;border-radius:15px;padding:20px;text-align:left;cursor:pointer}.choice:hover{border-color:#65dff7}.choice b{display:block;font-size:18px;margin-bottom:6px}.quiz{display:none}.quiz.show{display:block}.status{display:flex;justify-content:space-between;gap:12px;color:#aab8d4;font-size:14px;margin-bottom:18px}.bar{height:7px;background:#26324c;border-radius:9px;margin-bottom:24px;overflow:hidden}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#36d9f4,#8d69ff)}.question{font-size:22px;font-weight:bold;margin:15px 0}.options{display:grid;gap:10px}.option{padding:14px;border:1px solid #344365;background:#151f38;color:white;border-radius:12px;text-align:left;cursor:pointer}.option.selected{border-color:#65dff7;background:#15364b}.option.good{border-color:#36d69b;background:#12382f}.option.bad{border-color:#ff7189;background:#401d30}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.result{display:none;text-align:center}.result.show{display:block}.score{font-size:54px;color:#69e5f5;font-weight:900;margin:15px}.hidden{display:none!important}@media(max-width:600px){.choices{grid-template-columns:1fr}.hero,.card,.quiz,.result{padding:18px}.question{font-size:19px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top"><div class="brand">ENGLISH ZERO</div><a class="btn" href="../index.html">← Bosh sahifa</a></header>
+<section class="hero">
+<div class="tag">KNOWLEDGE CHECK</div>
+<h1>Test Center</h1>
+<p class="muted">O‘rgangan bilimlaringni sinab ko‘r. Har bir test yakunida natijang va to‘plagan XP hisoblanadi.</p>
+</section>
+<section class="card" id="selectScreen">
+<div class="tag">TEST TURINI TANLA</div>
+<h2>Qaysi testni ishlamoqchisan?</h2>
+<div class="choices">
+<button class="choice" data-test="grammar"><b>📘 Grammar Test</b><span class="muted">Grammatika qoidalari va zamonlar</span></button>
+<button class="choice" data-test="vocabulary"><b>🔤 Vocabulary Test</b><span class="muted">So‘z boyligi va tarjimalar</span></button>
+<button class="choice" data-test="mixed"><b>🧠 Mixed Test</b><span class="muted">Turli mavzulardan aralash savollar</span></button>
+<button class="choice" data-test="daily"><b>⚡ Quick Test</b><span class="muted">Qisqa bilim sinovi</span></button>
+</div>
+</section>
+<section class="quiz" id="quiz">
+<div class="status"><span id="testName">TEST</span><span>⏱ <b id="timer">05:00</b></span><span id="number">1 / 10</span></div>
+<div class="bar"><span id="progressBar"></span></div>
+<div class="tag">SAVOL</div>
+<div class="question" id="question"></div>
+<div class="options" id="options"></div>
+<div class="actions"><button class="btn" id="prev">← Oldingi</button><button class="btn primary" id="next">Keyingi →</button><button class="btn primary hidden" id="finish">Testni yakunlash</button></div>
+<p class="muted" id="notice">Javobni tanla, so‘ng keyingi savolga o‘t.</p>
+</section>
+<section class="result" id="result">
+<div class="tag">TEST NATIJASI</div><h2>Test yakunlandi!</h2>
+<div class="score" id="score">0%</div>
+<p class="muted" id="summary"></p>
+<p id="xpText"></p>
+<div class="actions" style="justify-content:center"><button class="btn primary" id="again">Yana test ishlash</button><a class="btn" href="progress.html">Progressni ko‘rish →</a></div>
+</section>
+</main>
+<script>
+const bank={
+grammar:[
+["She ___ a doctor.","is","are","am","be",0],["I ___ breakfast every morning.","has","have","having","had",1],["They ___ at home yesterday.","was","is","were","are",2],["He has ___ his homework.","do","did","done","doing",2],["If it rains, we ___ at home.","stay","stayed","will stay","staying",2],["There ___ many people here.","is","are","am","be",1],["I have lived here ___ 2020.","for","since","from","at",1],["This book is ___ than that one.","interesting","more interesting","most interesting","interest",1],["You ___ wear a seat belt.","should","would","might to","are",0],["The letter ___ yesterday.","send","sent","was sent","is send",2]],
+vocabulary:[
+["“Reliable” so‘zining ma’nosi?","Ishonchli","Xavfli","Qimmat","Qiyin",0],["“Ancient” tarjimasi?","Zamonaviy","Qadimiy","Kelajak","Yangi",1],["“Opportunity” nimani anglatadi?","Muammo","Imkoniyat","Sabab","Natija",1],["“Environment” tarjimasi?","Atrof-muhit","Iqtisodiyot","Ta’lim","Sayohat",0],["“Achieve” ma’nosi?","Yo‘qotmoq","Erishmoq","Kutmoq","Yashirmoq",1],["“Borrow” nima?","Qarzga olmoq","Sotmoq","Yubormoq","Qurmoq",0],["“Crowded” tarjimasi?","Bo‘sh","Tinch","Odam gavjum","Toza",2],["“Advice” nimani bildiradi?","Maslahat","Savol","Javob","Xabar",0],["“Increase” ma’nosi?","Kamaymoq","Oshmoq","To‘xtamoq","O‘zgarmoq",1],["“Successful” tarjimasi?","Muvaffaqiyatli","Charchagan","Xafa","Band",0]],
+mixed:[
+["“I am studying” qaysi zamon?","Present Simple","Present Continuous","Past Simple","Future Simple",1],["“Child” ko‘plik shakli?","Childs","Childes","Children","Childrens",2],["She ___ coffee every day.","drink","drinks","drinking","drank",1],["“Carefully” qaysi so‘z turkumi?","Noun","Verb","Adjective","Adverb",3],["“How often” nimani so‘raydi?","Qachon?","Qayerda?","Qanchalik tez-tez?","Nima uchun?",2],["I have never ___ to London.","be","been","being","was",1],["“Between” tarjimasi?","Orasida","Ustida","Tagida","Orqasida",0],["We ___ visit Samarkand tomorrow.","are","did","will","was",2],["“Quiet” antonimi?","Silent","Noisy","Calm","Peaceful",1],["A person who teaches is a ___.","doctor","teacher","driver","farmer",1]],
+daily:[
+["“Apple” tarjimasi?","Olma","Nok","Uzum","Shaftoli",0],["He ___ my brother.","am","are","is","be",2],["“Book” ko‘plik shakli?","Bookes","Books","Bookies","Book",1],["“Thank you” javobi qaysi?","Good night","You’re welcome","Good morning","See you",1],["Past Simple: go → ?","Goed","Gone","Went","Going",2],["“Fast” antonimi?","Quick","Slow","Rapid","Early",1],["___ you speak English?","Do","Does","Are","Is",0],["“Beautiful” tarjimasi?","Chiroyli","Yomon","Kichik","Qiziqarli",0],["She is ___ than me.","tall","taller","tallest","more tall",1],["“Yesterday” tarjimasi?","Ertaga","Bugun","Kecha","Hozir",2]]
+};
+let questions=[],answers=[],current=0,seconds=300,tick=null,testType="";
+const $=id=>document.getElementById(id);
+function start(type){
+testType=type;questions=bank[type].map(x=>({q:x[0],o:x.slice(1,5),a:x[5]}));answers=Array(questions.length).fill(null);current=0;seconds=type==="daily"?180:300;
+$("selectScreen").classList.add("hidden");$("result").classList.remove("show");$("quiz").classList.add("show");$("testName").textContent=type.toUpperCase()+" TEST";render();clearInterval(tick);tick=setInterval(()=>{seconds--;clock();if(seconds<=0)finish()},1000);clock();
+}
+function clock(){$("timer").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0")}
+function render(){
+let q=questions[current];$("number").textContent=(current+1)+" / "+questions.length;$("progressBar").style.width=((current+1)/questions.length*100)+"%";$("question").textContent=q.q;$("options").innerHTML="";
+q.o.forEach((v,i)=>{let b=document.createElement("button");b.className="option"+(answers[current]===i?" selected":"");b.textContent=String.fromCharCode(65+i)+". "+v;b.onclick=()=>{answers[current]=i;render()};$("options").appendChild(b)});
+$("prev").disabled=current===0;$("next").classList.toggle("hidden",current===questions.length-1);$("finish").classList.toggle("hidden",current!==questions.length-1);
+}
+function finish(){
+clearInterval(tick);let score=0;questions.forEach((q,i)=>{if(answers[i]===q.a)score++});
+let xp=score*10,key="ez_learning_data_v1",d={xp:0,correct:0,total:0,completed:0,history:[]};
+try{d={...d,...JSON.parse(localStorage.getItem(key)||"{}")}}catch(e){}
+d.xp=(d.xp||0)+xp;d.correct=(d.correct||0)+score;d.total=(d.total||0)+questions.length;d.completed=(d.completed||0)+1;d.history=d.history||[];d.history.unshift({name:"Test: "+testType,date:new Date().toISOString(),score,total:questions.length,xp});d.history=d.history.slice(0,30);localStorage.setItem(key,JSON.stringify(d));
+if(window.EnglishZero&&typeof EnglishZero.addXP==="function")EnglishZero.addXP(xp);
+$("quiz").classList.remove("show");$("result").classList.add("show");$("score").textContent=Math.round(score/questions.length*100)+"%";$("summary").textContent="To‘g‘ri javoblar: "+score+" / "+questions.length+". Javob berilmagan savollar ham noto‘g‘ri hisoblanadi.";$("xpText").textContent="⭐ +"+xp+" XP qo‘shildi.";
+}
+document.querySelectorAll("[data-test]").forEach(b=>b.onclick=()=>start(b.dataset.test));
+$("prev").onclick=()=>{if(current>0){current--;render()}};
+$("next").onclick=()=>{if(current<questions.length-1){current++;render()}};
+$("finish").onclick=finish;
+$("again").onclick=()=>{$("result").classList.remove("show");$("selectScreen").classList.remove("hidden")};
+</script>
+</body>
+</html>

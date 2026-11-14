@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1c">
+  <title>Register | ENGLISH ZERO</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 15%, #25245a 0, transparent 35%),
+        radial-gradient(circle at 85% 85%, #103b4b 0, transparent 35%),
+        #080d1c;
+      color: #f4f6ff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 15px;
+    }
+
+    .register-wrapper {
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .brand {
+      text-align: center;
+      color: #91a5ff;
+      font-weight: 900;
+      font-size: 25px;
+      letter-spacing: 2px;
+      margin-bottom: 22px;
+    }
+
+    .register-card {
+      background: rgba(17, 26, 45, .96);
+      border: 1px solid #334264;
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: 0 20px 70px rgba(0, 0, 0, .35);
+    }
+
+    .register-card h1 {
+      font-size: 27px;
+      margin: 0 0 9px;
+    }
+
+    .subtitle {
+      color: #95a4c6;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      color: #c5d0ec;
+      margin-bottom: 8px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #34415f;
+      border-radius: 11px;
+      outline: none;
+      background: #0c1426;
+      color: white;
+      font-size: 14px;
+      transition: .2s;
+    }
+
+    .field input:focus {
+      border-color: #7b8dff;
+      box-shadow: 0 0 0 3px rgba(123, 141, 255, .12);
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap input {
+      padding-right: 65px;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      color: #9eafff;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .terms {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      color: #aebbd8;
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 20px 0;
+    }
+
+    .terms input {
+      margin-top: 2px;
+      accent-color: #7b8dff;
+    }
+
+    .terms a {
+      color: #9eafff;
+      text-decoration: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border-radius: 11px;
+      background: linear-gradient(100deg, #687dff, #31cfc7);
+      color: #07111e;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 17px;
+    }
+
+    .message.error {
+      display: block;
+      color: #ffb9c5;
+      background: #351c2a;
+      border: 1px solid #714052;
+    }
+
+    .message.success {
+      display: block;
+      color: #a5f3d7;
+      background: #12332f;
+      border: 1px solid #28675a;
+    }
+
+    .login-link {
+      text-align: center;
+      color: #9aa9c8;
+      font-size: 13px;
+      margin-top: 23px;
+    }
+
+    .login-link a {
+      color: #9eafff;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #8998b8;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    @media(max-width: 430px) {
+      .register-card { padding: 23px 19px; }
+      .register-card h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="register-wrapper">
+
+    <div class="brand">ENGLISH ZERO</div>
+
+    <section class="register-card">
+      <h1>Hisob yarating ✨</h1>
+
+      <p class="subtitle">
+        Ingliz tilini o‘rganishni boshlang va o‘z rivojingizni kuzatib boring.
+      </p>
+
+      <div id="message" class="message" role="alert"></div>
+
+      <form id="registerForm">
+
+        <div class="field">
+          <label for="name">To‘liq ism</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Ismingizni kiriting"
+            minlength="2"
+            maxlength="50"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="email">Email manzil</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="example@gmail.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password">Parol</label>
+          <div class="password-wrap">
+            <input
+              id="password"
+              type="password"
+              placeholder="Kamida 8 ta belgi"
+              minlength="8"
+              autocomplete="new-password"
+              required
+            >
+            <button
+              class="show-password"
+              type="button"
+              data-target="password"
+            >Ko‘rsatish</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">Parolni tasdiqlang</label>
+          <div class="password-wrap">
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Parolni qayta kiriting"
+              minlength="8"
+              autocomplete="new-password"
+              required
+            >
+            <button
+              class="show-password"
+              type="button"
+              data-target="confirmPassword"
+            >Ko‘rsatish</button>
+          </div>
+        </div>
+
+        <label class="terms">
+          <input type="checkbox" id="terms" required>
+          <span>
+            Men foydalanish shartlari bilan tanishdim va roziman.
+          </span>
+        </label>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          Hisob yaratish →
+        </button>
+
+      </form>
+
+      <div class="login-link">
+        Hisobingiz bormi?
+        <a href="login.html">Kirish</a>
+      </div>
+    </section>
+
+    <a class="back-home" href="../index.html">
+      ← Bosh sahifaga qaytish
+    </a>
+
+  </main>
+
+  <script>
+    const USERS_KEY = "ez_users";
+    const SESSION_KEY = "ez_session";
+
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function getUsers() {
+      try {
+        const users = JSON.parse(localStorage.getItem(USERS_KEY));
+        return Array.isArray(users) ? users : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    document.querySelectorAll(".show-password").forEach(button => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.target);
+        const visible = input.type === "text";
+
+        input.type = visible ? "password" : "text";
+        button.textContent = visible ? "Ko‘rsatish" : "Yashirish";
+      });
+    });
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const accepted = document.getElementById("terms").checked;
+
+      if (name.length < 2) {
+        showMessage("Ismingizni to‘g‘ri kiriting.", "error");
+        return;
+      }
+
+      if (password.length < 8) {
+        showMessage("Parol kamida 8 ta belgidan iborat bo‘lishi kerak.", "error");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showMessage("Parollar bir-biriga mos kelmadi.", "error");
+        return;
+      }
+
+      if (!accepted) {
+        showMessage("Davom etish uchun shartlarga rozilik bildiring.", "error");
+        return;
+      }
+
+      const users = getUsers();
+
+      const existingUser = users.some(user =>
+        user.email.toLowerCase() === email
+      );
+
+      if (existingUser) {
+        showMessage("Bu email bilan hisob mavjud. Kirish sahifasidan foydalaning.", "error");
+        return;
+      }
+
+      const newUser = {
+        id: "user_" + Date.now(),
+        name,
+        email,
+        password,
+        createdAt: new Date().toISOString()
+      };
+
+      users.push(newUser);
+
+      try {
+        localStorage.setItem(USERS_KEY, JSON.stringify(users));
+
+        localStorage.setItem(SESSION_KEY, JSON.stringify({
+          name: newUser.name,
+          email: newUser.email,
+          loginAt: new Date().toISOString()
+        }));
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Hisob yaratildi ✓";
+
+        showMessage("Hisobingiz yaratildi! Dashboard ochilmoqda...", "success");
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1000);
+
+      } catch (error) {
+        showMessage(
+          "Ma’lumotlarni saqlashda xatolik yuz berdi. Brauzer xotirasini tekshiring.",
+          "error"
+        );
+      }
+    });
+  </script>
+</body>
+</html>

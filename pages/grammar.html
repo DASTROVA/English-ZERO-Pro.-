@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1b">
+  <title>Grammar Center | ENGLISH ZERO</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .grammar-layout {
+      width: min(1200px, 90%);
+      margin: 40px auto 80px;
+    }
+
+    .grammar-hero {
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: linear-gradient(120deg,#191d3b,#111d34);
+      margin-bottom: 30px;
+    }
+
+    .grammar-hero h1 {
+      font-size: clamp(28px,5vw,42px);
+      margin: 10px 0;
+    }
+
+    .grammar-hero p {
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 650px;
+    }
+
+    .grammar-search {
+      width: 100%;
+      padding: 14px 16px;
+      margin-top: 22px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #0c1527;
+      color: white;
+      outline: none;
+      font: inherit;
+    }
+
+    .grammar-search:focus {
+      border-color: var(--purple);
+    }
+
+    .grammar-tabs {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .grammar-tabs button {
+      flex-shrink: 0;
+      padding: 10px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .grammar-tabs button.active {
+      color: white;
+      background: #5140a0;
+      border-color: #8b70ff;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 14px;
+    }
+
+    .topic-card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--purple);
+    }
+
+    .topic-card .topic-number {
+      color: var(--cyan);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .topic-card h3 {
+      font-size: 14px;
+      margin: 10px 0 5px;
+    }
+
+    .topic-card p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .topic-card span:last-child {
+      display: block;
+      color: var(--purple);
+      font-size: 10px;
+      margin-top: 14px;
+      font-weight: 800;
+    }
+
+    .lesson-view {
+      display: none;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+    }
+
+    .lesson-view.active {
+      display: block;
+      animation: lessonIn .3s ease;
+    }
+
+    @keyframes lessonIn {
+      from {opacity:0;transform:translateY(8px)}
+      to {opacity:1;transform:translateY(0)}
+    }
+
+    .back-button {
+      border: 1px solid var(--border);
+      color: white;
+      background: var(--surface-light);
+      padding: 9px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 11px;
+      margin-bottom: 20px;
+    }
+
+    .lesson-view h2 {
+      font-size: clamp(24px,4vw,34px);
+      margin: 10px 0;
+    }
+
+    .lesson-description {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+
+    .lesson-block {
+      margin: 18px 0;
+      padding: 18px;
+      border: 1px solid var(--border);
+      background: #0c1527;
+      border-radius: 13px;
+    }
+
+    .lesson-block h3 {
+      color: var(--cyan);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .formula {
+      padding: 12px;
+      background: rgba(139,112,255,.12);
+      border-radius: 9px;
+      color: #c5b8ff;
+      font-size: 13px;
+      font-weight: 800;
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .example {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .example:last-child {
+      border-bottom: 0;
+    }
+
+    .example span:last-child {
+      color: var(--muted);
+    }
+
+    .practice-question {
+      padding: 15px;
+      margin: 10px 0;
+      background: #111e34;
+      border-radius: 12px;
+    }
+
+    .practice-question p {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .answer-options {
+      display: grid;
+      gap: 8px;
+    }
+
+    .answer-options button {
+      text-align: left;
+      padding: 11px 13px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      color: white;
+      background: #17243a;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .answer-options button:hover {
+      border-color: var(--purple);
+    }
+
+    .answer-options button.correct {
+      background: #164334;
+      border-color: #4de2a2;
+    }
+
+    .answer-options button.wrong {
+      background: #492632;
+      border-color: #ff7777;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--cyan);
+    }
+
+    .finish-lesson {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: linear-gradient(110deg,#8064f5,#418ff8);
+      border: 0;
+      border-radius: 11px;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    @media(max-width:850px) {
+      .topic-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+
+    @media(max-width:500px) {
+      .topic-grid {grid-template-columns:1fr}
+      .grammar-hero {padding:20px}
+      .lesson-view {padding:16px}
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a href="../index.html" class="logo">
+    <span class="logo-icon">E</span>
+    <span>ENGLISH <b>ZERO</b></span>
+  </a>
+  <a href="../index.html" class="login-btn">← Bosh sahifa</a>
+</header>
+
+<main class="grammar-layout">
+
+  <section class="grammar-hero">
+    <span class="section-label">ENGLISH GRAMMAR A1–C2</span>
+    <h1>Grammar Center</h1>
+    <p>
+      Ingliz tili grammatikasini noldan boshlab o‘rganing.
+      Har bir mavzuda qoidalar, formulalar, o‘zbekcha izohlar,
+      misollar va bilimni mustahkamlash mashqlari mavjud.
+    </p>
+    <input
+      type="search"
+      id="grammarSearch"
+      class="grammar-search"
+      placeholder="Mavzu qidirish... masalan: Present Simple"
+    >
+  </section>
+
+  <div class="grammar-tabs" id="grammarTabs">
+    <button class="active" data-level="ALL">Barchasi</button>
+    <button data-level="A1">A1</button>
+    <button data-level="A2">A2</button>
+    <button data-level="B1">B1</button>
+    <button data-level="B2">B2</button>
+    <button data-level="C1">C1</button>
+    <button data-level="C2">C2</button>
+  </div>
+
+  <section id="topicGrid" class="topic-grid"></section>
+
+  <section id="lessonView" class="lesson-view">
+    <button class="back-button" id="backButton">← Mavzularga qaytish</button>
+    <div id="lessonContent"></div>
+  </section>
+
+</main>
+
+<script src="../script.js"></script>
+
+<script>
+"use strict";
+
+const grammarLessons = [
+  {
+    id:"grammar-a1-01",
+    level:"A1",
+    title:"To be — am / is / are",
+    description:"To be fe'li kimdir yoki nimadir haqida ma'lumot berish uchun ishlatiladi.",
+    explanation:"Ingliz tilida to be fe'li o‘zbek tilidagi 'bo‘lmoq' ma'nosiga yaqin. Hozirgi zamonda ega bilan birga am, is yoki are ishlatiladi.",
+    formulas:[
+      "I + am",
+      "He / She / It + is",
+      "You / We / They + are",
+      "Inkor: Subject + am/is/are + not",
+      "Savol: Am/Is/Are + subject?"
+    ],
+    examples:[
+      ["I am a student.","Men o‘quvchiman."],
+      ["She is happy.","U xursand."],
+      ["They are friends.","Ular do‘stlar."],
+      ["He is not tired.","U charchamagan."],
+      ["Are you ready?","Siz tayyormisiz?"]
+    ],
+    question:"She ___ my sister.",
+    options:["am","is","are","be"],
+    answer:"is",
+    reason:"She bilan is ishlatiladi."
+  },
+  {
+    id:"grammar-a1-02",
+    level:"A1",
+    title:"Personal Pronouns",
+    description:"I, you, he, she, it, we, they olmoshlari.",
+    explanation:"Personal pronouns — kishilik olmoshlari. Ular gapda odam yoki narsaning nomi o‘rnida keladi.",
+    formulas:[
+      "I — men",
+      "You — sen / siz",
+      "He — u (erkak)",
+      "She — u (ayol)",
+      "It — u (narsa yoki hayvon)",
+      "We — biz",
+      "They — ular"
+    ],
+    examples:[
+      ["I am Ali.","Men Aliman."],
+      ["He is my brother.","U mening akam."],
+      ["She is a teacher.","U o‘qituvchi."],
+      ["We are students.","Biz o‘quvchilarmiz."]
+    ],
+    question:"___ are my friends. (Ular)",
+    options:["He","She","They","It"],
+    answer:"They",
+    reason:"They — ular degani."
+  },
+  {
+    id:"grammar-a1-03",
+    level:"A1",
+    title:"Articles — a / an / the",
+    description:"Artikllarning ishlatilishi va farqlari.",
+    explanation:"A va an birlikdagi sanaladigan otlar oldidan keladi. The esa aniq, ma'lum narsa haqida gapirganda ishlatiladi.",
+    formulas:[
+      "a + undosh tovush bilan boshlanadigan so‘z",
+      "an + unli tovush bilan boshlanadigan so‘z",
+      "the + aniq yoki oldindan ma'lum narsa"
+    ],
+    examples:[
+      ["a book","bir kitob"],
+      ["an apple","bir olma"],
+      ["the sun","quyosh"],
+      ["I have a pen.","Menda ruchka bor."]
+    ],
+    question:"I have ___ apple.",
+    options:["a","an","the","are"],
+    answer:"an",
+    reason:"Apple unli tovush bilan boshlanadi."
+  },
+  {
+    id:"grammar-a1-04",
+    level:"A1",
+    title:"Present Simple",
+    description:"Odatlar, kundalik ishlar va umumiy haqiqatlar.",
+    explanation:"Present Simple muntazam takrorlanadigan ishlar, odatlar va umumiy haqiqatlarni ifodalaydi. He, she, it bilan darak gapdagi asosiy fe'lga odatda -s yoki -es qo‘shiladi.",
+    formulas:[
+      "Darak: I / You / We / They + V1",
+      "Darak: He / She / It + V1(s/es)",
+      "Inkor: Subject + do/does + not + V1",
+      "Savol: Do/Does + subject + V1?"
+    ],
+    examples:[
+      ["I study English.","Men ingliz tilini o‘rganaman."],
+      ["She works every day.","U har kuni ishlaydi."],
+      ["They do not play football.","Ular futbol o‘ynamaydilar."],
+      ["Does he speak English?","U inglizcha gapiradimi?"]
+    ],
+    question:"He ___ to school every day.",
+    options:["go","goes","going","gone"],
+    answer:"goes",
+    reason:"He bilan Present Simple darak gapida fe'lga -s/-es qo‘shiladi."
+  },
+  {
+    id:"grammar-a1-05",
+    level:"A1",
+    title:"Plural Nouns",
+    description:"Otlarning ko‘plik shakli.",
+    explanation:"Ko‘p hollarda otga -s qo‘shiladi. Ayrim so‘zlarda -es yoki o‘zgaradigan shakllar ishlatiladi.",
+    formulas:[
+      "book → books",
+      "box → boxes",
+      "city → cities",
+      "child → children",
+      "man → men"
+    ],
+    examples:[
+      ["One book — two books","Bir kitob — ikki kitob"],
+      ["One box — two boxes","Bir quti — ikki quti"],
+      ["One child — two children","Bir bola — ikki bola"]
+    ],
+    question:"Two ___ (kitoblar)",
+    options:["book","books","bookes","bookies"],
+    answer:"books",
+    reason:"Book so‘zining odatiy ko‘plik shakli books."
+  },
+  {
+    id:"grammar-a2-01",
+    level:"A2",
+    title:"Present Continuous",
+    description:"Hozir sodir bo‘layotgan harakatlar.",
+    explanation:"Present Continuous ayni paytda davom etayotgan ish-harakatni ifodalaydi. Be fe'li va fe'lning -ing shakli ishlatiladi.",
+    formulas:[
+      "Darak: Subject + am/is/are + V-ing",
+      "Inkor: Subject + am/is/are + not + V-ing",
+      "Savol: Am/Is/Are + subject + V-ing?"
+    ],
+    examples:[
+      ["I am reading now.","Men hozir o‘qiyapman."],
+      ["She is cooking.","U ovqat tayyorlayapti."],
+      ["Are they playing?","Ular o‘ynashyaptimi?"]
+    ],
+    question:"They ___ watching TV now.",
+    options:["is","am","are","be"],
+    answer:"are",
+    reason:"They bilan are ishlatiladi."
+  },
+  {
+    id:"grammar-a2-02",
+    level:"A2",
+    title:"Past Simple",
+    description:"O‘tmishda tugagan harakatlar.",
+    explanation:"Past Simple o'tmishda sodir bo‘lib tugagan ishlarni ifodalaydi. Muntazam fe'llarga -ed qo‘shiladi. Noto‘g‘ri fe'llarning ikkinchi shakli ishlatiladi.",
+    formulas:[
+      "Darak: Subject + V2",
+      "Inkor: Subject + did not + V1",
+      "Savol: Did + subject + V1?"
+    ],
+    examples:[
+      ["I visited my friend.","Men do‘stimni ko‘rgani bordim."],
+      ["She went home.","U uyga ketdi."],
+      ["Did you study?","Sen o‘qidingmi?"]
+    ],
+    question:"I ___ football yesterday.",
+    options:["play","played","playing","plays"],
+    answer:"played",
+    reason:"Yesterday o'tgan vaqtni bildiradi."
+  },
+  {
+    id:"grammar-a2-03",
+    level:"A2",
+    title:"Future with will",
+    description:"Kelajakdagi qarorlar va taxminlar.",
+    explanation:"Will kelajak haqida gapirganda, tezkor qaror yoki taxmin bildirganda ishlatiladi.",
+    formulas:[
+      "Darak: Subject + will + V1",
+      "Inkor: Subject + will not + V1",
+      "Savol: Will + subject + V1?"
+    ],
+    examples:[
+      ["I will help you.","Men senga yordam beraman."],
+      ["She will come tomorrow.","U ertaga keladi."],
+      ["Will they join us?","Ular bizga qo‘shiladimi?"]
+    ],
+    question:"I will ___ you tomorrow.",
+    options:["called","calling","call","calls"],
+    answer:"call",
+    reason:"Will dan keyin fe'lning birinchi shakli keladi."
+  },
+  {
+    id:"grammar-b1-01",
+    level:"B1",
+    title:"Present Perfect",
+    description:"O‘tmishdagi ishning hozirgi natijasi.",
+    explanation:"Present Perfect o'tmishda sodir bo‘lgan, ammo hozirgi vaqt bilan aloqasi mavjud bo‘lgan harakatlarni ifodalaydi.",
+    formulas:[
+      "Darak: Subject + have/has + V3",
+      "Inkor: Subject + have/has + not + V3",
+      "Savol: Have/Has + subject + V3?"
+    ],
+    examples:[
+      ["I have finished my homework.","Men uy vazifamni tugatdim."],
+      ["She has visited London.","U Londonga borib kelgan."],
+      ["Have you seen this film?","Bu filmni ko‘rganmisan?"]
+    ],
+    question:"She has ___ her work.",
+    options:["finish","finishes","finished","finishing"],
+    answer:"finished",
+    reason:"Present Perfect da have/has dan keyin V3 keladi."
+  },
+  {
+    id:"grammar-b1-02",
+    level:"B1",
+    title:"Comparatives and Superlatives",
+    description:"Ikki yoki undan ortiq narsani taqqoslash.",
+    explanation:"Comparative ikki narsani, superlative esa bir guruh ichida eng yuqori yoki eng past darajani taqqoslaydi.",
+    formulas:[
+      "Short adjective + -er + than",
+      "the + short adjective + -est",
+      "more + long adjective + than",
+      "the most + long adjective"
+    ],
+    examples:[
+      ["Ali is taller than Bob.","Ali Bobdan balandroq."],
+      ["This is the biggest room.","Bu eng katta xona."],
+      ["English is more interesting.","Ingliz tili qiziqroq."]
+    ],
+    question:"This is the ___ building in town.",
+    options:["tall","taller","tallest","more tall"],
+    answer:"tallest",
+    reason:"The bilan superlative shakli ishlatilgan."
+  },
+  {
+    id:"grammar-b2-01",
+    level:"B2",
+    title:"Passive Voice",
+    description:"Ish-harakat bajaruvchisidan ko‘ra natijaga e'tibor.",
+    explanation:"Passive Voice gapda harakatni kim bajarganidan ko‘ra nima sodir bo‘lganiga urg‘u beradi.",
+    formulas:[
+      "Subject + be + V3",
+      "Present: am/is/are + V3",
+      "Past: was/were + V3",
+      "Future: will be + V3"
+    ],
+    examples:[
+      ["The room is cleaned every day.","Xona har kuni tozalanadi."],
+      ["The book was written in 1990.","Kitob 1990-yilda yozilgan."],
+      ["The work will be finished.","Ish tugatiladi."]
+    ],
+    question:"The letter ___ yesterday.",
+    options:["sent","was sent","is send","sending"],
+    answer:"was sent",
+    reason:"Past Simple Passive: was/were + V3."
+  },
+  {
+    id:"grammar-c1-01",
+    level:"C1",
+    title:"Inversion",
+    description:"Rasmiy va ta'sirli gaplarda so‘z tartibini o‘zgartirish.",
+    explanation:"Inversion ayrim salbiy yoki cheklovchi ravishlar gap boshida kelganda yordamchi fe'lni egadan oldinga olib chiqadi.",
+    formulas:[
+      "Never + auxiliary + subject + verb",
+      "Rarely + auxiliary + subject + verb",
+      "Not only + auxiliary + subject + verb"
+    ],
+    examples:[
+      ["Never have I seen such beauty.","Men hech qachon bunday go‘zallikni ko‘rmaganman."],
+      ["Rarely does he complain.","U kamdan-kam shikoyat qiladi."]
+    ],
+    question:"Never ___ I seen this before.",
+    options:["have","has","did","am"],
+    answer:"have",
+    reason:"I bilan Present Perfect yordamchi fe'li have ishlatiladi."
+  },
+  {
+    id:"grammar-c2-01",
+    level:"C2",
+    title:"Advanced Subjunctive",
+    description:"Rasmiy taklif, talab va zaruratni ifodalash.",
+    explanation:"Subjunctive ayrim rasmiy ifodalarda talab, taklif yoki zaruratni bildiradi. That dan keyin ega bilan fe'lning asosiy shakli kelishi mumkin.",
+    formulas:[
+      "It is essential that + subject + V1",
+      "They suggested that + subject + V1",
+      "It is important that + subject + V1"
+    ],
+    examples:[
+      ["It is essential that he be present.","Uning hozir bo‘lishi juda muhim."],
+      ["They suggested that she apply.","Ular uning ariza topshirishini taklif qilishdi."]
+    ],
+    question:"It is important that he ___ on time.",
+    options:["is","be","being","was"],
+    answer:"be",
+    reason:"Formal subjunctive shaklida be ishlatiladi."
+  }
+];
+
+const grid = document.getElementById("topicGrid");
+const view = document.getElementById("lessonView");
+const content = document.getElementById("lessonContent");
+const search = document.getElementById("grammarSearch");
+const tabs = document.getElementById("grammarTabs");
+
+let activeLevel = "ALL";
+let activeLesson = null;
+let answered = false;
+
+function renderTopics() {
+  const query = search.value.trim().toLowerCase();
+
+  const filtered = grammarLessons.filter(lesson => {
+    const levelMatch =
+      activeLevel === "ALL" || lesson.level === activeLevel;
+
+    const searchMatch =
+      lesson.title.toLowerCase().includes(query) ||
+      lesson.description.toLowerCase().includes(query);
+
+    return levelMatch && searchMatch;
+  });
+
+  grid.innerHTML = "";
+
+  if (!filtered.length) {
+    grid.innerHTML = `
+      <p style="color:#91a0bb;padding:20px">
+        Bu qidiruv bo‘yicha mavzu topilmadi.
+      </p>
+    `;
+    return;
+  }
+
+  filtered.forEach((lesson, index) => {
+    const card = document.createElement("article");
+    card.className = "topic-card";
+
+    card.innerHTML = `
+      <span class="topic-number">${lesson.level} • LESSON ${index + 1}</span>
+      <h3>${lesson.title}</h3>
+      <p>${lesson.description}</p>
+      <span>Darsni ochish →</span>
+    `;
+
+    card.addEventListener("click", () => openLesson(lesson.id));
+    grid.appendChild(card);
+  });
+}
+
+function openLesson(id) {
+  const lesson = grammarLessons.find(item => item.id === id);
+  if (!lesson) return;
+
+  activeLesson = lesson;
+  answered = false;
+
+  grid.style.display = "none";
+  tabs.style.display = "none";
+  search.style.display = "none";
+  view.classList.add("active");
+
+  const formulas = lesson.formulas.map(item =>
+    `<div class="formula">${item}</div>`
+  ).join("");
+
+  const examples = lesson.examples.map(item => `
+    <div class="example">
+      <strong>${item[0]}</strong>
+      <span>${item[1]}</span>
+      <button
+        type="button"
+        onclick="EnglishZero.speak(${JSON.stringify(item[0])})"
+        aria-label="Talaffuzni eshitish"
+        style="background:none;border:0;color:#4de2dc;cursor:pointer"
+      >🔊</button>
+    </div>
+  `).join("");
+
+  const options = lesson.options.map(option =>
+    `<button type="button" data-answer="${option}">${option}</button>`
+  ).join("");
+
+  content.innerHTML = `
+    <span class="section-label">${lesson.level} GRAMMAR LESSON</span>
+    <h2>${lesson.title}</h2>
+    <p class="lesson-description">${lesson.description}</p>
+
+    <div class="lesson-block">
+      <h3>📘 Tushuntirish</h3>
+      <p style="font-size:13px;line-height:1.9">${lesson.explanation}</p>
+    </div>
+
+    <div class="lesson-block">
+      <h3>📐 Qoida va formulalar</h3>
+      ${formulas}
+    </div>
+
+    <div class="lesson-block">
+      <h3>💬 Misollar va tarjimalar</h3>
+      ${examples}
+    </div>
+
+    <div class="lesson-block">
+      <h3>🎯 Bilimingizni tekshiring</h3>
+      <div class="practice-question">
+        <p>${lesson.question}</p>
+        <div class="answer-options">${options}</div>
+        <div class="feedback" id="answerFeedback"></div>
+      </div>
+    </div>
+
+    <button class="finish-lesson" id="finishLesson" disabled>
+      Avval mashqni bajaring
+    </button>
+  `;
+
+  content.querySelectorAll("[data-answer]").forEach(button => {
+    button.addEventListener("click", () => checkAnswer(button));
+  });
+
+  document.getElementById("finishLesson").addEventListener("click", () => {
+    if (!answered) return;
+
+    const completed = window.EnglishZero.completeLesson(lesson.id);
+
+    if (completed) {
+      document.getElementById("finishLesson").textContent =
+        "✓ Dars yakunlandi";
+      document.getElementById("finishLesson").disabled = true;
+    }
+  });
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function checkAnswer(button) {
+  if (answered) return;
+
+  const selected = button.dataset.answer;
+  const feedback = document.getElementById("answerFeedback");
+  const finish = document.getElementById("finishLesson");
+
+  const buttons = content.querySelectorAll("[data-answer]");
+
+  buttons.forEach(item => {
+    item.disabled = true;
+
+    if (item.dataset.answer === activeLesson.answer) {
+      item.classList.add("correct");
+    }
+  });
+
+  if (selected === activeLesson.answer) {
+    answered = true;
+    feedback.textContent = "✓ To‘g‘ri! " + activeLesson.reason;
+    feedback.style.color = "#4de2a2";
+    finish.disabled = false;
+    finish.textContent = "Darsni yakunlash (+20 XP)";
+  } else {
+    button.classList.add("wrong");
+    feedback.textContent =
+      "✕ Noto‘g‘ri. To‘g‘ri javob: " + activeLesson.answer +
+      ". " + activeLesson.reason;
+    feedback.style.color = "#ff8585";
+
+    finish.textContent = "Javobni qayta ko‘rib chiqing";
+  }
+}
+
+function backToTopics() {
+  view.classList.remove("active");
+  grid.style.display = "grid";
+  tabs.style.display = "flex";
+  search.style.display = "block";
+
+  renderTopics();
+}
+
+document.getElementById("backButton").addEventListener("click", backToTopics);
+
+tabs.querySelectorAll("button").forEach(button => {
+  button.addEventListener("click", () => {
+    tabs.querySelectorAll("button").forEach(item =>
+      item.classList.remove("active")
+    );
+
+    button.classList.add("active");
+    activeLevel = button.dataset.level;
+    renderTopics();
+  });
+});
+
+search.addEventListener("input", renderTopics);
+
+renderTopics();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses | English ZERO</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080d1c;color:#eef2ff;font-family:Arial,sans-serif}
+.wrap{max-width:1150px;margin:auto;padding:24px 18px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:27px}
+.brand{color:#75e6ff;font-weight:900;letter-spacing:2px}
+.btn{display:inline-block;border:1px solid #344365;background:#151f38;color:#fff;padding:11px 17px;border-radius:12px;text-decoration:none;cursor:pointer}
+.hero{padding:30px;border:1px solid #293957;border-radius:22px;background:linear-gradient(120deg,#17294b,#251d49);margin-bottom:25px}
+.tag{font-size:12px;color:#65dff7;font-weight:bold;letter-spacing:1px}
+.hero h1{font-size:clamp(28px,5vw,42px);margin:10px 0}
+.muted{color:#aab8d4;line-height:1.6}
+.search{width:100%;max-width:420px;padding:14px;background:#10192e;border:1px solid #344365;border-radius:12px;color:white;outline:none;margin:15px 0}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 23px}
+.filter{padding:10px 15px;background:#10192e;border:1px solid #344365;color:#dce7ff;border-radius:10px;cursor:pointer}
+.filter.active{background:#17415a;border-color:#65dff7}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.course{background:#10192e;border:1px solid #293957;border-radius:19px;overflow:hidden;display:flex;flex-direction:column;transition:.2s}
+.course:hover{transform:translateY(-4px);border-color:#65dff7}
+.cover{padding:23px;background:linear-gradient(135deg,#193a59,#32245d);font-size:42px}
+.course-body{padding:20px;display:flex;flex-direction:column;flex:1}
+.level{font-size:12px;color:#70dff5;font-weight:bold}
+.course h2{font-size:21px;margin:10px 0}
+.course p{font-size:14px;color:#aab8d4;line-height:1.6}
+.details{display:flex;justify-content:space-between;color:#aab8d4;font-size:12px;margin:12px 0}
+.course .btn{margin-top:auto;text-align:center;background:linear-gradient(100deg,#2678ee,#8c5cf6);border:0}
+.empty{display:none;text-align:center;padding:30px;color:#aab8d4}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:550px){.grid{grid-template-columns:1fr}.hero{padding:21px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+<div class="brand">ENGLISH ZERO</div>
+<a class="btn" href="../index.html">← Bosh sahifa</a>
+</header>
+
+<section class="hero">
+<div class="tag">LEARNING PROGRAMS</div>
+<h1>Explore Your Courses 📚</h1>
+<p class="muted">Ingliz tilini noldan boshlab yuqori darajagacha o‘rgan. O‘zingga mos kursni tanla va darslarni boshlagin.</p>
+<input class="search" id="search" type="search" placeholder="Kurs yoki mavzu qidirish...">
+</section>
+
+<div class="filters">
+<button class="filter active" data-level="all">Barchasi</button>
+<button class="filter" data-level="A1">A1 Beginner</button>
+<button class="filter" data-level="A2">A2 Elementary</button>
+<button class="filter" data-level="B1">B1 Intermediate</button>
+<button class="filter" data-level="B2">B2 Upper-Intermediate</button>
+<button class="filter" data-level="C1">C1 Advanced</button>
+</div>
+
+<section class="grid" id="courses">
+
+<article class="course" data-level="A1">
+<div class="cover">🌱</div>
+<div class="course-body">
+<div class="level">A1 · BEGINNER</div>
+<h2>English Foundations</h2>
+<p>Ingliz tilining asoslari: alifbo, talaffuz, salomlashish, oddiy so‘zlar va sodda gaplar.</p>
+<div class="details"><span>📖 20 ta mavzu</span><span>⭐ Boshlang‘ich</span></div>
+<a class="btn" href="lessons.html?course=a1">Kursni boshlash →</a>
+</div>
+</article>
+
+<article class="course" data-level="A2">
+<div class="cover">🌿</div>
+<div class="course-body">
+<div class="level">A2 · ELEMENTARY</div>
+<h2>Everyday English</h2>
+<p>Kundalik hayot, oila, xarid, sayohat, savol berish va oddiy suhbatlar.</p>
+<div class="details"><span>📖 20 ta mavzu</span><span>⭐ Elementary</span></div>
+<a class="btn" href="lessons.html?course=a2">Kursni boshlash →</a>
+</div>
+</article>
+
+<article class="course" data-level="B1">
+<div class="cover">🌳</div>
+<div class="course-body">
+<div class="level">B1 · INTERMEDIATE</div>
+<h2>Confident English</h2>
+<p>Murakkabroq grammatikalar, kundalik suhbatlar, matnlar va fikr bildirish.</p>
+<div class="details"><span>📖 24 ta mavzu</span><span>⭐ Intermediate</span></div>
+<a class="btn" href="lessons.html?course=b1">Kursni boshlash →</a>
+</div>
+</article>
+
+<article class="course" data-level="B2">
+<div class="cover">🚀</div>
+<div class="course-body">
+<div class="level">B2 · UPPER-INTERMEDIATE</div>
+<h2>Fluent Communication</h2>
+<p>Ravon muloqot, murakkab matnlar, akademik lug‘at va fikrlarni aniq ifodalash.</p>
+<div class="details"><span>📖 24 ta mavzu</span><span>⭐ Upper-Intermediate</span></div>
+<a class="btn" href="lessons.html?course=b2">Kursni boshlash →</a>
+</div>
+</article>
+
+<article class="course" data-level="C1">
+<div class="cover">🏆</div>
+<div class="course-body">
+<div class="level">C1 · ADVANCED</div>
+<h2>Advanced English Mastery</h2>
+<p>Murakkab grammatika, professional yozish, akademik nutq va keng lug‘at.</p>
+<div class="details"><span>📖 25 ta mavzu</span><span>⭐ Advanced</span></div>
+<a class="btn" href="lessons.html?course=c1">Kursni boshlash →</a>
+</div>
+</article>
+
+<article class="course" data-level="all">
+<div class="cover">🎯</div>
+<div class="course-body">
+<div class="level">ALL LEVELS</div>
+<h2>English Grammar</h2>
+<p>Grammatika bo‘yicha alohida kurs: zamonlar, artikllar, modal fe’llar va gap tuzilishi.</p>
+<div class="details"><span>📖 30 ta mavzu</span><span>⭐ Barcha darajalar</span></div>
+<a class="btn" href="grammar.html">Grammatikani o‘rganish →</a>
+</div>
+</article>
+
+<article class="course" data-level="all">
+<div class="cover">🔤</div>
+<div class="course-body">
+<div class="level">ALL LEVELS</div>
+<h2>Vocabulary Builder</h2>
+<p>Mavzular bo‘yicha yangi so‘zlar, tarjimalar, misollar va lug‘at mashqlari.</p>
+<div class="details"><span>📖 Ko‘plab so‘zlar</span><span>⭐ Barcha darajalar</span></div>
+<a class="btn" href="vocabulary.html">Lug‘atni o‘rganish →</a>
+</div>
+</article>
+
+<article class="course" data-level="all">
+<div class="cover">🗣️</div>
+<div class="course-body">
+<div class="level">ALL LEVELS</div>
+<h2>Speaking & Pronunciation</h2>
+<p>Gapirish, talaffuz, kundalik dialoglar va inglizcha nutqni rivojlantirish.</p>
+<div class="details"><span>🎧 Amaliy mashqlar</span><span>⭐ Barcha darajalar</span></div>
+<a class="btn" href="speaking.html">Speakingni boshlash →</a>
+</div>
+</article>
+
+</section>
+<div class="empty" id="empty">Bu qidiruv bo‘yicha kurs topilmadi.</div>
+</main>
+
+<script>
+const search=document.getElementById("search");
+const cards=[...document.querySelectorAll(".course")];
+const filters=[...document.querySelectorAll(".filter")];
+let active="all";
+
+function update(){
+const term=search.value.toLowerCase().trim();
+let count=0;
+
+cards.forEach(card=>{
+const level=card.dataset.level;
+const matchesLevel=active==="all"||level===active||level==="all";
+const matchesText=card.textContent.toLowerCase().includes(term);
+const visible=matchesLevel&&matchesText;
+card.style.display=visible?"flex":"none";
+if(visible)count++;
+});
+
+document.getElementById("empty").style.display=count?"none":"block";
+}
+
+filters.forEach(button=>{
+button.addEventListener("click",()=>{
+filters.forEach(x=>x.classList.remove("active"));
+button.classList.add("active");
+active=button.dataset.level;
+update();
+});
+});
+
+search.addEventListener("input",update);
+</script>
+</body>
+</html>

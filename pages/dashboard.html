@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1c">
+  <title>Dashboard | ENGLISH ZERO</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #080d1c;
+      color: #f4f6ff;
+      font-family: Arial, sans-serif;
+    }
+    .dashboard {
+      width: min(1100px, 94%);
+      margin: 35px auto;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .brand {
+      color: #8b9cff;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .user-chip {
+      padding: 10px 15px;
+      border: 1px solid #293451;
+      border-radius: 30px;
+      background: #111a30;
+      color: #cbd5f5;
+      font-size: 13px;
+    }
+    .welcome {
+      padding: 28px;
+      border: 1px solid #29375c;
+      border-radius: 22px;
+      background: linear-gradient(120deg, #172447, #222052, #142c42);
+      margin-bottom: 22px;
+    }
+    .welcome small {
+      color: #9daee7;
+      letter-spacing: 1px;
+    }
+    .welcome h1 {
+      margin: 12px 0;
+      font-size: clamp(25px, 5vw, 36px);
+    }
+    .welcome p {
+      color: #c1cbea;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .stat, .panel {
+      background: #111a2d;
+      border: 1px solid #26334e;
+      border-radius: 18px;
+      padding: 20px;
+      min-width: 0;
+    }
+    .stat span {
+      color: #9ba9ca;
+      font-size: 13px;
+    }
+    .stat strong {
+      display: block;
+      margin-top: 12px;
+      font-size: 27px;
+      color: #8fa4ff;
+      overflow-wrap: anywhere;
+    }
+    .stat small {
+      color: #7e8ba9;
+      display: block;
+      margin-top: 5px;
+    }
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+    }
+    .panel h2 {
+      font-size: 19px;
+      margin: 0 0 18px;
+    }
+    .level-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #b8c5e5;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .progress-track {
+      height: 11px;
+      border-radius: 20px;
+      background: #26334e;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #6478ff, #31d4d0);
+      transition: width .4s ease;
+    }
+    .level-note {
+      color: #8998b9;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 13px;
+    }
+    .activity {
+      display: grid;
+      gap: 10px;
+    }
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      background: #18243b;
+      font-size: 13px;
+    }
+    .activity-item span { color: #aab8d8; }
+    .activity-item strong { color: #7de4d4; }
+    .empty {
+      color: #8290ae;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .quick-link {
+      display: block;
+      text-decoration: none;
+      color: #e8edff;
+      padding: 17px;
+      border: 1px solid #293754;
+      background: #111a2d;
+      border-radius: 15px;
+      transition: .2s;
+    }
+    .quick-link:hover {
+      border-color: #778aff;
+      transform: translateY(-3px);
+      background: #172440;
+    }
+    .quick-link b {
+      display: block;
+      margin-bottom: 7px;
+    }
+    .quick-link small {
+      color: #8998b9;
+      line-height: 1.4;
+    }
+    .guest {
+      padding: 22px;
+      border: 1px solid #725b35;
+      background: #302719;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .guest a {
+      color: #f5ca73;
+      font-weight: bold;
+    }
+    .logout {
+      border: 1px solid #56394c;
+      background: #2c1c2b;
+      color: #ffb3cb;
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+    @media(max-width: 750px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .main-grid { grid-template-columns: 1fr; }
+      .quick-links { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media(max-width: 420px) {
+      .dashboard { width: 92%; margin: 22px auto; }
+      .welcome { padding: 21px; }
+      .stat, .panel { padding: 15px; }
+      .quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="dashboard">
+    <header class="topbar">
+      <div class="brand">ENGLISH ZERO</div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span class="user-chip" id="userChip">Guest</span>
+        <button class="logout" id="logoutBtn" hidden>Chiqish</button>
+      </div>
+    </header>
+
+    <div id="guestMessage" class="guest" hidden>
+      Dashboarddan foydalanish uchun tizimga kiring.
+      <a href="login.html">Kirish →</a>
+    </div>
+
+    <section class="welcome">
+      <small>SHAXSIY BOSHQARUV PANELI</small>
+      <h1 id="welcomeTitle">Xush kelibsiz!</h1>
+      <p>Bugun ham ingliz tilini o‘rganish uchun ajoyib kun.
+        Maqsadingiz sari yana bir qadam tashlang.</p>
+    </section>
+
+    <section class="stats">
+      <article class="stat">
+        <span>⭐ Jami XP</span>
+        <strong id="xpValue">0</strong>
+        <small>To‘plangan ball</small>
+      </article>
+      <article class="stat">
+        <span>📚 Tugatilgan mashqlar</span>
+        <strong id="completedValue">0</strong>
+        <small>Bajarilgan topshiriqlar</small>
+      </article>
+      <article class="stat">
+        <span>🎯 Aniqlik</span>
+        <strong id="accuracyValue">0%</strong>
+        <small>To‘g‘ri javoblar</small>
+      </article>
+      <article class="stat">
+        <span>🏆 Daraja</span>
+        <strong id="levelValue">A1</strong>
+        <small>Ingliz tili bosqichi</small>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel">
+        <h2>📈 O‘rganish rivoji</h2>
+        <div class="level-row">
+          <span id="levelLabel">A1 — Beginner</span>
+          <strong id="progressPercent">0%</strong>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="level-note" id="progressNote">
+          Mashqlarni bajaring va yangi darajalarga erishing.
+        </p>
+      </article>
+
+      <article class="panel">
+        <h2>🕒 Oxirgi faoliyat</h2>
+        <div class="activity" id="activityList">
+          <p class="empty">Hozircha faoliyat mavjud emas. Birinchi mashqingizni boshlang!</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <h2>🚀 Tezkor bo‘limlar</h2>
+      <div class="quick-links">
+        <a class="quick-link" href="courses.html">
+          <b>📚 Kurslar</b>
+          <small>Ingliz tili kurslarini tanlang</small>
+        </a>
+        <a class="quick-link" href="lessons.html">
+          <b>🎓 Darslar</b>
+          <small>Yangi mavzularni o‘rganing</small>
+        </a>
+        <a class="quick-link" href="practice.html">
+          <b>✍️ Mashqlar</b>
+          <small>Bilimingizni mustahkamlang</small>
+        </a>
+        <a class="quick-link" href="tests.html">
+          <b>📝 Testlar</b>
+          <small>Bilimingizni tekshiring</small>
+        </a>
+        <a class="quick-link" href="achievements.html">
+          <b>🏆 Yutuqlar</b>
+          <small>Erishgan natijalaringiz</small>
+        </a>
+        <a class="quick-link" href="settings.html">
+          <b>⚙️ Sozlamalar</b>
+          <small>Profil va sayt sozlamalari</small>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const SESSION_KEY = "ez_session";
+    const DATA_KEY = "ez_learning_data_v1";
+
+    function readJSON(key, fallback) {
+      try {
+        const value = JSON.parse(localStorage.getItem(key));
+        return value && typeof value === "object" ? value : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    const session = readJSON(SESSION_KEY, null);
+    const data = readJSON(DATA_KEY, {});
+
+    const userName = session && session.name
+      ? session.name
+      : "O‘quvchi";
+
+    document.getElementById("welcomeTitle").textContent =
+      "Xush kelibsiz, " + userName + "!";
+
+    document.getElementById("userChip").textContent =
+      session && session.email ? session.email : "Mehmon";
+
+    if (!session) {
+      document.getElementById("guestMessage").hidden = false;
+    } else {
+      document.getElementById("logoutBtn").hidden = false;
+    }
+
+    const xp = Number(data.xp) || 0;
+    const completed = Number(data.completed) || 0;
+    const correct = Number(data.correct) || 0;
+    const total = Number(data.total) || 0;
+    const accuracy = total > 0
+      ? Math.round((correct / total) * 100)
+      : 0;
+
+    const placement = data.placement || "A1";
+    const levels = ["A1", "A2", "B1", "B2", "C1"];
+    const levelNames = {
+      A1: "Beginner",
+      A2: "Elementary",
+      B1: "Intermediate",
+      B2: "Upper Intermediate",
+      C1: "Advanced"
+    };
+
+    const levelIndex = Math.max(0, levels.indexOf(placement));
+    const progress = Math.min(100, Math.round((xp % 500) / 5));
+
+    document.getElementById("xpValue").textContent = xp;
+    document.getElementById("completedValue").textContent = completed;
+    document.getElementById("accuracyValue").textContent = accuracy + "%";
+    document.getElementById("levelValue").textContent = placement;
+    document.getElementById("levelLabel").textContent =
+      placement + " — " + (levelNames[placement] || "Beginner");
+    document.getElementById("progressPercent").textContent =
+      progress + "%";
+    document.getElementById("progressFill").style.width =
+      progress + "%";
+
+    document.getElementById("progressNote").textContent =
+      "Keyingi bosqichga tayyorlanish uchun muntazam dars va mashqlarni bajaring.";
+
+    const activityList = document.getElementById("activityList");
+    const history = Array.isArray(data.history) ? data.history : [];
+
+    if (history.length) {
+      activityList.replaceChildren();
+
+      history.slice(-5).reverse().forEach(item => {
+        const row = document.createElement("div");
+        row.className = "activity-item";
+
+        const label = document.createElement("span");
+        label.textContent = item.type || item.title || "Mashq";
+
+        const score = document.createElement("strong");
+        score.textContent =
+          item.score !== undefined && item.total !== undefined
+            ? item.score + "/" + item.total
+            : "+" + (Number(item.xp) || 0) + " XP";
+
+        row.append(label, score);
+        activityList.appendChild(row);
+      });
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem(SESSION_KEY);
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

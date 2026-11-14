@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice | English ZERO</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080d1c;color:#eef2ff;font-family:Arial,sans-serif}.practice{max-width:1100px;margin:auto;padding:25px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:28px}.brand{font-weight:900;color:#75e6ff;letter-spacing:2px}.back,.btn{border:1px solid #344365;background:#151f38;color:#fff;padding:11px 17px;border-radius:12px;text-decoration:none;cursor:pointer}.hero{padding:28px;border:1px solid #293957;border-radius:22px;background:linear-gradient(120deg,#17294b,#251d49);margin-bottom:22px}.hero h1{font-size:clamp(27px,5vw,40px);margin:8px 0}.muted{color:#aab8d4;line-height:1.6}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}.tab{padding:15px 8px;background:#111a30;border:1px solid #293957;border-radius:14px;color:#dce7ff;cursor:pointer}.tab.active{background:#17415a;border-color:#53d8f4;color:#fff}.panel{background:#10192e;border:1px solid #293957;border-radius:20px;padding:22px}.tag{color:#65dff7;font-size:13px;font-weight:bold}.question{font-size:23px;font-weight:700;margin:15px 0}.options{display:grid;gap:10px}.option{padding:14px;border:1px solid #344365;background:#151f38;color:#fff;border-radius:12px;text-align:left;cursor:pointer;font-size:15px}.option:hover{border-color:#65dff7}.option.selected{border-color:#65dff7;background:#15364b}.option.correct{border-color:#36d69b;background:#12382f}.option.wrong{border-color:#ff7189;background:#401d30}.feedback{margin:15px 0;padding:13px;border-radius:12px;display:none}.feedback.show{display:block}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.primary{background:linear-gradient(100deg,#2678ee,#8c5cf6);border:0}.status{display:flex;justify-content:space-between;gap:12px;color:#aab8d4;font-size:13px;margin-bottom:14px}.progressbar{height:7px;background:#26324c;border-radius:10px;overflow:hidden;margin:10px 0 20px}.progressbar span{display:block;height:100%;background:linear-gradient(90deg,#36d9f4,#8d69ff);width:0}.result{display:none;text-align:center;padding:25px}.result.show{display:block}.result strong{font-size:42px;color:#69e5f5}@media(max-width:600px){.tabs{grid-template-columns:repeat(2,1fr)}.hero{padding:20px}.panel{padding:17px}.question{font-size:19px}}
+</style>
+</head>
+<body>
+<main class="practice">
+<header class="top"><div class="brand">ENGLISH ZERO</div><a class="back" href="../index.html">← Bosh sahifa</a></header>
+<section class="hero">
+<div class="tag">DAILY TRAINING</div>
+<h1>Practice Zone</h1>
+<p class="muted">Bilimingni mashqlar orqali mustahkamla. Har bir to‘g‘ri javob uchun XP olasan.</p>
+</section>
+<div class="tabs" id="tabs">
+<button class="tab active" data-type="grammar">📘 Grammar</button>
+<button class="tab" data-type="vocabulary">🔤 Vocabulary</button>
+<button class="tab" data-type="sentences">🧩 Sentence Builder</button>
+<button class="tab" data-type="translation">🌍 Translation</button>
+</div>
+<section class="panel" id="exercise">
+<div class="status"><span id="category">GRAMMAR PRACTICE</span><span id="counter">1 / 5</span></div>
+<div class="progressbar"><span id="bar"></span></div>
+<div class="tag">SAVOL</div>
+<div class="question" id="question"></div>
+<div class="options" id="options"></div>
+<div class="feedback" id="feedback"></div>
+<div class="actions">
+<button class="btn primary" id="check">Javobni tekshirish</button>
+<button class="btn" id="next" disabled>Keyingi savol →</button>
+</div>
+</section>
+<section class="panel result" id="result">
+<div class="tag">MASHQ YAKUNLANDI</div>
+<h2>Barakalla!</h2>
+<strong id="score">0/5</strong>
+<p class="muted" id="resultText"></p>
+<button class="btn primary" id="restart">Qayta mashq qilish</button>
+</section>
+</main>
+<script>
+const exercises={
+grammar:[
+{q:"She ___ to school every day.",o:["go","goes","going","gone"],a:1,e:"He / She / It bilan Present Simple zamonida fe’lga -s qo‘shiladi."},
+{q:"They ___ watching TV now.",o:["is","am","are","be"],a:2,e:"They bilan to be fe’lining are shakli ishlatiladi."},
+{q:"I ___ a student.",o:["is","are","am","be"],a:2,e:"I bilan am ishlatiladi."},
+{q:"We ___ football yesterday.",o:["play","played","plays","playing"],a:1,e:"Yesterday — Past Simple. Regular fe’lga -ed qo‘shiladi."},
+{q:"There ___ two books on the table.",o:["is","are","am","be"],a:1,e:"Two books ko‘plik, shuning uchun are ishlatiladi."}
+],
+vocabulary:[
+{q:"“Beautiful” so‘zining tarjimasini top.",o:["Xunuk","Chiroyli","Tez","Katta"],a:1,e:"Beautiful — chiroyli, go‘zal."},
+{q:"“Improve” nimani anglatadi?",o:["Yaxshilamoq","Unutmoq","Sotib olmoq","Kutmoq"],a:0,e:"Improve — yaxshilamoq, rivojlantirmoq."},
+{q:"“Choose” so‘zining ma’nosi?",o:["Yo‘qotmoq","Tanlamoq","Yozmoq","O‘qimoq"],a:1,e:"Choose — tanlamoq."},
+{q:"“Journey” tarjimasi qaysi?",o:["Sayohat","Dars","Do‘st","Oila"],a:0,e:"Journey — sayohat, safar."},
+{q:"“Careful” so‘zi nimani bildiradi?",o:["Ehtiyotkor","Dangasa","Och","Shovqinli"],a:0,e:"Careful — ehtiyotkor, diqqatli."}
+],
+sentences:[
+{q:"So‘zlardan to‘g‘ri gap tuz: “I / English / study”.",o:["English I study.","I study English.","Study English I.","I English study."],a:1,e:"Ingliz tilida oddiy gap tartibi: Subject + Verb + Object."},
+{q:"To‘g‘ri gapni tanla.",o:["She is my friend.","She my friend is.","Is she friend my.","My she is friend."],a:0,e:"She is my friend — U mening do‘stim."},
+{q:"“Men kitob o‘qiyapman” qaysi?",o:["I read book yesterday.","I am reading a book.","I reads a book.","I reading book."],a:1,e:"Hozir davom etayotgan ish: am/is/are + V-ing."},
+{q:"To‘g‘ri tartibni tanla.",o:["Always I am happy.","I happy always am.","I am always happy.","Always happy I."],a:2,e:"I am always happy — Men doim xursandman."},
+{q:"“Ular futbol o‘ynashadi” qaysi?",o:["They plays football.","They playing football.","They play football.","They is play football."],a:2,e:"They bilan fe’lning asosiy shakli ishlatiladi."}
+],
+translation:[
+{q:"“Good morning!” tarjimasini top.",o:["Xayrli kech!","Xayrli tong!","Xayr!","Rahmat!"],a:1,e:"Good morning — Xayrli tong."},
+{q:"“I am learning English.”",o:["Men ingliz tilini o‘rganyapman.","Men ingliz tilini unutdim.","Men ingliz tilida gaplashdim.","Men ingliz tilini o‘rgataman."],a:0,e:"Am learning — o‘rganyapman."},
+{q:"“Where do you live?”",o:["Isming nima?","Yoshing nechida?","Qayerda yashaysan?","Qayerga ketyapsan?"],a:2,e:"Where do you live? — Qayerda yashaysan?"},
+{q:"“Thank you for your help.”",o:["Yordaming uchun rahmat.","Menga yordam ber.","Men yordamga muhtojman.","Yordam kerak emas."],a:0,e:"Thank you for your help — Yordaming uchun rahmat."},
+{q:"“I would like some water.”",o:["Men suv ichdim.","Men biroz suv xohlayman.","Suv qayerda?","Suv juda sovuq."],a:1,e:"I would like — Men xohlardim / istayman."}
+]};
+const $=id=>document.getElementById(id);
+let type="grammar",index=0,selected=null,correct=0,checked=false;
+function render(){
+const list=exercises[type],item=list[index];selected=null;checked=false;
+$("category").textContent=type.toUpperCase()+" PRACTICE";
+$("counter").textContent=(index+1)+" / "+list.length;
+$("bar").style.width=(index/list.length*100)+"%";
+$("question").textContent=item.q;$("options").innerHTML="";
+item.o.forEach((v,i)=>{const b=document.createElement("button");b.className="option";b.textContent=String.fromCharCode(65+i)+". "+v;b.onclick=()=>{if(checked)return;selected=i;document.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected")};$("options").appendChild(b)});
+$("feedback").className="feedback";$("feedback").textContent="";
+$("check").disabled=false;$("next").disabled=true;$("next").textContent=index===list.length-1?"Natijani ko‘rish →":"Keyingi savol →";
+}
+function saveResult(){
+const key="ez_learning_data_v1";let d={xp:0,correct:0,total:0,completed:0,history:[]};
+try{d={...d,...JSON.parse(localStorage.getItem(key)||"{}")}}catch(e){}
+d.xp=(d.xp||0)+correct*10;d.correct=(d.correct||0)+correct;d.total=(d.total||0)+exercises[type].length;d.completed=(d.completed||0)+1;
+d.history=d.history||[];d.history.unshift({name:"Practice: "+type,date:new Date().toISOString(),score:correct,total:exercises[type].length,xp:correct*10});d.history=d.history.slice(0,30);
+localStorage.setItem(key,JSON.stringify(d));
+if(window.EnglishZero&&typeof EnglishZero.addXP==="function")EnglishZero.addXP(correct*10);
+}
+$("check").onclick=()=>{
+if(selected===null){$("feedback").textContent="Avval javob variantini tanla."; $("feedback").className="feedback show";return}
+const item=exercises[type][index],buttons=[...document.querySelectorAll(".option")];checked=true;
+buttons[item.a].classList.add("correct");if(selected!==item.a)buttons[selected].classList.add("wrong");else correct++;
+$("feedback").textContent=(selected===item.a?"✓ To‘g‘ri! ":"✗ Noto‘g‘ri. ")+item.e;
+$("feedback").className="feedback show";$("check").disabled=true;$("next").disabled=false;
+};
+$("next").onclick=()=>{
+if(index<exercises[type].length-1){index++;render();return}
+saveResult();$("exercise").style.display="none";$("result").classList.add("show");$("score").textContent=correct+"/"+exercises[type].length;$("resultText").textContent="To‘g‘ri javoblar: "+correct+". Yig‘ilgan XP: "+(correct*10)+". Natijang Progress sahifasida saqlanadi.";
+};
+function restart(){index=0;correct=0;$("result").classList.remove("show");$("exercise").style.display="block";render()}
+$("restart").onclick=restart;
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");type=b.dataset.type;restart()});
+render();
+</script>
+</body>
+</html>

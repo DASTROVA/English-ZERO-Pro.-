@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | English ZERO</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#080d1c;color:#eef2ff;font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-wrap{width:100%;max-width:1000px;display:grid;grid-template-columns:1fr 1fr;background:#10192e;border:1px solid #293957;border-radius:25px;overflow:hidden;box-shadow:0 25px 80px #0006}
+.info{padding:45px;background:linear-gradient(145deg,#17294b,#251d49);display:flex;flex-direction:column;justify-content:space-between}
+.brand{font-size:20px;font-weight:900;letter-spacing:2px;color:#75e6ff}
+.info h1{font-size:clamp(30px,5vw,48px);line-height:1.15;margin:25px 0 12px}
+.info p{color:#bdc9e2;line-height:1.7}
+.feature{display:flex;gap:12px;align-items:center;margin-top:17px;color:#dce7ff}
+.feature span{font-size:22px}
+.form-area{padding:45px 38px}
+.form-area h2{font-size:29px;margin:0 0 8px}
+.muted{color:#aab8d4;line-height:1.6}
+label{display:block;margin:19px 0 8px;font-size:14px;color:#dce7ff}
+input{width:100%;padding:15px;background:#0b1428;border:1px solid #344365;border-radius:12px;color:white;font-size:15px;outline:none}
+input:focus{border-color:#65dff7;box-shadow:0 0 0 3px #65dff722}
+.password{position:relative}
+.password button{position:absolute;right:10px;top:8px;border:0;background:transparent;color:#aab8d4;padding:8px;cursor:pointer}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:15px 0;color:#aab8d4;font-size:13px}
+.row a,.signup a{color:#70dff5;text-decoration:none}
+.remember{display:flex;align-items:center;gap:8px}
+.remember input{width:auto}
+.submit{width:100%;padding:15px;border:0;border-radius:12px;background:linear-gradient(100deg,#2678ee,#8c5cf6);color:white;font-size:16px;font-weight:bold;cursor:pointer;margin-top:15px}
+.message{display:none;margin-top:15px;padding:12px;border-radius:10px;font-size:14px;line-height:1.5}
+.message.show{display:block}
+.message.error{background:#401d30;color:#ffb3c0}
+.message.success{background:#12382f;color:#8af0c7}
+.signup{text-align:center;margin-top:23px;color:#aab8d4;font-size:14px}
+.home{text-align:center;margin-top:25px}
+.home a{color:#aab8d4;text-decoration:none;font-size:13px}
+@media(max-width:750px){.login-wrap{grid-template-columns:1fr}.info{padding:25px}.info h1{font-size:31px}.info .features{display:none}.form-area{padding:30px 23px}}
+</style>
+</head>
+<body>
+<main class="login-wrap">
+<section class="info">
+<div class="brand">ENGLISH ZERO</div>
+<div>
+<div class="brand">WELCOME BACK</div>
+<h1>Continue your English journey.</h1>
+<p>Har kuni ozgina o‘rgan. Har kuni yangi bilim. Ingliz tilini bosqichma-bosqich egalla.</p>
+<div class="features">
+<div class="feature"><span>📚</span> Interaktiv ingliz tili darslari</div>
+<div class="feature"><span>🎯</span> Shaxsiy o‘quv maqsadlari</div>
+<div class="feature"><span>🏆</span> Yutuqlar va XP tizimi</div>
+</div>
+</div>
+<p>Learn smarter. Grow faster.</p>
+</section>
+
+<section class="form-area">
+<h2>Welcome back!</h2>
+<p class="muted">Hisobingga kirish uchun ma’lumotlaringni kirit.</p>
+
+<form id="loginForm">
+<label for="email">Email manzil</label>
+<input type="email" id="email" placeholder="example@gmail.com" autocomplete="email" required>
+
+<label for="password">Parol</label>
+<div class="password">
+<input type="password" id="password" placeholder="Parolingni kiriting" autocomplete="current-password" required>
+<button type="button" id="togglePassword">Ko‘rsatish</button>
+</div>
+
+<div class="row">
+<label class="remember"><input type="checkbox" id="remember"> Meni eslab qol</label>
+<a href="settings.html">Yordam</a>
+</div>
+
+<button class="submit" type="submit">Login →</button>
+<div class="message" id="message"></div>
+</form>
+
+<div class="signup">Hisobing yo‘qmi? <a href="register.html">Ro‘yxatdan o‘tish</a></div>
+<div class="home"><a href="../index.html">← Bosh sahifaga qaytish</a></div>
+</section>
+</main>
+
+<script>
+const form=document.getElementById("loginForm");
+const message=document.getElementById("message");
+const password=document.getElementById("password");
+
+document.getElementById("togglePassword").onclick=()=>{
+const visible=password.type==="password";
+password.type=visible?"text":"password";
+document.getElementById("togglePassword").textContent=visible?"Yashirish":"Ko‘rsatish";
+};
+
+form.addEventListener("submit",function(e){
+e.preventDefault();
+
+const email=document.getElementById("email").value.trim().toLowerCase();
+const pass=password.value;
+
+message.className="message";
+message.textContent="";
+
+if(!email||!pass){
+message.textContent="Barcha maydonlarni to‘ldir.";
+message.classList.add("show","error");
+return;
+}
+
+let users=[];
+try{users=JSON.parse(localStorage.getItem("ez_users")||"[]")}catch(error){users=[]}
+
+const user=users.find(u=>u.email===email&&u.password===pass);
+
+if(!user){
+message.textContent="Email yoki parol noto‘g‘ri. Ro‘yxatdan o‘tganingni tekshir.";
+message.classList.add("show","error");
+return;
+}
+
+const session={
+name:user.name,
+email:user.email,
+loginAt:new Date().toISOString()
+};
+
+localStorage.setItem("ez_session",JSON.stringify(session));
+
+message.textContent="Muvaffaqiyatli kirildi! Dashboard sahifasiga yo‘naltirilmoqda...";
+message.classList.add("show","success");
+
+setTimeout(()=>location.href="dashboard.html",700);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Progress | English ZERO</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080d1c;color:#eef2ff;font-family:Arial,sans-serif}.wrap{max-width:1100px;margin:auto;padding:24px 17px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:25px}.brand{color:#75e6ff;font-weight:900;letter-spacing:2px}.btn{border:1px solid #344365;background:#151f38;color:#fff;padding:11px 17px;border-radius:12px;text-decoration:none;cursor:pointer}.hero{padding:25px;border:1px solid #293957;border-radius:20px;background:linear-gradient(120deg,#17294b,#251d49);margin-bottom:20px}.hero h1{font-size:clamp(27px,5vw,39px);margin:8px 0}.muted{color:#aab8d4;line-height:1.6}.tag{font-size:12px;color:#65dff7;font-weight:bold;letter-spacing:1px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px}.stat,.panel{background:#10192e;border:1px solid #293957;border-radius:18px;padding:20px}.stat small{color:#aab8d4}.stat strong{display:block;font-size:30px;margin:9px 0;color:#75e6ff}.stat span{font-size:12px;color:#aab8d4}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:15px}.panel h2{margin-top:0}.levelLine{display:flex;justify-content:space-between;gap:10px;margin:16px 0 8px}.bar{height:10px;background:#26324c;border-radius:10px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,#36d9f4,#8d69ff);width:0}.levelBadge{display:inline-block;padding:8px 13px;background:#173b50;border:1px solid #28647b;border-radius:10px;color:#75e6ff;font-weight:bold}.activity{display:grid;gap:10px}.item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px;background:#151f38;border:1px solid #293957;border-radius:12px}.item small{display:block;color:#aab8d4;margin-top:5px}.xp{color:#70e8bb;font-weight:bold;white-space:nowrap}.empty{text-align:center;padding:25px;color:#aab8d4}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.reset{color:#ff9aab;border-color:#704052;background:#2c1928}@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:380px){.stat{padding:14px}.stat strong{font-size:24px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top"><div class="brand">ENGLISH ZERO</div><a class="btn" href="../index.html">← Bosh sahifa</a></header>
+<section class="hero">
+<div class="tag">YOUR LEARNING JOURNEY</div>
+<h1>My Progress 📊</h1>
+<p class="muted">O‘qish jarayoning, to‘plagan XP ballaring va oxirgi natijalaring shu yerda.</p>
+</section>
+
+<section class="stats">
+<div class="stat"><small>⭐ Jami XP</small><strong id="xp">0</strong><span>To‘plangan ball</span></div>
+<div class="stat"><small>📚 Bajarilgan</small><strong id="completed">0</strong><span>Mashq va testlar</span></div>
+<div class="stat"><small>✓ To‘g‘ri javob</small><strong id="correct">0</strong><span>Jami to‘g‘ri javoblar</span></div>
+<div class="stat"><small>🎯 Aniqlik</small><strong id="accuracy">0%</strong><span>To‘g‘ri javob foizi</span></div>
+</section>
+
+<section class="grid">
+<div class="panel">
+<div class="tag">LEVEL OVERVIEW</div>
+<h2>Daraja ko‘rsatkichi</h2>
+<div class="levelLine"><span>Hozirgi darajang</span><span class="levelBadge" id="level">A1 — Beginner</span></div>
+<p class="muted" id="levelDescription">Placement test topshirilmagan.</p>
+<div class="levelLine"><span>XP progress</span><b id="xpProgress">0 / 500 XP</b></div>
+<div class="bar"><span id="xpBar"></span></div>
+<p class="muted" id="nextLevel">Keyingi bosqichga chiqish uchun yana 500 XP to‘pla.</p>
+</div>
+<div class="panel">
+<div class="tag">LEARNING SUMMARY</div>
+<h2>O‘quv statistikasi</h2>
+<div class="item"><span>Jami javoblar</span><b id="total">0</b></div>
+<div class="item"><span>Oxirgi placement</span><b id="placementScore">—</b></div>
+<div class="item"><span>Oxirgi faollik</span><b id="lastActivity">—</b></div>
+</div>
+</section>
+
+<section class="panel" style="margin-top:16px">
+<div class="tag">RECENT ACTIVITY</div>
+<h2>Oxirgi natijalar</h2>
+<div class="activity" id="history"><div class="empty">Hozircha natijalar yo‘q. Mashq yoki test bajarib ko‘r!</div></div>
+<div class="actions">
+<a class="btn" href="practice.html">Mashq qilish →</a>
+<a class="btn" href="tests.html">Test ishlash →</a>
+<a class="btn" href="placement.html">Darajani aniqlash →</a>
+</div>
+</section>
+<section class="panel" style="margin-top:16px">
+<h2>Ma’lumotlarni boshqarish</h2>
+<p class="muted">Bu sahifadagi statistikalar ushbu brauzerda saqlanadi. Brauzer ma’lumotlarini tozalash natijalarni yo‘qotishi mumkin.</p>
+<button class="btn reset" id="reset">Statistikani tozalash</button>
+</section>
+</main>
+<script>
+const KEY="ez_learning_data_v1";
+const $=id=>document.getElementById(id);
+function readData(){
+const base={xp:0,correct:0,total:0,completed:0,history:[],placement:null};
+try{return {...base,...JSON.parse(localStorage.getItem(KEY)||"{}")}}catch(e){return base}
+}
+function formatDate(value){
+if(!value)return "—";
+const d=new Date(value);
+if(isNaN(d.getTime()))return "—";
+return d.toLocaleDateString("uz-UZ",{day:"2-digit",month:"short",year:"numeric"});
+}
+function render(){
+const d=readData(),xp=Number(d.xp)||0,correct=Number(d.correct)||0,total=Number(d.total)||0;
+const accuracy=total?Math.round(correct/total*100):0;
+$("xp").textContent=xp.toLocaleString("uz-UZ");
+$("completed").textContent=d.completed||0;
+$("correct").textContent=correct;
+$("accuracy").textContent=accuracy+"%";
+$("total").textContent=total;
+const placement=d.placement;
+if(placement){
+$("level").textContent=placement.level;
+$("levelDescription").textContent="Placement test natijasi: "+placement.score+" / "+placement.total+" ("+Math.round(placement.score/placement.total*100)+"%).";
+$("placementScore").textContent=placement.score+"/"+placement.total;
+}else{
+$("level").textContent="A1 — Beginner";
+$("levelDescription").textContent="Darajangni bilish uchun Placement Test topshir.";
+$("placementScore").textContent="—";
+}
+const milestones=[0,500,1200,2500,4500,7000];
+const names=["Beginner","Elementary","Pre-Intermediate","Intermediate","Upper-Intermediate","Advanced"];
+let stage=0;for(let i=0;i<milestones.length;i++){if(xp>=milestones[i])stage=i}
+let next=milestones[Math.min(stage+1,milestones.length-1)];
+let previous=milestones[stage];
+if(stage===milestones.length-1){
+$("xpProgress").textContent=xp+" XP — MAX";
+$("xpBar").style.width="100%";
+$("nextLevel").textContent="Ajoyib! Eng yuqori XP bosqichiga yetding.";
+}else{
+let percent=Math.max(0,Math.min(100,(xp-previous)/(next-previous)*100));
+$("xpProgress").textContent=xp+" / "+next+" XP";
+$("xpBar").style.width=percent+"%";
+$("nextLevel").textContent="Keyingi bosqich: "+names[stage+1]+". Yana "+Math.max(0,next-xp)+" XP kerak.";
+}
+const history=d.history||[];
+$("lastActivity").textContent=history.length?formatDate(history[0].date):"—";
+$("history").innerHTML="";
+if(!history.length){
+$("history").innerHTML='<div class="empty">Hozircha natijalar yo‘q. Mashq yoki test bajarib ko‘r!</div>';
+}else{
+history.slice(0,12).forEach(item=>{
+const row=document.createElement("div");row.className="item";
+const left=document.createElement("div"),title=document.createElement("b"),date=document.createElement("small");
+title.textContent=item.name||"O‘quv mashqi";date.textContent=formatDate(item.date)+" · "+(item.score??0)+"/"+(item.total??0)+" to‘g‘ri";
+left.append(title,date);
+const right=document.createElement("span");right.className="xp";right.textContent="+"+(item.xp||0)+" XP";
+row.append(left,right);$("history").appendChild(row);
+});
+}
+}
+$("reset").onclick=()=>{
+if(confirm("Barcha English ZERO statistikalarini o‘chirishni xohlaysanmi?")){
+localStorage.removeItem(KEY);render();
+}
+};
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1b">
+<title>Reading — English Zero</title>
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.reading-page {
+  max-width: 1200px;
+  margin: auto;
+  padding: 35px 20px 70px;
+}
+.reading-hero {
+  padding: 30px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: linear-gradient(130deg,#171c3c,#102b40);
+  margin-bottom: 25px;
+}
+.reading-hero h1 {font-size:clamp(27px,5vw,42px);margin:12px 0}
+.reading-hero p {color:var(--muted);line-height:1.7;max-width:650px}
+.reading-label {
+  color:var(--cyan);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+.reading-levels {
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin:22px 0;
+}
+.level-btn,.action-btn,.lesson-btn {
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  padding:11px 17px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:700;
+}
+.level-btn.active,.action-btn.primary {
+  background:linear-gradient(120deg,#7555ed,#287edc);
+  border-color:transparent;
+  color:white;
+}
+.reading-layout {
+  display:grid;
+  grid-template-columns:280px minmax(0,1fr);
+  gap:20px;
+  align-items:start;
+}
+.reading-panel,.reading-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:20px;
+  min-width:0;
+}
+.reading-panel h3,.reading-card h3 {margin:0 0 15px}
+.lesson-list {display:grid;gap:10px}
+.lesson-btn {
+  width:100%;
+  text-align:left;
+  padding:14px;
+  line-height:1.5;
+}
+.lesson-btn small {
+  display:block;
+  color:var(--muted);
+  margin-top:5px;
+  font-weight:400;
+}
+.lesson-btn.active {
+  border-color:var(--purple);
+  background:#242044;
+}
+.reading-content {min-width:0}
+.reading-toolbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:15px;
+}
+.reading-stats {
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+.stat-chip {
+  background:var(--surface-light);
+  border:1px solid var(--border);
+  padding:8px 12px;
+  border-radius:10px;
+  font-size:13px;
+  color:var(--muted);
+}
+.progress-track {
+  height:7px;
+  background:var(--surface-light);
+  border-radius:20px;
+  overflow:hidden;
+  margin:14px 0 20px;
+}
+.progress-fill {
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#7457ee,#21c5d9);
+  transition:width .3s;
+}
+.article-title {font-size:25px;margin:0 0 10px}
+.article-meta {color:var(--muted);font-size:13px;margin-bottom:20px}
+.article-text {
+  font-size:17px;
+  line-height:2;
+  color:var(--text);
+  overflow-wrap:anywhere;
+}
+.word {
+  cursor:pointer;
+  border-radius:4px;
+  padding:1px 2px;
+  transition:.2s;
+}
+.word:hover,.word:focus {
+  background:#34305d;
+  color:#a99aff;
+  outline:none;
+}
+.word-info {
+  display:none;
+  background:#172a3a;
+  border:1px solid #28516a;
+  padding:13px;
+  border-radius:12px;
+  margin:15px 0;
+  color:#bfefff;
+}
+.translation {
+  display:none;
+  padding:17px;
+  margin-top:15px;
+  border-radius:13px;
+  background:#1c2039;
+  line-height:1.9;
+  color:#d4d5f5;
+}
+.article-actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:20px;
+}
+.vocabulary-list {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+  gap:10px;
+}
+.vocab-item {
+  padding:12px;
+  background:var(--surface-light);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+.vocab-item strong {display:block;margin-bottom:5px}
+.vocab-item span {color:var(--muted);font-size:13px}
+.section-gap {margin-top:20px}
+.question {
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  margin:12px 0;
+}
+.question h4 {margin:0 0 13px;line-height:1.6}
+.answer-options {display:grid;gap:9px}
+.answer-option {
+  text-align:left;
+  padding:12px 14px;
+  background:var(--surface-light);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:10px;
+  cursor:pointer;
+  line-height:1.5;
+}
+.answer-option.selected {border-color:var(--purple);background:#28234a}
+.answer-option.correct {border-color:#20bd88;background:#123b32}
+.answer-option.wrong {border-color:#e16c75;background:#46232b}
+.answer-option:disabled {cursor:default;opacity:1}
+.result-box {
+  display:none;
+  padding:17px;
+  border:1px solid var(--border);
+  background:var(--surface-light);
+  border-radius:14px;
+  margin-top:15px;
+  line-height:1.7;
+}
+.empty-state {
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+}
+@media(max-width:760px) {
+  .reading-layout {grid-template-columns:1fr}
+  .reading-page {padding:20px 13px 50px}
+  .reading-hero {padding:22px}
+  .reading-panel {order:1}
+  .reading-content {order:2}
+  .article-text {font-size:16px}
+}
+</style>
+</head>
+
+<body>
+<header class="site-header">
+  <a href="../index.html" class="logo">ENGLISH <span>ZERO</span></a>
+  <nav>
+    <a href="../index.html">Bosh sahifa</a>
+    <a href="courses.html">Kurslar</a>
+    <a href="progress.html">Natijalar</a>
+  </nav>
+</header>
+
+<main class="reading-page">
+
+<section class="reading-hero">
+  <div class="reading-label">READING CENTER</div>
+  <h1>Reading — O‘qib tushunish</h1>
+  <p>
+    Ingliz tilidagi matnlarni o‘qing, yangi so‘zlarni o‘rganing,
+    matn mazmunini tushuning va savollarga javob bering.
+  </p>
+  <div class="reading-stats">
+    <div class="stat-chip">📚 Matnlar: <strong id="totalLessons">8</strong></div>
+    <div class="stat-chip">✅ Tugatilgan: <strong id="completedCount">0</strong></div>
+    <div class="stat-chip">⏱ O‘qish vaqti: <strong id="timer">00:00</strong></div>
+  </div>
+</section>
+
+<div class="reading-label">DARAJANI TANLANG</div>
+<div class="reading-levels" id="levels">
+  <button class="level-btn active" data-level="A1">A1 Beginner</button>
+  <button class="level-btn" data-level="A2">A2 Elementary</button>
+  <button class="level-btn" data-level="B1">B1 Intermediate</button>
+  <button class="level-btn" data-level="B2">B2 Upper-Intermediate</button>
+  <button class="level-btn" data-level="C1">C1 Advanced</button>
+  <button class="level-btn" data-level="C2">C2 Proficiency</button>
+</div>
+
+<div class="reading-layout">
+
+<aside class="reading-panel">
+  <h3>📖 Reading darslari</h3>
+  <div class="lesson-list" id="lessonList"></div>
+</aside>
+
+<section class="reading-content">
+
+<div class="reading-toolbar">
+  <div class="reading-label" id="currentLevel">A1 LEVEL</div>
+  <div class="reading-stats">
+    <div class="stat-chip">⭐ <span id="lessonXP">20 XP</span></div>
+    <div class="stat-chip">📄 <span id="wordCount">0 words</span></div>
+  </div>
+</div>
+
+<div class="progress-track">
+  <div class="progress-fill" id="readProgress"></div>
+</div>
+
+<article class="reading-card">
+  <h2 class="article-title" id="articleTitle">Darsni tanlang</h2>
+  <div class="article-meta" id="articleMeta">English Zero Reading Course</div>
+
+  <div class="article-text" id="articleText">
+    Chap tomondagi darslardan birini tanlang.
+  </div>
+
+  <div class="word-info" id="wordInfo"></div>
+
+  <div class="translation" id="translation"></div>
+
+  <div class="article-actions">
+    <button class="action-btn" id="translationBtn">🇺🇿 Tarjimani ko‘rsatish</button>
+    <button class="action-btn" id="vocabBtn">📚 Lug‘at</button>
+    <button class="action-btn" id="startReadBtn">▶ O‘qishni boshlash</button>
+  </div>
+</article>
+
+<section class="reading-card section-gap" id="vocabSection" hidden>
+  <h3>📚 Muhim so‘zlar</h3>
+  <div class="vocabulary-list" id="vocabularyList"></div>
+</section>
+
+<section class="reading-card section-gap" id="quizSection">
+  <h3>🧠 Reading Comprehension</h3>
+  <p style="color:var(--muted);line-height:1.6">
+    Matnni diqqat bilan o‘qing va savollarga javob bering.
+  </p>
+  <div id="questions">
+    <div class="empty-state">Avval darsni tanlang.</div>
+  </div>
+  <button class="action-btn primary" id="checkBtn" disabled>Javoblarni tekshirish</button>
+  <div class="result-box" id="resultBox"></div>
+  <button class="action-btn" id="retryBtn" style="display:none">🔄 Qayta ishlash</button>
+  <button class="action-btn primary" id="finishBtn" style="display:none">Darsni yakunlash →</button>
+</section>
+
+</section>
+</div>
+</main>
+
+<script src="../script.js"></script>
+<script>
+const readingLessons = [
+{
+ id:"a1-family",level:"A1",title:"My Family",time:3,
+ text:"My name is Anna. I am twelve years old. I live with my family in a small house. My father is a teacher and my mother is a doctor. I have one brother and one sister. We like spending time together. Every Sunday, we visit our grandparents. My family is very important to me.",
+ translation:"Mening ismim Anna. Men o‘n ikki yoshdaman. Men oilam bilan kichik uyda yashayman. Otam o‘qituvchi, onam esa shifokor. Mening bitta akam va bitta singlim bor. Biz birga vaqt o‘tkazishni yaxshi ko‘ramiz. Har yakshanba kuni bobom va buvimni ko‘rgani boramiz. Mening oilam men uchun juda muhim.",
+ words:[["family","oila"],["together","birgalikda"],["important","muhim"],["grandparents","bobo va buvi"],["spending","o‘tkazish"]],
+ questions:[
+ ["How old is Anna?",["Ten","Twelve","Fourteen","Sixteen"],1],
+ ["What is Anna's father?",["A doctor","A driver","A teacher","A cook"],2],
+ ["Where do they go on Sundays?",["To school","To the park","To work","To their grandparents"],3],
+ ["How many siblings does Anna have?",["One","Two","Three","Four"],1]
+ ]
+},
+{
+ id:"a1-day",level:"A1",title:"My Daily Routine",time:3,
+ text:"I wake up at seven o'clock every morning. First, I wash my face and brush my teeth. Then I have breakfast with my family. I go to school at eight o'clock. My lessons finish in the afternoon. After school, I do my homework and play with my friends. In the evening, I read a book and go to bed at ten.",
+ translation:"Men har kuni ertalab soat yettida uyg‘onaman. Avval yuzimni yuvaman va tishlarimni tozalayman. Keyin oilam bilan nonushta qilaman. Soat sakkizda maktabga boraman. Darslarim tushdan keyin tugaydi. Maktabdan so‘ng uy vazifamni bajaraman va do‘stlarim bilan o‘ynayman. Kechqurun kitob o‘qiyman va soat o‘nda uxlayman.",
+ words:[["wake up","uyg‘onmoq"],["brush","tozalamoq"],["breakfast","nonushta"],["afternoon","tushdan keyin"],["homework","uy vazifasi"]],
+ questions:[
+ ["When does the writer wake up?",["At six","At seven","At eight","At nine"],1],
+ ["What does the writer do first?",["Has breakfast","Goes to school","Washes their face","Reads a book"],2],
+ ["When do the lessons finish?",["In the morning","At night","In the afternoon","At midnight"],2],
+ ["What does the writer do in the evening?",["Reads a book","Goes swimming","Works","Cooks dinner"],0]
+ ]
+},
+{
+ id:"a2-weekend",level:"A2",title:"A Weekend Trip",time:4,
+ text:"Last weekend, my family and I travelled to a beautiful mountain village. We left home early in the morning because we wanted to enjoy the whole day. The weather was sunny and the air was fresh. We walked along a mountain path, took photographs and had a picnic near a river. In the afternoon, we visited a small local museum. It was an unforgettable trip, and we hope to return next summer.",
+ translation:"O‘tgan dam olish kunlari oilam bilan chiroyli tog‘ qishlog‘iga sayohat qildik. Butun kunni maroqli o‘tkazishni xohlaganimiz uchun ertalab uyimizdan erta chiqdik. Havo quyoshli, atrof esa toza edi. Tog‘ yo‘li bo‘ylab yurdik, suratga tushdik va daryo yaqinida piknik qildik. Tushdan keyin kichik mahalliy muzeyga bordik. Bu unutilmas sayohat bo‘ldi va kelasi yozda yana qaytishni umid qilamiz.",
+ words:[["travelled","sayohat qildi"],["village","qishloq"],["fresh","toza"],["path","so‘qmoq"],["unforgettable","unutilmas"]],
+ questions:[
+ ["Where did the family go?",["To a beach","To a mountain village","To a city","To a forest"],1],
+ ["Why did they leave early?",["It was raining","They were tired","They wanted the whole day","The museum was closing"],2],
+ ["What did they do near the river?",["Swam","Had a picnic","Fished","Built a house"],1],
+ ["When do they hope to return?",["Next winter","Next spring","Next summer","Next week"],2]
+ ]
+},
+{
+ id:"a2-shopping",level:"A2",title:"At the Shopping Centre",time:4,
+ text:"Sarah needed a new pair of shoes, so she went to the shopping centre with her cousin. They visited several shops before finding a comfortable pair of trainers. The shoes were not cheap, but they were good quality. Sarah also bought a notebook and a birthday card for her friend. Before going home, they stopped at a cafe and shared a piece of chocolate cake.",
+ translation:"Sarahga yangi oyoq kiyim kerak edi, shuning uchun u amakivachchasi bilan savdo markaziga bordi. Qulay sport oyoq kiyimini topishdan oldin bir nechta do‘konga kirishdi. Oyoq kiyim arzon emas edi, ammo sifati yaxshi edi. Sarah yana daftar va do‘sti uchun tug‘ilgan kun tabriknomasini sotib oldi. Uyga qaytishdan oldin kafega kirib, shokoladli tort bo‘lagini bo‘lishib yeyishdi.",
+ words:[["several","bir nechta"],["comfortable","qulay"],["quality","sifat"],["notebook","daftar"],["shared","bo‘lishib oldi"]],
+ questions:[
+ ["Why did Sarah go shopping?",["To buy shoes","To meet a teacher","To buy food","To find a book"],0],
+ ["Who went with Sarah?",["Her mother","Her cousin","Her friend","Her sister"],1],
+ ["What were the trainers like?",["Cheap and old","Uncomfortable","Good quality","Too small"],2],
+ ["What did they eat at the cafe?",["Ice cream","Pizza","Chocolate cake","Sandwiches"],2]
+ ]
+},
+{
+ id:"b1-learning",level:"B1",title:"Learning a New Language",time:5,
+ text:"Learning a foreign language requires patience, regular practice and curiosity. Many students make the mistake of memorising long lists of words without using them in real situations. A more effective method is to combine reading, listening, speaking and writing every day. Watching films with subtitles can improve listening skills, while keeping a diary helps learners practise writing. Making mistakes is a natural part of the process. The most important thing is to continue learning and use every opportunity to communicate.",
+ translation:"Chet tilini o‘rganish sabr, muntazam mashq va qiziquvchanlikni talab qiladi. Ko‘plab o‘quvchilar so‘zlarni haqiqiy vaziyatlarda ishlatmasdan, uzun ro‘yxatlarni yodlash xatosiga yo‘l qo‘yadilar. Samaraliroq usul — har kuni o‘qish, tinglash, gapirish va yozishni birlashtirish. Subtitrli filmlarni tomosha qilish tinglab tushunish ko‘nikmasini yaxshilaydi, kundalik yuritish esa yozishni mashq qilishga yordam beradi. Xato qilish jarayonning tabiiy qismidir. Eng muhimi — o‘rganishda davom etish va muloqot qilish uchun har qanday imkoniyatdan foydalanish.",
+ words:[["requires","talab qiladi"],["curiosity","qiziquvchanlik"],["memorising","yodlash"],["effective","samarali"],["opportunity","imkoniyat"]],
+ questions:[
+ ["What does language learning require?",["Only talent","Patience and practice","Expensive books","A teacher every day"],1],
+ ["What is a more effective method?",["Only memorising words","Avoiding speaking","Combining four skills","Studying once a week"],2],
+ ["How can films help?",["Improve listening","Teach mathematics","Replace all lessons","Improve handwriting"],0],
+ ["According to the text, mistakes are...",["A reason to stop","A natural part of learning","Always harmful","Unnecessary"],1]
+ ]
+},
+{
+ id:"b1-environment",level:"B1",title:"Protecting the Environment",time:5,
+ text:"Environmental protection is one of the most important challenges facing modern society. Everyday choices can have a significant effect on the planet. People can reduce waste by using reusable bags, repairing old objects and recycling materials. Saving electricity and water is also important. Communities can organise clean-up events and plant trees in public spaces. Although individual actions may seem small, millions of people making responsible choices can create meaningful change.",
+ translation:"Atrof-muhitni himoya qilish zamonaviy jamiyat oldidagi eng muhim muammolardan biridir. Kundalik tanlovlar sayyoraga sezilarli ta'sir ko‘rsatishi mumkin. Odamlar qayta ishlatiladigan sumkalardan foydalanish, eski buyumlarni ta'mirlash va materiallarni qayta ishlash orqali chiqindilarni kamaytirishlari mumkin. Elektr va suvni tejash ham muhim. Jamoalar tozalash tadbirlarini tashkil qilishi va jamoat joylariga daraxt ekishi mumkin. Alohida harakatlar kichik ko‘rinsa-da, millionlab insonlarning mas'uliyatli tanlovlari muhim o‘zgarish yaratishi mumkin.",
+ words:[["environmental","atrof-muhitga oid"],["significant","sezilarli"],["reusable","qayta ishlatiladigan"],["communities","jamoalar"],["responsible","mas'uliyatli"]],
+ questions:[
+ ["What is the text mainly about?",["Technology","Environmental protection","Travelling","Education"],1],
+ ["How can people reduce waste?",["Buy more things","Use reusable bags","Waste more water","Avoid recycling"],1],
+ ["What can communities organise?",["Clean-up events","Shopping trips","Sports exams","Music lessons"],0],
+ ["What can millions of responsible people create?",["More pollution","Meaningful change","More traffic","Less education"],1]
+ ]
+},
+{
+ id:"b2-social",level:"B2",title:"The Influence of Social Media",time:6,
+ text:"Social media has transformed the way people communicate, share information and maintain relationships. It allows users to connect across geographical boundaries and discover different perspectives. However, its convenience comes with challenges. The constant flow of information can make it difficult to distinguish reliable sources from misleading content. Excessive use may also affect concentration and reduce the time people spend interacting face to face. Developing digital literacy and setting reasonable limits can help individuals benefit from social media without allowing it to dominate their daily lives.",
+ translation:"Ijtimoiy tarmoqlar odamlarning muloqot qilish, ma'lumot almashish va munosabatlarni saqlash usulini o‘zgartirdi. U foydalanuvchilarga geografik chegaralardan qat'i nazar bog‘lanish va turli qarashlarni kashf qilish imkonini beradi. Biroq, bu qulaylik ayrim muammolar bilan birga keladi. Tinimsiz axborot oqimi ishonchli manbalarni chalg‘ituvchi kontentdan ajratishni qiyinlashtirishi mumkin. Haddan tashqari foydalanish diqqatga ta'sir qilishi va yuzma-yuz muloqot vaqtini kamaytirishi mumkin. Raqamli savodxonlikni rivojlantirish va oqilona cheklovlar belgilash ijtimoiy tarmoqlardan foydali foydalanishga yordam beradi.",
+ words:[["transformed","o‘zgartirdi"],["boundaries","chegaralar"],["misleading","chalg‘ituvchi"],["excessive","haddan tashqari"],["literacy","savodxonlik"]],
+ questions:[
+ ["What has social media transformed?",["Only education","Communication and relationships","Transport","Weather"],1],
+ ["What can be difficult for users?",["Finding friends","Distinguishing reliable sources","Opening websites","Learning to type"],1],
+ ["What may excessive use affect?",["Concentration","Height","Weather","Transport"],0],
+ ["What does the text recommend?",["Never use technology","Share everything","Develop digital literacy","Avoid all communication"],2]
+ ]
+},
+{
+ id:"c1-critical",level:"C1",title:"Critical Thinking in Education",time:7,
+ text:"Critical thinking is increasingly recognised as an essential component of effective education. Rather than simply accepting information, learners are encouraged to examine evidence, identify assumptions and evaluate competing explanations. This approach enables students to develop independent judgement and make informed decisions. Nevertheless, critical thinking does not mean rejecting every claim or treating all opinions as equally valid. It requires intellectual openness alongside careful evaluation. Educational institutions can support this process by encouraging discussion, asking challenging questions and creating opportunities for students to investigate real-world problems.",
+ translation:"Tanqidiy fikrlash samarali ta'limning muhim tarkibiy qismi sifatida tobora ko‘proq e'tirof etilmoqda. Ma'lumotni shunchaki qabul qilish o‘rniga, o‘quvchilar dalillarni tekshirish, taxminlarni aniqlash va raqobat qiluvchi izohlarni baholashga undaladi. Bu yondashuv mustaqil fikr va asoslangan qarorlar qabul qilish imkonini beradi. Shunga qaramay, tanqidiy fikrlash har bir da'voni rad etish yoki barcha fikrlarni bir xil darajada to‘g‘ri deb hisoblash degani emas. Bu sinchkov baholash bilan birga fikrga ochiqlikni ham talab qiladi. Ta'lim muassasalari munozaralar, murakkab savollar va haqiqiy muammolarni o‘rganish imkoniyatlari orqali bu jarayonni qo‘llab-quvvatlashi mumkin.",
+ words:[["component","tarkibiy qism"],["assumptions","taxminlar"],["competing","raqobat qiluvchi"],["judgement","mulohaza"],["intellectual","intellektual"]],
+ questions:[
+ ["What is the main purpose of critical thinking?",["Memorising everything","Evaluating information","Avoiding questions","Accepting every claim"],1],
+ ["What does critical thinking require?",["Intellectual openness and evaluation","Rejecting all opinions","Avoiding evidence","Following popular ideas"],0],
+ ["How can institutions support it?",["Discourage discussion","Remove difficult tasks","Encourage discussion","Limit investigation"],2],
+ ["What does the passage suggest about opinions?",["All are equally valid","All should be rejected","They should be evaluated carefully","They should never be discussed"],2]
+ ]
+},
+{
+ id:"c2-language",level:"C2",title:"Language, Culture and Identity",time:8,
+ text:"Language is far more than a mechanism for exchanging information; it is deeply intertwined with cultural memory, social identity and the ways communities interpret the world. Expressions that appear equivalent across languages may carry distinct historical associations or emotional implications. Consequently, translation involves more than replacing individual words: it requires sensitivity to context, audience and cultural nuance. As global communication expands, preserving linguistic diversity becomes increasingly significant, since the disappearance of a language may also mean the loss of unique knowledge, traditions and perspectives.",
+ translation:"Til ma'lumot almashish vositasidan ancha keng tushunchadir; u madaniy xotira, ijtimoiy o‘zlik va jamoalarning dunyoni talqin qilish usullari bilan chambarchas bog‘liq. Turli tillarda bir xil ko‘ringan iboralar o‘ziga xos tarixiy bog‘lanish yoki hissiy ma'nolarga ega bo‘lishi mumkin. Shu sababli tarjima alohida so‘zlarni almashtirishdan ko‘proq narsani talab qiladi: u kontekst, auditoriya va madaniy noziklikni hisobga olishni talab etadi. Global muloqot kengaygani sari til xilma-xilligini saqlash muhimlashmoqda, chunki bir tilning yo‘qolishi noyob bilimlar, an'analar va qarashlarning ham yo‘qolishini anglatishi mumkin.",
+ words:[["intertwined","chambarchas bog‘langan"],["associations","bog‘lanishlar"],["implications","mazmuniy oqibatlar"],["nuance","nozik farq"],["linguistic","tilga oid"]],
+ questions:[
+ ["What is language deeply connected with?",["Only grammar","Cultural memory and identity","Only technology","Mathematics"],1],
+ ["Why is translation complex?",["Words have no meaning","It requires cultural sensitivity","All languages are identical","It avoids context"],1],
+ ["What may language disappearance cause?",["More communication","Loss of unique knowledge","Better translation","More vocabulary"],1],
+ ["What is the central message?",["Languages should be identical","Culture is unimportant","Linguistic diversity matters","Translation is impossible"],2]
+ ]
+}
+];
+
+const $ = id => document.getElementById(id);
+let currentLevel="A1";
+let currentLesson=null;
+let answers={};
+let checked=false;
+let seconds=0;
+let timerInterval=null;
+let readStarted=false;
+
+function completed(){
+ try{return JSON.parse(localStorage.getItem("ez_reading_completed")||"[]")}
+ catch(e){return []}
+}
+function saveCompleted(id){
+ const list=completed();
+ if(!list.includes(id)){
+  list.push(id);
+  localStorage.setItem("ez_reading_completed",JSON.stringify(list));
+ }
+}
+function updateStats(){
+ $("completedCount").textContent=completed().length;
+}
+function startTimer(){
+ if(timerInterval)return;
+ timerInterval=setInterval(()=>{
+  seconds++;
+  $("timer").textContent=
+   String(Math.floor(seconds/60)).padStart(2,"0")+":"+
+   String(seconds%60).padStart(2,"0");
+ },1000);
+}
+function stopTimer(){
+ clearInterval(timerInterval);
+ timerInterval=null;
+}
+function renderList(){
+ const list=readingLessons.filter(x=>x.level===currentLevel);
+ $("lessonList").innerHTML="";
+ list.forEach((lesson)=>{
+  const button=document.createElement("button");
+  button.className="lesson-btn"+(currentLesson?.id===lesson.id?" active":"");
+  button.innerHTML=
+   `${completed().includes(lesson.id)?"✅ ":"📖 "}${lesson.title}
+   <small>${lesson.level} · ${lesson.time} daqiqa</small>`;
+  button.addEventListener("click",()=>loadLesson(lesson.id));
+  $("lessonList").appendChild(button);
+ });
+}
+function loadLesson(id){
+ currentLesson=readingLessons.find(x=>x.id===id);
+ if(!currentLesson)return;
+ currentLevel=currentLesson.level;
+ answers={};
+ checked=false;
+ readStarted=false;
+ stopTimer();
+ seconds=0;
+ $("timer").textContent="00:00";
+ $("currentLevel").textContent=currentLesson.level+" LEVEL";
+ $("articleTitle").textContent=currentLesson.title;
+ $("articleMeta").textContent="English Zero · "+currentLesson.time+" daqiqa";
+ $("wordCount").textContent=currentLesson.text.trim().split(/\s+/).length+" words";
+ $("articleText").innerHTML=currentLesson.text.split(/(\s+)/).map(part=>{
+  if(!part.trim())return part;
+  const clean=part.replace(/[.,!?;:"()]/g,"");
+  const found=currentLesson.words.find(w=>w[0].toLowerCase()===clean.toLowerCase());
+  if(!found)return part;
+  return `<span class="word" tabindex="0" data-word="${found[0]}">${part}</span>`;
+ }).join("");
+ $("wordInfo").style.display="none";
+ $("translation").style.display="none";
+ $("translation").textContent=currentLesson.translation;
+ $("translationBtn").textContent="🇺🇿 Tarjimani ko‘rsatish";
+ $("vocabSection").hidden=true;
+ $("readProgress").style.width="0%";
+ $("lessonXP").textContent="20 XP";
+ $("resultBox").style.display="none";
+ $("retryBtn").style.display="none";
+ $("finishBtn").style.display="none";
+ $("checkBtn").disabled=false;
+ renderVocabulary();
+ renderQuestions();
+ renderList();
+}
+function renderVocabulary(){
+ $("vocabularyList").innerHTML=currentLesson.words.map(w=>
+  `<div class="vocab-item"><strong>${w[0]}</strong><span>${w[1]}</span></div>`
+ ).join("");
+}
+function renderQuestions(){
+ $("questions").innerHTML=currentLesson.questions.map((q,i)=>`
+ <div class="question" data-question="${i}">
+  <h4>${i+1}. ${q[0]}</h4>
+  <div class="answer-options">
+   ${q[1].map((option,j)=>`
+    <button class="answer-option" data-q="${i}" data-a="${j}">
+     ${String.fromCharCode(65+j)}. ${option}
+    </button>`).join("")}
+  </div>
+ </div>`).join("");
+ $("questions").querySelectorAll(".answer-option").forEach(button=>{
+  button.addEventListener("click",()=>{
+   if(checked)return;
+   const q=Number(button.dataset.q);
+   const a=Number(button.dataset.a);
+   answers[q]=a;
+   $("questions").querySelectorAll(`[data-question="${q}"] .answer-option`)
+    .forEach(b=>b.classList.toggle("selected",b===button));
+  });
+ });
+}
+$("articleText").addEventListener("click",e=>{
+ const word=e.target.closest(".word");
+ if(!word)return;
+ const item=currentLesson.words.find(w=>w[0]===word.dataset.word);
+ if(!item)return;
+ $("wordInfo").textContent=item[0]+" — "+item[1];
+ $("wordInfo").style.display="block";
+});
+$("articleText").addEventListener("keydown",e=>{
+ if(e.key==="Enter"||e.key===" "){
+  const word=e.target.closest(".word");
+  if(word){e.preventDefault();word.click()}
+ }
+});
+$("translationBtn").addEventListener("click",()=>{
+ if(!currentLesson)return;
+ const el=$("translation");
+ const show=el.style.display!=="block";
+ el.style.display=show?"block":"none";
+ $("translationBtn").textContent=show?"🇬🇧 Tarjimani yashirish":"🇺🇿 Tarjimani ko‘rsatish";
+});
+$("vocabBtn").addEventListener("click",()=>{
+ if(!currentLesson)return;
+ $("vocabSection").hidden=!$("vocabSection").hidden;
+});
+$("startReadBtn").addEventListener("click",()=>{
+ if(!currentLesson)return;
+ readStarted=true;
+ startTimer();
+ $("readProgress").style.width="100%";
+ $("startReadBtn").textContent="✓ Matn o‘qildi";
+});
+$("levels").addEventListener("click",e=>{
+ const btn=e.target.closest(".level-btn");
+ if(!btn)return;
+ currentLevel=btn.dataset.level;
+ $("levels").querySelectorAll(".level-btn").forEach(b=>
+  b.classList.toggle("active",b===btn));
+ currentLesson=null;
+ $("articleTitle").textContent="Darsni tanlang";
+ $("articleText").textContent="Chap tomondagi darslardan birini tanlang.";
+ $("wordCount").textContent="0 words";
+ $("questions").innerHTML='<div class="empty-state">Avval darsni tanlang.</div>';
+ $("checkBtn").disabled=true;
+ $("translation").style.display="none";
+ $("vocabSection").hidden=true;
+ $("readProgress").style.width="0%";
+ $("resultBox").style.display="none";
+ $("retryBtn").style.display="none";
+ $("finishBtn").style.display="none";
+ stopTimer();
+ renderList();
+});
+$("checkBtn").addEventListener("click",()=>{
+ if(!currentLesson||checked)return;
+ if(Object.keys(answers).length!==currentLesson.questions.length){
+  alert("Iltimos, barcha savollarga javob bering.");
+  return;
+ }
+ checked=true;
+ let score=0;
+ currentLesson.questions.forEach((q,i)=>{
+  const correct=q[2];
+  if(answers[i]===correct)score++;
+  $("questions").querySelectorAll(`[data-question="${i}"] .answer-option`)
+   .forEach((b,j)=>{
+    b.disabled=true;
+    if(j===correct)b.classList.add("correct");
+    else if(j===answers[i])b.classList.add("wrong");
+   });
+ });
+ const percent=Math.round(score/currentLesson.questions.length*100);
+ $("resultBox").style.display="block";
+ $("resultBox").innerHTML=
+  `<strong>Natija: ${score}/${currentLesson.questions.length} (${percent}%)</strong>
+  <p>${percent>=75?"Ajoyib! Matnni yaxshi tushundingiz.":"Yaxshi harakat! Matnni qayta o‘qib, yana urinib ko‘ring."}</p>`;
+ $("checkBtn").disabled=true;
+ $("retryBtn").style.display="inline-block";
+ if(percent>=75){
+  $("finishBtn").style.display="inline-block";
+ }
+});
+$("retryBtn").addEventListener("click",()=>{
+ if(!currentLesson)return;
+ answers={};
+ checked=false;
+ $("resultBox").style.display="none";
+ $("retryBtn").style.display="none";
+ $("finishBtn").style.display="none";
+ $("checkBtn").disabled=false;
+ renderQuestions();
+});
+$("finishBtn").addEventListener("click",()=>{
+ if(!currentLesson)return;
+ const already=completed().includes(currentLesson.id);
+ if(!already){
+  saveCompleted(currentLesson.id);
+  if(window.EnglishZero){
+   EnglishZero.addXP(20);
+   EnglishZero.completeLesson();
+  }
+ }
+ updateStats();
+ renderList();
+ $("finishBtn").textContent="✓ Dars yakunlandi";
+ $("finishBtn").disabled=true;
+});
+
+document.querySelectorAll(".level-btn").forEach(btn=>{
+ btn.addEventListener("keydown",e=>{
+  if(e.key==="Enter"||e.key===" ")btn.click();
+ });
+});
+
+$("totalLessons").textContent=readingLessons.length;
+updateStats();
+renderList();
+loadLesson("a1-family");
+</script>
+</body>
+</html>

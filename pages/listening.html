@@ -1,0 +1,996 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d1a">
+  <title>Listening Center | English Zero</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .listen-page {
+      width: min(1150px, 94%);
+      margin: 35px auto 70px;
+    }
+
+    .ls-hero {
+      padding: 32px;
+      border-radius: 24px;
+      border: 1px solid rgba(90,180,255,.2);
+      background:
+        radial-gradient(circle at 90% 10%,rgba(45,160,255,.2),transparent 38%),
+        linear-gradient(135deg,#142641,#111a32);
+      margin-bottom: 25px;
+    }
+
+    .ls-label {
+      color: #71c9ff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .ls-hero h1 {
+      font-size: clamp(29px,5vw,43px);
+      margin: 12px 0;
+    }
+
+    .ls-hero p {
+      color: #aabbd2;
+      line-height: 1.7;
+      max-width: 680px;
+    }
+
+    .ls-stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .ls-stat {
+      padding: 15px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .ls-stat strong {
+      display: block;
+      font-size: 23px;
+    }
+
+    .ls-stat span {
+      color: #aabbd2;
+      font-size: 12px;
+    }
+
+    .ls-section {
+      margin-top: 25px;
+      padding: 24px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.09);
+      background: rgba(20,25,45,.9);
+      min-width: 0;
+    }
+
+    .ls-section h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .ls-muted {
+      color: #9da9c1;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .ls-levels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 16px;
+    }
+
+    .ls-level {
+      padding: 10px 15px;
+      border-radius: 30px;
+      background: #18243a;
+      color: #b9c9df;
+      border: 1px solid rgba(255,255,255,.1);
+      cursor: pointer;
+    }
+
+    .ls-level.active {
+      background: #245d8b;
+      border-color: #56b9ff;
+      color: white;
+    }
+
+    .ls-lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 13px;
+      margin-top: 20px;
+    }
+
+    .ls-lesson {
+      padding: 18px;
+      border-radius: 15px;
+      border: 1px solid rgba(255,255,255,.09);
+      background: #151e33;
+      color: white;
+      text-align: left;
+      cursor: pointer;
+      transition: .2s;
+      min-width: 0;
+    }
+
+    .ls-lesson:hover,
+    .ls-lesson.active {
+      border-color: #55b9ff;
+      background: #1d2d49;
+      transform: translateY(-2px);
+    }
+
+    .ls-lesson .emoji {
+      font-size: 26px;
+    }
+
+    .ls-lesson h3 {
+      font-size: 16px;
+      margin: 12px 0 7px;
+    }
+
+    .ls-lesson p {
+      color: #9daec6;
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .ls-lesson small {
+      display: block;
+      margin-top: 12px;
+      color: #70caff;
+    }
+
+    .ls-player {
+      padding: 22px;
+      margin-top: 20px;
+      border-radius: 17px;
+      background:
+        radial-gradient(circle at top right,rgba(50,140,255,.14),transparent 40%),
+        #121d32;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .ls-player-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .ls-play-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg,#278bd3,#6259db);
+      font-size: 23px;
+    }
+
+    .ls-player-title {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .ls-player-title h3 {
+      margin: 0 0 5px;
+    }
+
+    .ls-player-title p {
+      color: #9daec6;
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .ls-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .ls-btn {
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 11px;
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(110deg,#287fca,#655ce0);
+      cursor: pointer;
+    }
+
+    .ls-btn.secondary {
+      background: #27344e;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .ls-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    .ls-speed {
+      padding: 11px;
+      background: #1b2941;
+      color: white;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px;
+    }
+
+    .ls-progress {
+      height: 7px;
+      background: #293650;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 18px;
+    }
+
+    .ls-progress div {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg,#36a6ee,#8c70ff);
+      transition: width .2s;
+    }
+
+    .ls-status {
+      color: #9daec6;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .ls-transcript {
+      display: none;
+      margin-top: 17px;
+      padding: 18px;
+      background: #10192c;
+      border-radius: 13px;
+      line-height: 1.9;
+      color: #dce6f7;
+      overflow-wrap: anywhere;
+    }
+
+    .ls-transcript.show {
+      display: block;
+    }
+
+    .ls-translation {
+      display: none;
+      margin-top: 12px;
+      padding: 16px;
+      background: rgba(45,130,210,.09);
+      border: 1px solid rgba(80,160,255,.18);
+      border-radius: 12px;
+      color: #b8cbe4;
+      line-height: 1.8;
+    }
+
+    .ls-translation.show {
+      display: block;
+    }
+
+    .ls-questions {
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+      margin-top: 20px;
+    }
+
+    .ls-question {
+      padding: 17px;
+      background: #151f35;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    .ls-question h3 {
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 0 13px;
+    }
+
+    .ls-options {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 9px;
+    }
+
+    .ls-option {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      padding: 12px;
+      background: #202b44;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      color: #d5dff0;
+      cursor: pointer;
+      font-size: 13px;
+      line-height: 1.5;
+      min-width: 0;
+    }
+
+    .ls-option:has(input:checked) {
+      border-color: #57baff;
+      background: #203e5d;
+    }
+
+    .ls-option input {
+      accent-color: #55b9ff;
+      flex-shrink: 0;
+    }
+
+    .ls-result {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 15px;
+      background: #172d35;
+      border: 1px solid rgba(70,210,160,.2);
+    }
+
+    .ls-result.show {
+      display: block;
+    }
+
+    .ls-result h3 {
+      margin: 0 0 8px;
+    }
+
+    .ls-result strong {
+      font-size: 30px;
+      color: #65e2b3;
+    }
+
+    .ls-result p {
+      color: #b3c8ce;
+      line-height: 1.6;
+    }
+
+    @media(max-width:800px) {
+      .ls-lesson-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:560px) {
+      .listen-page {
+        margin-top: 20px;
+      }
+
+      .ls-hero,
+      .ls-section {
+        padding: 18px;
+      }
+
+      .ls-stats {
+        gap: 7px;
+      }
+
+      .ls-stat {
+        padding: 11px;
+      }
+
+      .ls-stat strong {
+        font-size: 20px;
+      }
+
+      .ls-lesson-grid,
+      .ls-options {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container nav-container">
+    <a href="../index.html" class="logo">ENGLISH <span>ZERO</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menyuni ochish">☰</button>
+
+    <nav class="nav-links" id="mobileMenu">
+      <a href="../index.html">Bosh sahifa</a>
+      <a href="grammar.html">Grammar</a>
+      <a href="vocabulary.html">Vocabulary</a>
+      <a href="speaking.html">Speaking</a>
+      <a href="listening.html" class="active">Listening</a>
+    </nav>
+  </div>
+</header>
+
+<main class="listen-page">
+
+  <section class="ls-hero">
+    <span class="ls-label">ENGLISH ZERO / LISTENING CENTER</span>
+    <h1>🎧 Tinglang. Tushuning. O‘rganing.</h1>
+    <p>
+      Ingliz tilidagi suhbatlarni tinglang, asosiy ma’lumotlarni
+      tushuning va savollarga javob bering. Har bir darsda alohida
+      audio matn, tarjima va test mavjud.
+    </p>
+
+    <div class="ls-stats">
+      <div class="ls-stat">
+        <strong id="lsCompleted">0</strong>
+        <span>Bajarilgan darslar</span>
+      </div>
+      <div class="ls-stat">
+        <strong id="lsBest">0%</strong>
+        <span>Eng yaxshi natija</span>
+      </div>
+      <div class="ls-stat">
+        <strong id="lsXP">0</strong>
+        <span>Listening XP</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="ls-section">
+    <h2>🎯 Darajani tanlang</h2>
+    <p class="ls-muted">
+      Har bir darajada tinglash matnlari va savollar murakkabligi oshib boradi.
+    </p>
+
+    <div class="ls-levels" id="lsLevels">
+      <button class="ls-level active" data-level="A1">A1 Beginner</button>
+      <button class="ls-level" data-level="A2">A2 Elementary</button>
+      <button class="ls-level" data-level="B1">B1 Intermediate</button>
+      <button class="ls-level" data-level="B2">B2 Upper</button>
+    </div>
+  </section>
+
+  <section class="ls-section">
+    <h2>📚 Listening darslari</h2>
+    <p class="ls-muted">
+      Darsni tanlang va audio mashqni boshlang.
+    </p>
+
+    <div class="ls-lesson-grid" id="lsLessonGrid"></div>
+  </section>
+
+  <section class="ls-section" id="lessonPlayer">
+    <h2>🎵 Audio dars</h2>
+    <p class="ls-muted" id="lsLessonDescription">
+      Boshlash uchun darslardan birini tanlang.
+    </p>
+
+    <div class="ls-player">
+      <div class="ls-player-top">
+        <div class="ls-play-icon">♫</div>
+        <div class="ls-player-title">
+          <h3 id="lsPlayerTitle">Listening lesson</h3>
+          <p id="lsPlayerLevel">A1 · Beginner</p>
+        </div>
+      </div>
+
+      <div class="ls-controls">
+        <button class="ls-btn" id="lsPlay">▶ Tinglash</button>
+        <button class="ls-btn secondary" id="lsPause">Ⅱ Pauza</button>
+        <button class="ls-btn secondary" id="lsStop">■ To‘xtatish</button>
+
+        <select class="ls-speed" id="lsSpeed" aria-label="Tinglash tezligi">
+          <option value="0.65">0.65x</option>
+          <option value="0.8">0.8x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.15">1.15x</option>
+        </select>
+      </div>
+
+      <div class="ls-progress">
+        <div id="lsProgressBar"></div>
+      </div>
+
+      <div class="ls-status" id="lsStatus">
+        Audio tayyor.
+      </div>
+    </div>
+
+    <div class="ls-controls">
+      <button class="ls-btn secondary" id="lsShowTranscript">
+        📄 Matnni ko‘rish
+      </button>
+      <button class="ls-btn secondary" id="lsShowTranslation">
+        🌐 Tarjimani ko‘rish
+      </button>
+    </div>
+
+    <div class="ls-transcript" id="lsTranscript"></div>
+    <div class="ls-translation" id="lsTranslation"></div>
+  </section>
+
+  <section class="ls-section">
+    <h2>📝 Tinglab tushunishni tekshirish</h2>
+    <p class="ls-muted">
+      Audio matnni tinglang va quyidagi savollarga javob bering.
+      Har bir savolda faqat bitta to‘g‘ri javob bor.
+    </p>
+
+    <div class="ls-questions" id="lsQuestions"></div>
+
+    <div class="ls-controls">
+      <button class="ls-btn" id="lsSubmit">Natijani tekshirish</button>
+      <button class="ls-btn secondary" id="lsRetry">Qayta ishlash</button>
+    </div>
+
+    <div class="ls-result" id="lsResult">
+      <h3>Natijangiz</h3>
+      <strong id="lsScore">0%</strong>
+      <p id="lsResultText"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 English Zero — Listen every day.</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+
+<script>
+const listeningLessons = [
+  {
+    id:"a1-intro",
+    level:"A1",
+    title:"My Daily Life",
+    icon:"🌅",
+    description:"Kundalik hayot va odatlar.",
+    transcript:"Hello! My name is Emma. I am a student. I wake up at seven o'clock every morning. I have breakfast with my family. Then I go to school by bus. My favourite subject is English. After school, I do my homework and read a book. In the evening, I have dinner with my family. I go to bed at ten o'clock.",
+    translation:"Salom! Mening ismim Emma. Men o‘quvchiman. Har kuni ertalab soat yettida uyg‘onaman. Oilam bilan nonushta qilaman. Keyin maktabga avtobusda boraman. Mening sevimli fanim ingliz tili. Maktabdan keyin uy vazifamni bajaraman va kitob o‘qiyman. Kechqurun oilam bilan kechki ovqat yeyman. Soat o‘nda uxlashga yotaman.",
+    questions:[
+      {q:"What is the girl's name?",options:["Anna","Emma","Lucy","Sarah"],correct:1},
+      {q:"What time does she wake up?",options:["At six","At eight","At seven","At nine"],correct:2},
+      {q:"How does she go to school?",options:["By bus","By car","On foot","By train"],correct:0},
+      {q:"What is her favourite subject?",options:["Maths","History","Science","English"],correct:3}
+    ]
+  },
+  {
+    id:"a1-family",
+    level:"A1",
+    title:"My Family",
+    icon:"👨‍👩‍👧",
+    description:"Oila a’zolari va ularning ishlari.",
+    transcript:"I have a small family. There are four people in my family: my father, my mother, my brother and me. My father is a doctor. My mother is a teacher. My brother is twelve years old. We live in a comfortable house. We like spending time together. On Sundays, we usually visit our grandparents.",
+    translation:"Mening kichik oilam bor. Oilamizda to‘rt kishi: otam, onam, akam va men. Otam shifokor. Onam o‘qituvchi. Akam o‘n ikki yoshda. Biz qulay uyda yashaymiz. Birga vaqt o‘tkazishni yoqtiramiz. Yakshanba kunlari odatda buvi va bobomizni ko‘rgani boramiz.",
+    questions:[
+      {q:"How many people are in the family?",options:["Three","Four","Five","Six"],correct:1},
+      {q:"What does the father do?",options:["Doctor","Teacher","Driver","Engineer"],correct:0},
+      {q:"How old is the brother?",options:["Ten","Eleven","Twelve","Thirteen"],correct:2},
+      {q:"When do they visit their grandparents?",options:["Mondays","Fridays","Saturdays","Sundays"],correct:3}
+    ]
+  },
+  {
+    id:"a2-weekend",
+    level:"A2",
+    title:"A Weekend Trip",
+    icon:"🚗",
+    description:"Dam olish kunidagi sayohat.",
+    transcript:"Last weekend, my friends and I went to a beautiful village near the mountains. We left early in the morning because we wanted to spend the whole day there. The weather was sunny, but it was quite cold. We walked along a river, took photographs and had lunch outside. In the afternoon, we visited a small museum. We returned home in the evening. It was a wonderful trip, and I hope to go there again.",
+    translation:"O‘tgan dam olish kunlari do‘stlarim bilan tog‘lar yaqinidagi chiroyli qishloqqa bordik. Kun bo‘yi u yerda bo‘lishni xohlaganimiz uchun ertalab erta yo‘lga chiqdik. Havo quyoshli edi, ammo ancha sovuq edi. Daryo bo‘ylab sayr qildik, suratga tushdik va tashqarida tushlik qildik. Tushdan keyin kichik muzeyga bordik. Kechqurun uyga qaytdik. Bu ajoyib sayohat bo‘ldi va u yerga yana borishni umid qilaman.",
+    questions:[
+      {q:"Where did they go?",options:["To a city","To a village","To a beach","To a museum"],correct:1},
+      {q:"Why did they leave early?",options:["To spend the whole day there","To catch a train","To meet a teacher","To buy food"],correct:0},
+      {q:"What was the weather like?",options:["Rainy and warm","Snowy","Sunny but cold","Windy and hot"],correct:2},
+      {q:"What did they visit in the afternoon?",options:["A school","A castle","A market","A museum"],correct:3}
+    ]
+  },
+  {
+    id:"a2-shopping",
+    level:"A2",
+    title:"At the Shopping Centre",
+    icon:"🛍️",
+    description:"Do‘konda xarid qilish haqida.",
+    transcript:"Yesterday, Mary went to a shopping centre with her sister. They wanted to buy some clothes for the new school year. First, they visited a shoe shop. Mary found a pair of comfortable black shoes. Then they went to a clothes shop. Her sister bought a blue jacket, but Mary decided to buy a white shirt. After shopping, they had lunch in a small cafe. They enjoyed their day together.",
+    translation:"Kecha Meri singlisi bilan savdo markaziga bordi. Ular yangi o‘quv yili uchun kiyim sotib olmoqchi edi. Avval poyabzal do‘koniga kirishdi. Meri qulay qora tufli topdi. Keyin kiyim do‘koniga borishdi. Singlisi ko‘k kurtka sotib oldi, Meri esa oq ko‘ylak sotib olishga qaror qildi. Xariddan keyin kichik kafeda tushlik qilishdi. Ular birga o‘tkazgan kunidan xursand bo‘lishdi.",
+    questions:[
+      {q:"Who went shopping with Mary?",options:["Her mother","Her sister","Her friend","Her teacher"],correct:1},
+      {q:"What did Mary buy?",options:["Black shoes","A blue jacket","A white shirt","A red dress"],correct:2},
+      {q:"What did her sister buy?",options:["A blue jacket","A white shirt","Black shoes","A bag"],correct:0},
+      {q:"Where did they have lunch?",options:["At home","At school","In a park","In a cafe"],correct:3}
+    ]
+  },
+  {
+    id:"b1-education",
+    level:"B1",
+    title:"Learning a New Language",
+    icon:"📚",
+    description:"Til o‘rganish usullari va foydasi.",
+    transcript:"Learning a new language can be challenging, but it also offers many benefits. Students who practise regularly often make better progress than those who study only before exams. Listening to podcasts, reading short articles and speaking with other learners can help develop different skills. Making mistakes is a natural part of learning. Instead of feeling embarrassed, learners should use mistakes as opportunities to improve. Consistency is usually more important than studying for many hours on just one day.",
+    translation:"Yangi til o‘rganish qiyin bo‘lishi mumkin, ammo u ko‘plab foydalar ham beradi. Muntazam mashq qiladigan o‘quvchilar faqat imtihon oldidan o‘qiydiganlarga qaraganda ko‘pincha yaxshiroq natijaga erishadi. Podkast tinglash, qisqa maqolalar o‘qish va boshqa o‘rganuvchilar bilan gaplashish turli ko‘nikmalarni rivojlantirishga yordam beradi. Xato qilish o‘rganishning tabiiy qismidir. Uyalish o‘rniga, o‘rganuvchilar xatolardan yaxshilanish imkoniyati sifatida foydalanishlari kerak. Muntazamlik odatda bir kunda ko‘p soat o‘qishdan muhimroq.",
+    questions:[
+      {q:"What do regular learners often achieve?",options:["Less progress","Better progress","No progress","Only exam success"],correct:1},
+      {q:"Which activity is mentioned?",options:["Playing games all day","Watching films only","Listening to podcasts","Avoiding conversations"],correct:2},
+      {q:"How should learners view mistakes?",options:["As opportunities to improve","As a reason to stop","As something unusual","As a failure"],correct:0},
+      {q:"What is usually more important?",options:["Studying only at weekends","Studying one long day","Memorising every sentence","Consistency"],correct:3}
+    ]
+  },
+  {
+    id:"b1-environment",
+    level:"B1",
+    title:"Protecting the Environment",
+    icon:"🌱",
+    description:"Atrof-muhit va ekologiya.",
+    transcript:"Protecting the environment is a responsibility shared by individuals, businesses and governments. Small actions can make a meaningful difference when many people take part. For example, using reusable bags, saving electricity and choosing public transport can reduce waste and pollution. Schools can also help by teaching students about recycling and responsible consumption. However, individual choices alone are not enough. Larger organisations and governments need to support effective environmental policies as well.",
+    translation:"Atrof-muhitni himoya qilish insonlar, bizneslar va hukumatlar o‘rtasidagi umumiy mas’uliyatdir. Ko‘p odamlar qatnashsa, kichik harakatlar ham sezilarli o‘zgarish keltirishi mumkin. Masalan, qayta ishlatiladigan sumkalardan foydalanish, elektr energiyasini tejash va jamoat transportini tanlash chiqindi hamda ifloslanishni kamaytirishi mumkin. Maktablar ham o‘quvchilarga qayta ishlash va mas’uliyatli iste’mol haqida ta’lim berish orqali yordam bera oladi. Biroq faqat shaxsiy tanlovlar yetarli emas. Katta tashkilotlar va hukumatlar ham samarali ekologik siyosatlarni qo‘llab-quvvatlashi kerak.",
+    questions:[
+      {q:"Who shares responsibility for the environment?",options:["Only students","Only businesses","Individuals, businesses and governments","Only scientists"],correct:2},
+      {q:"Which action is mentioned?",options:["Using reusable bags","Driving more often","Wasting electricity","Buying more plastic"],correct:0},
+      {q:"How can schools help?",options:["By stopping all travel","By avoiding science","By selling products","By teaching about recycling"],correct:3},
+      {q:"Are individual choices alone enough?",options:["Yes, always","No, larger organisations also matter","Only in cities","Only during winter"],correct:1}
+    ]
+  },
+  {
+    id:"b2-media",
+    level:"B2",
+    title:"The Influence of Social Media",
+    icon:"📱",
+    description:"Ijtimoiy tarmoqlarning jamiyatga ta’siri.",
+    transcript:"Social media has transformed the way people communicate, access information and participate in public discussions. It allows individuals to share ideas quickly and connect with communities across geographical boundaries. Nevertheless, the speed at which information spreads can also create difficulties. Misleading content may reach large audiences before it is checked. For this reason, digital literacy is essential. Users should evaluate the reliability of sources, compare different perspectives and avoid sharing claims they cannot verify. A balanced approach can help people benefit from social media while recognising its limitations.",
+    translation:"Ijtimoiy tarmoqlar odamlarning muloqot qilish, ma’lumot olish va jamoatchilik muhokamalarida qatnashish usullarini o‘zgartirdi. U odamlarga fikrlarini tez ulashish va geografik chegaralardan tashqaridagi jamoalar bilan bog‘lanish imkonini beradi. Shunga qaramay, ma’lumot tarqalish tezligi muammolar ham keltirib chiqarishi mumkin. Noto‘g‘ri ma’lumot tekshirilishidan oldin katta auditoriyaga yetib borishi mumkin. Shu sababli raqamli savodxonlik muhim. Foydalanuvchilar manbalarning ishonchliligini baholashi, turli qarashlarni solishtirishi va tekshira olmaydigan xabarlarni tarqatmasligi kerak. Muvozanatli yondashuv ijtimoiy tarmoqlarning cheklovlarini anglagan holda ulardan foyda olishga yordam beradi.",
+    questions:[
+      {q:"What has social media transformed?",options:["Only shopping","Communication and access to information","Only education","Public transport"],correct:1},
+      {q:"What difficulty is mentioned?",options:["Information spreads too slowly","People cannot share ideas","Misleading content can spread quickly","There are no online communities"],correct:2},
+      {q:"Why is digital literacy essential?",options:["To evaluate information reliability","To increase screen time","To avoid all technology","To create more accounts"],correct:0},
+      {q:"What is a balanced approach?",options:["Believing every post","Ignoring all sources","Sharing everything immediately","Recognising both benefits and limitations"],correct:3}
+    ]
+  }
+];
+
+let selectedLevel = "A1";
+let selectedLesson = null;
+let currentUtterance = null;
+let completedLessons = JSON.parse(
+  localStorage.getItem("ez_listening_completed") || "[]"
+);
+let bestScore = Number(localStorage.getItem("ez_listening_best") || 0);
+let listeningXP = Number(localStorage.getItem("ez_listening_xp") || 0);
+let submitted = false;
+
+function updateStats() {
+  document.getElementById("lsCompleted").textContent =
+    completedLessons.length;
+
+  document.getElementById("lsBest").textContent =
+    bestScore + "%";
+
+  document.getElementById("lsXP").textContent = listeningXP;
+}
+
+function renderLessonCards() {
+  const grid = document.getElementById("lsLessonGrid");
+  grid.innerHTML = "";
+
+  const lessons = listeningLessons.filter(
+    lesson => lesson.level === selectedLevel
+  );
+
+  lessons.forEach(lesson => {
+    const button = document.createElement("button");
+    button.className = "ls-lesson" +
+      (selectedLesson && selectedLesson.id === lesson.id ? " active" : "");
+
+    const icon = document.createElement("div");
+    icon.className = "emoji";
+    icon.textContent = lesson.icon;
+
+    const title = document.createElement("h3");
+    title.textContent = lesson.title;
+
+    const description = document.createElement("p");
+    description.textContent = lesson.description;
+
+    const level = document.createElement("small");
+    level.textContent = lesson.level + " · " + lesson.questions.length + " savol";
+
+    button.append(icon, title, description, level);
+
+    button.addEventListener("click", () => {
+      selectLesson(lesson);
+      renderLessonCards();
+    });
+
+    grid.appendChild(button);
+  });
+}
+
+function selectLesson(lesson) {
+  stopAudio();
+  selectedLesson = lesson;
+  submitted = false;
+
+  document.getElementById("lsLessonDescription").textContent =
+    lesson.description;
+
+  document.getElementById("lsPlayerTitle").textContent = lesson.title;
+  document.getElementById("lsPlayerLevel").textContent =
+    lesson.level + " · Listening lesson";
+
+  document.getElementById("lsStatus").textContent =
+    "Audio tayyor. Tinglashni boshlashingiz mumkin.";
+
+  document.getElementById("lsProgressBar").style.width = "0%";
+
+  document.getElementById("lsTranscript").textContent =
+    lesson.transcript;
+
+  document.getElementById("lsTranslation").textContent =
+    lesson.translation;
+
+  document.getElementById("lsTranscript").classList.remove("show");
+  document.getElementById("lsTranslation").classList.remove("show");
+
+  document.getElementById("lsResult").classList.remove("show");
+
+  renderQuestions();
+}
+
+function stopAudio() {
+  if ("speechSynthesis" in window) {
+    speechSynthesis.cancel();
+  }
+
+  currentUtterance = null;
+}
+
+function playAudio() {
+  if (!selectedLesson) {
+    alert("Avval listening darsini tanlang.");
+    return;
+  }
+
+  if (!("speechSynthesis" in window)) {
+    alert("Brauzeringiz audio o‘qishni qo‘llab-quvvatlamaydi.");
+    return;
+  }
+
+  stopAudio();
+
+  const utterance = new SpeechSynthesisUtterance(
+    selectedLesson.transcript
+  );
+
+  utterance.lang = "en-US";
+  utterance.rate = Number(document.getElementById("lsSpeed").value);
+  utterance.pitch = 1;
+
+  utterance.onstart = () => {
+    document.getElementById("lsStatus").textContent =
+      "Audio tinglanmoqda...";
+  };
+
+  utterance.onend = () => {
+    document.getElementById("lsStatus").textContent =
+      "Tinglash tugadi. Endi savollarga javob bering.";
+
+    document.getElementById("lsProgressBar").style.width = "100%";
+  };
+
+  utterance.onerror = () => {
+    document.getElementById("lsStatus").textContent =
+      "Audio ijro etilmadi. Qayta urinib ko‘ring.";
+  };
+
+  currentUtterance = utterance;
+  speechSynthesis.speak(utterance);
+}
+
+document.getElementById("lsPlay").addEventListener("click", playAudio);
+
+document.getElementById("lsPause").addEventListener("click", () => {
+  if (!("speechSynthesis" in window)) return;
+
+  if (speechSynthesis.speaking && !speechSynthesis.paused) {
+    speechSynthesis.pause();
+    document.getElementById("lsStatus").textContent = "Pauza.";
+  } else if (speechSynthesis.paused) {
+    speechSynthesis.resume();
+    document.getElementById("lsStatus").textContent = "Davom etmoqda...";
+  }
+});
+
+document.getElementById("lsStop").addEventListener("click", () => {
+  stopAudio();
+  document.getElementById("lsStatus").textContent = "Audio to‘xtatildi.";
+  document.getElementById("lsProgressBar").style.width = "0%";
+});
+
+document.getElementById("lsShowTranscript").addEventListener("click", () => {
+  document.getElementById("lsTranscript").classList.toggle("show");
+});
+
+document.getElementById("lsShowTranslation").addEventListener("click", () => {
+  document.getElementById("lsTranslation").classList.toggle("show");
+});
+
+function renderQuestions() {
+  const container = document.getElementById("lsQuestions");
+  container.innerHTML = "";
+
+  if (!selectedLesson) {
+    container.innerHTML =
+      '<p class="ls-muted">Savollarni ko‘rish uchun darsni tanlang.</p>';
+    return;
+  }
+
+  selectedLesson.questions.forEach((question, index) => {
+    const card = document.createElement("div");
+    card.className = "ls-question";
+
+    const heading = document.createElement("h3");
+    heading.textContent = (index + 1) + ". " + question.q;
+
+    const options = document.createElement("div");
+    options.className = "ls-options";
+
+    question.options.forEach((option, optionIndex) => {
+      const label = document.createElement("label");
+      label.className = "ls-option";
+
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "ls-question-" + index;
+      input.value = optionIndex;
+
+      const text = document.createElement("span");
+      text.textContent = option;
+
+      label.append(input, text);
+      options.appendChild(label);
+    });
+
+    card.append(heading, options);
+    container.appendChild(card);
+  });
+}
+
+document.getElementById("lsSubmit").addEventListener("click", () => {
+  if (!selectedLesson) {
+    alert("Avval darsni tanlang.");
+    return;
+  }
+
+  if (submitted) {
+    alert("Bu dars natijasi allaqachon hisoblangan. Qayta ishlash tugmasini bosing.");
+    return;
+  }
+
+  const questions = selectedLesson.questions;
+  let correct = 0;
+  let answered = 0;
+
+  questions.forEach((question, index) => {
+    const selected = document.querySelector(
+      'input[name="ls-question-' + index + '"]:checked'
+    );
+
+    if (selected) {
+      answered++;
+      if (Number(selected.value) === question.correct) {
+        correct++;
+      }
+    }
+  });
+
+  if (answered !== questions.length) {
+    alert("Iltimos, barcha savollarga javob bering.");
+    return;
+  }
+
+  submitted = true;
+
+  const score = Math.round(correct / questions.length * 100);
+
+  if (score > bestScore) {
+    bestScore = score;
+    localStorage.setItem("ez_listening_best", bestScore);
+  }
+
+  const isNewCompletion = !completedLessons.includes(selectedLesson.id);
+
+  if (isNewCompletion) {
+    completedLessons.push(selectedLesson.id);
+    listeningXP += correct * 5;
+
+    localStorage.setItem(
+      "ez_listening_completed",
+      JSON.stringify(completedLessons)
+    );
+
+    localStorage.setItem("ez_listening_xp", listeningXP);
+
+    if (window.EnglishZero) {
+      EnglishZero.addXP(correct * 5);
+      EnglishZero.completeTest();
+    }
+  }
+
+  document.getElementById("lsScore").textContent = score + "%";
+
+  document.getElementById("lsResultText").textContent =
+    correct + " ta to‘g‘ri javob / " +
+    questions.length + " ta savol. " +
+    (score >= 80
+      ? "Ajoyib! Tinglab tushunish ko‘nikmangiz yaxshi."
+      : score >= 50
+        ? "Yaxshi harakat! Matnni yana bir marta tinglab ko‘ring."
+        : "Mashqni takrorlang va yangi so‘zlarga e’tibor bering.");
+
+  document.getElementById("lsResult").classList.add("show");
+
+  updateStats();
+
+  document.getElementById("lsResult").scrollIntoView({
+    behavior:"smooth",
+    block:"nearest"
+  });
+});
+
+document.getElementById("lsRetry").addEventListener("click", () => {
+  if (!selectedLesson) return;
+
+  submitted = false;
+  document.getElementById("lsResult").classList.remove("show");
+  renderQuestions();
+});
+
+document.getElementById("lsLevels").addEventListener("click", event => {
+  const button = event.target.closest(".ls-level");
+  if (!button) return;
+
+  selectedLevel = button.dataset.level;
+
+  document.querySelectorAll(".ls-level").forEach(item => {
+    item.classList.toggle("active", item === button);
+  });
+
+  selectedLesson = null;
+  stopAudio();
+
+  document.getElementById("lsLessonDescription").textContent =
+    "Yangi darsni tanlang.";
+
+  document.getElementById("lsPlayerTitle").textContent =
+    "Listening lesson";
+
+  document.getElementById("lsPlayerLevel").textContent =
+    selectedLevel + " · Listening";
+
+  document.getElementById("lsTranscript").classList.remove("show");
+  document.getElementById("lsTranslation").classList.remove("show");
+  document.getElementById("lsResult").classList.remove("show");
+
+  document.getElementById("lsStatus").textContent = "Audio tayyor.";
+  document.getElementById("lsProgressBar").style.width = "0%";
+
+  renderLessonCards();
+  renderQuestions();
+});
+
+/* INITIALIZE */
+
+renderLessonCards();
+renderQuestions();
+updateStats();
+</script>
+
+</body>
+</html>
